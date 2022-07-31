@@ -17,11 +17,7 @@ class PageHomeState extends State<PageHome>
     return Scaffold(
       body: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
             const Text( "Enable: ", style: TextStyle(fontSize: 10), textAlign: TextAlign.center),
-            Checkbox(value: m_bAppEnabled,
-                onChanged: (bool? value){
-                  setState((){
-                    m_bAppEnabled = value;
-                  });})
+            Checkbox(value: m_bAppEnabled, onChanged: (bool? value){setState((){m_bAppEnabled = value;});})
           ]
           )
     );
