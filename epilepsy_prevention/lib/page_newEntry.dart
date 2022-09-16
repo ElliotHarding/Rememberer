@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:epilepsy_prevention/page_home.dart';
 
 class PageNewEntry extends StatelessWidget
 {
   PageNewEntry({super.key});
 
-  bool? m_bMultiChoice = false;
+  bool m_bMultiChoice = false;
 
   Widget build(BuildContext context)
   {
     return Scaffold(
-        body: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+        body: Column(children: <Widget>[
+
+          const Spacer(),
 
           Column(children: const [
             Text("Question", style: TextStyle(fontSize: 10), textAlign: TextAlign.left),
@@ -41,13 +44,26 @@ class PageNewEntry extends StatelessWidget
           ]
           ),
 
-          const Visibility(visible: true,
-              child:  TextField(
+          Visibility(visible: m_bMultiChoice,
+              child:  const TextField(
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               hintText: 'Enter wrong answers.',
             ),
-          ))
+          )),
+
+          const Spacer(),
+
+          Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+            TextButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => PageHome()));
+            }, child: const Text("Cancel")),
+            TextButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => PageHome()));
+            }, child: const Text("Add"))
+          ]),
+
+          const Spacer()
         ]
         ),
     );
