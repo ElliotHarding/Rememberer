@@ -7,6 +7,10 @@ class PageNewEntry extends StatelessWidget
 
   bool m_bMultiChoice = false;
 
+  final m_questionTextController = TextEditingController();
+  final m_answerTextController = TextEditingController();
+  final m_wrongAnswersTextController = TextEditingController();
+
   Widget build(BuildContext context)
   {
     return Scaffold(
@@ -14,25 +18,27 @@ class PageNewEntry extends StatelessWidget
 
           const Spacer(),
 
-          Column(children: const [
-            Text("Question", style: TextStyle(fontSize: 10), textAlign: TextAlign.left),
+          Column(children: [
+            const Text("Question", style: TextStyle(fontSize: 10), textAlign: TextAlign.left),
             TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Enter a search question',
               ),
+              controller: m_questionTextController,
             )
           ],),
 
           const Spacer(),
 
-          Column(children: const [
-            Text("Correct Answer", style: TextStyle(fontSize: 10), textAlign: TextAlign.left),
+          Column(children: [
+            const Text("Correct Answer", style: TextStyle(fontSize: 10), textAlign: TextAlign.left),
             TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Enter a answer',
               ),
+              controller: m_answerTextController
             )
           ]),
 
@@ -45,11 +51,12 @@ class PageNewEntry extends StatelessWidget
           ),
 
           Visibility(visible: m_bMultiChoice,
-              child:  const TextField(
-            decoration: InputDecoration(
+              child:  TextField(
+              decoration: const InputDecoration(
               border: OutlineInputBorder(),
               hintText: 'Enter wrong answers.',
-            ),
+              ),
+              controller: m_wrongAnswersTextController
           )),
 
           const Spacer(),
