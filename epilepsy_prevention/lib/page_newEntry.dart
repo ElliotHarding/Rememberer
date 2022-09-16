@@ -40,7 +40,7 @@ class PageNewEntry extends StatelessWidget
 
           Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
             const Text("Multi Choice: ", style: TextStyle(fontSize: 10), textAlign: TextAlign.center),
-            Checkbox(value: m_bMultiChoice, onChanged: (bool? value){m_bMultiChoice = value;})
+            Checkbox(value: m_bMultiChoice, onChanged: (bool? value){m_bMultiChoice = value == true;})
           ]
           ),
 
