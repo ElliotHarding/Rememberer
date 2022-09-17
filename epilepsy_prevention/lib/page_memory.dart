@@ -8,8 +8,6 @@ class PageMemory extends StatelessWidget
 
   Memory m_memory;
 
-  String m_notificationsFrequency = "Never";
-
   final m_questionTextController = TextEditingController();
   final m_answerTextController = TextEditingController();
   final m_wrongAnswersTextController = TextEditingController();
@@ -84,16 +82,16 @@ class PageMemory extends StatelessWidget
                   DropdownMenuItem(child: Text("Rare", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center), value: "Rare"),
                   DropdownMenuItem(child: Text("Occasional", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center), value: "Occasional"),
                   DropdownMenuItem(child: Text("Frequently", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center), value: "Frequently")
-                )],
-                value: m_notificationsFrequency,
+                ],
+                value: m_memory.m_testFrequecy,
                 onChanged: (String? selectedValue) {
-                  setState((){if(selectedValue != null){ m_notificationsFrequency = selectedValue;}});
+                  setState((){if(selectedValue != null){ m_memory.m_testFrequecy = selectedValue;}});
                 }
               ),
               ]);
           }),
 
-          const Spacer()
+          const Spacer(),
 
           Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
 
@@ -120,7 +118,7 @@ class PageMemory extends StatelessWidget
               }
 
               Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome()));
-            }, child: const Text("Add", style: TextStyle(fontSize: 30, color: Colors.black)))
+            }, child: const Text("Save", style: TextStyle(fontSize: 30, color: Colors.black)))
           ]),
 
           const Spacer()
