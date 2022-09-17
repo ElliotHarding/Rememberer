@@ -89,8 +89,8 @@ class PageMemory extends StatelessWidget
                 value: "Rare", child: Text("Rare", style: TextStyle(
                 fontSize: 25, color: Colors.black), textAlign: TextAlign
                 .center)),
-            DropdownMenuItem(value: "Occasional",
-                child: Text("Occasional", style: TextStyle(
+            DropdownMenuItem(value: "Occasionally",
+                child: Text("Occasionally", style: TextStyle(
                     fontSize: 25, color: Colors.black), textAlign: TextAlign
                     .center)),
             DropdownMenuItem(value: "Frequently",
@@ -154,7 +154,7 @@ class PageMemory extends StatelessWidget
                           m_memory.key.toString() + "-" +
                               notifyTime.toString());
                     }
-                    else if (m_memory.m_testFrequecy == "Occasional") {
+                    else if (m_memory.m_testFrequecy == "Occasionally") {
                       int notifyTime = 30;
                       notifyTimes.add(notifyTime);
                       await notifications.scheduleNotification(
