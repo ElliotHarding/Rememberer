@@ -81,7 +81,7 @@ class Database
     Hive.registerAdapter(MemoryAdapter());
 
     m_memoryBox = await Hive.openBox("Memories.db");
-    m_notificationStatsBox = Hive.box("notificationStats.db");
+    m_notificationStatsBox = await Hive.openBox("notificationStats.db");
   }
 
   int getAndIncrementChannelNumber()
