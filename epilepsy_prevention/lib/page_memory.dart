@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/page_home.dart';
-import 'package:epilepsy_prevention/Memory.dart';
+import 'package:epilepsy_prevention/memory.dart';
 
 class PageMemory extends StatelessWidget
 {
   PageMemory(this.m_memory);
 
   Memory m_memory;
-
-  bool m_bMultiChoice = false;
 
   final m_questionTextController = TextEditingController();
   final m_answerTextController = TextEditingController();
@@ -53,11 +51,11 @@ class PageMemory extends StatelessWidget
 
           Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
             const Text("Multi Choice: ", style: TextStyle(fontSize: 10), textAlign: TextAlign.center),
-            Checkbox(value: m_bMultiChoice, onChanged: (bool? value){m_bMultiChoice = value == true;})
+            Checkbox(value: m_memory.m_bMultiChoice, onChanged: (bool? value){if(value != null){ m_memory.m_bMultiChoice = value;}})
           ]
           ),
 
-          Visibility(visible: m_bMultiChoice,
+          Visibility(visible: m_memory.m_bMultiChoice,
               child:  TextField(
               decoration: const InputDecoration(
               border: OutlineInputBorder(),

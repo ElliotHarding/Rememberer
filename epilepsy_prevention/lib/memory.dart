@@ -4,10 +4,11 @@ import 'package:hive/hive.dart';
 @HiveType(typeId: 0)
 class Memory extends HiveObject
 {
-  Memory(String question, String answer, String falseAnswers)
+  Memory(String question, String answer, bool multiChoice, String falseAnswers)
   {
     m_question = question;
     m_answer = answer;
+    m_bMultiChoice = multiChoice;
     m_falseAnswers = falseAnswers;
   }
 
@@ -17,8 +18,11 @@ class Memory extends HiveObject
   @HiveField(1)
   String m_answer = "";
 
-  @HiveField(1)
+  @HiveField(2)
   String m_falseAnswers = "";
+
+  @HiveField(3)
+  bool m_bMultiChoice = false;
 }
 
 class MemoryAdapter extends TypeAdapter<Memory>
@@ -28,13 +32,21 @@ class MemoryAdapter extends TypeAdapter<Memory>
 
   @override
   Memory read(BinaryReader reader) {
-    return Memory(reader.read(), reader.read(), reader.read());
+    try
+    {
+      return Memory(reader.read(), reader.read(), reader.readBool(), reader.read());
+    }
+    catch (e)
+    {
+      return Memory("", "", false, "");
+    }
   }
 
   @override
   void write(BinaryWriter writer, Memory obj) {
     writer.write(obj.m_question);
     writer.write(obj.m_answer);
+    writer.writeBool(obj.m_bMultiChoice);
     writer.write(obj.m_falseAnswers);
   }
 }

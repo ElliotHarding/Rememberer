@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/page_memory.dart';
-import 'package:epilepsy_prevention/Memory.dart';
+import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_memories.dart';
 
 class PageHome extends StatefulWidget
@@ -29,7 +29,7 @@ class PageHomeState extends State<PageHome>
 
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
           TextButton(onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory("", "", ""))));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory("", "", false, ""))));
           }, child: const Text("Add new entry"))
         ]
         ),

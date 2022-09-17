@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:epilepsy_prevention/Memory.dart';
+import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_memory.dart';
 
 class PageMemories extends StatelessWidget
@@ -9,8 +9,15 @@ class PageMemories extends StatelessWidget
   Widget build(BuildContext context)
   {
     return Scaffold(
-      body: Column(children: <Widget>
+      body: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>
         [
+        Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+          TextButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory("", "", false, ""))));
+          }, child: const Text("Add new entry"))
+        ]
+        ),
+
         const Spacer(),
 
         ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: getMemoryWidgets(context))
