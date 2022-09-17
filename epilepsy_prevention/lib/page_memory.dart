@@ -145,7 +145,10 @@ class PageMemory extends StatelessWidget
                   if (m_bChangeNotifyTimes) {
 
                     //Clear previous notifications
-                    Notifications().removeNotifications(m_memory.key, m_memory.m_notifyTimes);
+                    if(m_memory.key != null)
+                    {
+                      Notifications().removeNotifications(m_memory.key, m_memory.m_notifyTimes);
+                    }
 
                     //Gen new notify times
                     List<int> notifyTimes = <int>[];
