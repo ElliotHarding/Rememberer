@@ -22,6 +22,8 @@ class Notifications
 
   void init() async
   {
+    setupTimezoneStuff();
+
     if(!(await isNotificationPermissionGranted()))
     {
       await requestNotificationPermissions();

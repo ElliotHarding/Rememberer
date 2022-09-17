@@ -15,6 +15,14 @@ void main() async {
   var notifications = Notifications();
   notifications.init();
 
+  Memory myMem = Memory(question: "What is the meaning", answer: "Yolo");
+  var box = database.getMemoryBox();
+  if(box != null)
+  {
+      box.add(myMem);
+  }
+  notifications.scheduleNotification(myMem, 10, 1, "my mem id");
+
   //Run app
   runApp(App(notifications.getNotificationPayload()));
 }
