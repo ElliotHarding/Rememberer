@@ -1,4 +1,5 @@
 import 'package:epilepsy_prevention/page_home.dart';
+import 'package:epilepsy_prevention/page_test.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'notifications.dart';
@@ -27,9 +28,21 @@ class App extends StatelessWidget
   @override
   Widget build(BuildContext context)
   {
-      return MaterialApp(
+    //Comming from notification
+    if(_m_notificationPayload != null) {
+      var database = Database();
+      Memory? mem = database.getMemoryWithId(_m_notificationPayload);
+      if (mem != null) {
+        return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: PageTest(mem)
+        );
+      }
+    }
+
+    return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: PageHome()
-      );
+    );
   }
 }

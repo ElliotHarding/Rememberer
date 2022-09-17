@@ -1,3 +1,4 @@
+import 'package:epilepsy_prevention/page_test.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_memory.dart';
@@ -39,7 +40,11 @@ class PageMemories extends StatelessWidget
           children: [
             TextButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(memory)));
-            }, child: Text(memory.m_question))
+            }, child: Text(memory.m_question)),
+
+            TextButton(onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(memory)));
+            }, child: const Text("Test"))
           ],
         ));
       }
