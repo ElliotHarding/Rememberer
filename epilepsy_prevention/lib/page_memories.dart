@@ -47,7 +47,7 @@ class PageMemories extends StatelessWidget
           children: [
             TextButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(memory)));
-            }, child: Text(memory.m_question)),
+            }, child: Text(memory.m_question != "" ? memory.m_question : "Error")),
 
             TextButton(onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(memory)));
