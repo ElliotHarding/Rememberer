@@ -7,7 +7,7 @@ class PageMemory extends StatelessWidget
 {
   PageMemory(this.m_memory);
 
-  Memory m_memory;
+  final Memory m_memory;
 
   bool m_bChangeNotifyTimes = false;
 
@@ -17,11 +17,6 @@ class PageMemory extends StatelessWidget
 
   Widget build(BuildContext context)
   {
-    if(m_memory.m_notifyTimes.length == 0)
-    {
-      m_bChangeNotifyTimes = true;
-    }
-
     m_questionTextController.text = m_memory.m_question;
     m_answerTextController.text = m_memory.m_answer;
     m_wrongAnswersTextController.text = m_memory.m_falseAnswers;
@@ -133,13 +128,16 @@ class PageMemory extends StatelessWidget
                       style: TextStyle(fontSize: 30, color: Colors.black))),
 
               TextButton(onPressed: () async {
-                var box = Database().getMemoryBox();
+                Database db = Database();
+                var box = db.getMemoryBox();
                 if (box != null) {
                   m_memory.m_question = m_questionTextController.text;
                   m_memory.m_answer = m_answerTextController.text;
                   m_memory.m_falseAnswers = m_wrongAnswersTextController.text;
 
                   if (m_bChangeNotifyTimes) {
+                    List<int> notifyTimes = <int>[];
+
                     Notifications notifications = Notifications();
 
                     //Clear previous notifications
@@ -147,11 +145,10 @@ class PageMemory extends StatelessWidget
                       notifications.removeNotification(
                           m_memory.key.toString() + "-" + notifyTime.toString());
                     }
-                    m_memory.m_notifyTimes.clear();
 
                     if (m_memory.m_testFrequecy == "Rare") {
                       int notifyTime = 60;
-                      m_memory.m_notifyTimes.add(notifyTime);
+                      notifyTimes.add(notifyTime);
                       await notifications.scheduleNotification(
                           m_memory, notifyTime, 0,
                           m_memory.key.toString() + "-" +
@@ -159,7 +156,7 @@ class PageMemory extends StatelessWidget
                     }
                     else if (m_memory.m_testFrequecy == "Occasional") {
                       int notifyTime = 30;
-                      m_memory.m_notifyTimes.add(notifyTime);
+                      notifyTimes.add(notifyTime);
                       await notifications.scheduleNotification(
                           m_memory, notifyTime, 1,
                           m_memory.key.toString() + "-" +
@@ -167,22 +164,29 @@ class PageMemory extends StatelessWidget
                     }
                     else if (m_memory.m_testFrequecy == "Frequently") {
                       int notifyTime = 1;
-                      m_memory.m_notifyTimes.add(notifyTime);
+                      notifyTimes.add(notifyTime);
                       await notifications.scheduleNotification(
                           m_memory, notifyTime, 2,
                           m_memory.key.toString() + "-" +
                               notifyTime.toString());
                     }
+
+                    m_memory.m_notifyTimes = notifyTimes;
                   }
 
-                  box.add(m_memory);
+                  if(db.getMemoryWithId(m_memory.key) == null)
+                  {
+                    box.add(m_memory);
+                  }
+                  else
+                  {
+                    box.put(m_memory.key, m_memory);
+                  }
                 }
 
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const PageHome()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome()));
               },
-                  child: const Text("Save",
-                      style: TextStyle(fontSize: 30, color: Colors.black)))
+                  child: const Text("Save", style: TextStyle(fontSize: 30, color: Colors.black)))
             ]),
 
         const Spacer()
