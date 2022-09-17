@@ -1,3 +1,4 @@
+import 'package:epilepsy_prevention/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/page_home.dart';
 import 'package:epilepsy_prevention/memory.dart';
@@ -8,12 +9,19 @@ class PageMemory extends StatelessWidget
 
   Memory m_memory;
 
+  bool m_bChangeNotifyTimes = false;
+
   final m_questionTextController = TextEditingController();
   final m_answerTextController = TextEditingController();
   final m_wrongAnswersTextController = TextEditingController();
 
   Widget build(BuildContext context)
   {
+    if(m_memory.m_notifyTimes.length == 0)
+    {
+      m_bChangeNotifyTimes = true;
+    }
+
     m_questionTextController.text = m_memory.m_question;
     m_answerTextController.text = m_memory.m_answer;
     m_wrongAnswersTextController.text = m_memory.m_falseAnswers;
@@ -85,7 +93,7 @@ class PageMemory extends StatelessWidget
                 ],
                 value: m_memory.m_testFrequecy,
                 onChanged: (String? selectedValue) {
-                  setState((){if(selectedValue != null){ m_memory.m_testFrequecy = selectedValue;}});
+                  setState((){if(selectedValue != null){ m_memory.m_testFrequecy = selectedValue; m_bChangeNotifyTimes = true;}});
                 }
               ),
               ]);
@@ -114,6 +122,38 @@ class PageMemory extends StatelessWidget
                 m_memory.m_question = m_questionTextController.text;
                 m_memory.m_answer = m_answerTextController.text;
                 m_memory.m_falseAnswers = m_wrongAnswersTextController.text;
+
+                if(m_bChangeNotifyTimes)
+                {
+                  Notifications notifications = Notifications();
+
+                  //Clear previous notifications
+                  for(int notifyTime in m_memory.m_notifyTimes)
+                  {
+                      notifications.removeNotification(m_memory.key.toString() + "-" + notifyTime.toString());
+                  }
+                  m_memory.m_notifyTimes.clear();
+
+                  if(m_memory.m_testFrequecy == "Rare")
+                  {
+                    int notifyTime = 60;
+                    m_memory.m_notifyTimes.add(notifyTime);
+                    await notifications.scheduleNotification(m_memory, notifyTime, 0, m_memory.key.toString() + "-" + notifyTime.toString());
+                  }
+                  else if(m_memory.m_testFrequecy == "Occasional")
+                  {
+                    int notifyTime = 30;
+                    m_memory.m_notifyTimes.add(notifyTime);
+                    await notifications.scheduleNotification(m_memory, notifyTime, 1, m_memory.key.toString() + "-" + notifyTime.toString());
+                  }
+                  else if(m_memory.m_testFrequecy == "Frequently")
+                  {
+                    int notifyTime = 1;
+                    m_memory.m_notifyTimes.add(notifyTime);
+                    await notifications.scheduleNotification(m_memory, notifyTime, 2, m_memory.key.toString() + "-" + notifyTime.toString());
+                  }
+                }
+
                 box.add(m_memory);
               }
 
