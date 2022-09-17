@@ -69,18 +69,30 @@ class Notifications
     return await androidImplementation?.requestPermission();
   }
 
-  Future<void> scheduleNotification(Memory memory, int secondsFromNow, int id) async
+  Future<void> scheduleNotification(Memory memory, int secondsFromNow, int id, String channelId) async
   {
-    await _m_flutterLocalNotificationsPlugin.schedule(
+    await _m_flutterLocalNotificationsPlugin.zonedSchedule(
         id,
         'Time to remember!',
         memory.m_question,
         timeZone.TZDateTime.now(timeZone.local).add(const Duration(seconds: 1) * secondsFromNow),
-        const NotificationDetails(
+        NotificationDetails(
             android: AndroidNotificationDetails(
-                'your channel id', 'your channel name',
-                channelDescription: 'your channel description')),
+                channelId, 'Memory notification channel',
+                channelDescription: 'Memory notification channel')
+        ),
+        androidAllowWhileIdle: true,
         payload: memory.key,
-        androidAllowWhileIdle: true);
+        uiLocalNotificationDateInterpretation:
+        UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.time);
+  }
+
+  Future<void> removeNotification(String channelId) async
+  {
+    await _m_flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>()
+        ?.deleteNotificationChannel(channelId);
   }
 }
