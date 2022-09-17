@@ -21,7 +21,7 @@ void main() async {
   {
       box.add(myMem);
   }
-  notifications.scheduleNotification(myMem, 5, 54, "my3439");
+  await notifications.scheduleNotification(myMem, 30, 9, "my3039");
 
   //Run app
   runApp(App(notifications.getNotificationPayload()));
