@@ -65,7 +65,7 @@ class Database
 {
   static final Database m_database = Database._internal();
   static Box<Memory>? m_memoryBox;
-  static Box? m_notificationStatsBox;
+  static Box? _m_settingsBox;
 
   factory Database()
   {
@@ -81,12 +81,12 @@ class Database
     Hive.registerAdapter(MemoryAdapter());
 
     m_memoryBox = await Hive.openBox("Memories.db");
-    m_notificationStatsBox = await Hive.openBox("notificationStats.db");
+    _m_settingsBox = await Hive.openBox("settings.db");
   }
 
   int getAndIncrementChannelNumber()
   {
-    int result = int.parse(m_notificationStatsBox?.get("channel number") ?? "256");
+    int result = int.parse(_m_settingsBox?.get("channel number") ?? "267");
     result++;
 
     if(result >= 922337203685477580)
@@ -94,8 +94,18 @@ class Database
       result = 0;
     }
 
-    m_notificationStatsBox?.put("channel number", result.toString());
+    _m_settingsBox?.put("channel number", result.toString());
     return result;
+  }
+
+  bool getNotificationsEnabledSetting()
+  {
+    return _m_settingsBox?.get("notifications enabled") != "false";
+  }
+
+  void setNotificationsEnabledSetting(bool enabled)
+  {
+    _m_settingsBox?.put("notifications enabled", enabled ? "true" : "false");
   }
 
   Box<Memory>? getMemoryBox()

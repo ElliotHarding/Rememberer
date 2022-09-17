@@ -15,7 +15,7 @@ class PageHome extends StatefulWidget
 
 class PageHomeState extends State<PageHome>
 {
-  bool? m_bAppEnabled = false;
+  bool? m_bAppEnabled = Database().getNotificationsEnabledSetting();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,38 @@ class PageHomeState extends State<PageHome>
       body: Column(children: [
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
           const Text( "Enable: ", style: TextStyle(fontSize: 10), textAlign: TextAlign.center),
-          Checkbox(value: m_bAppEnabled, onChanged: (bool? value){setState((){m_bAppEnabled = value;});})
+          Checkbox(value: m_bAppEnabled, onChanged: (bool? value){setState((){
+            m_bAppEnabled = value;
+
+            var box = Database().getMemoryBox();
+            if(box != null)
+            {
+              if(m_bAppEnabled == true)
+              {
+                Database().setNotificationsEnabledSetting(true);
+
+                for(Memory memory in box.values)
+                {
+                  for (int notifyTime in memory.m_notifyTimes)
+                  {
+                    Notifications().scheduleNotification(memory, notifyTime, memory.key.toString() + "-" + notifyTime.toString());
+                  }
+                }
+              }
+              else
+              {
+                Database().setNotificationsEnabledSetting(false);
+
+                for(Memory memory in box.values)
+                {
+                  for (int notifyTime in memory.m_notifyTimes)
+                  {
+                    Notifications().removeNotification(memory.key.toString() + "-" + notifyTime.toString());
+                  }
+                }
+              }
+            }
+          });})
           ]
         ),
 
