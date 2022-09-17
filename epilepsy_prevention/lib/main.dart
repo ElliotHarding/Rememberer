@@ -44,6 +44,8 @@ void main() async {
     notificationPermissionGranted = await requestPermissionsForAndroid();
   }
 
+  requestNotification();
+
   //Run app
   runApp(const App());
 }
@@ -84,4 +86,19 @@ Future<void> setupTimezoneStuff() async
   timeZone.initializeTimeZones();
   final String? timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
   timeZone.setLocalLocation(timeZone.getLocation(timeZoneName!));
+}
+
+Future<void> requestNotification() async {
+  await flutterLocalNotificationsPlugin.zonedSchedule(
+      0,
+      'scheduled title',
+      'scheduled body',
+      timeZone.TZDateTime.now(timeZone.local).add(const Duration(seconds: 5)),
+      const NotificationDetails(
+          android: AndroidNotificationDetails(
+              'your channel id', 'your channel name',
+              channelDescription: 'your channel description')),
+      androidAllowWhileIdle: true,
+      uiLocalNotificationDateInterpretation:
+      UILocalNotificationDateInterpretation.absoluteTime);
 }
