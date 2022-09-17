@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 @HiveType(typeId: 0)
 class Memory extends HiveObject
 {
-  Memory({String question = "", String answer = "", bool multiChoice = false, String falseAnswers = "", String testFrequency = "", List<int> notifyTimes = const []})
+  Memory({String question = "", String answer = "", bool multiChoice = false, String falseAnswers = "", String testFrequency = "Never", List<int> notifyTimes = const []})
   {
     m_question = question;
     m_answer = answer;

@@ -86,10 +86,10 @@ class PageMemory extends StatelessWidget
                 const Text("Reminder frequency", style: TextStyle(fontSize: 30), textAlign: TextAlign.left),
 
               DropdownButton(items: const [
-                  DropdownMenuItem(child: Text("Never", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center), value: "Never"),
-                  DropdownMenuItem(child: Text("Rare", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center), value: "Rare"),
-                  DropdownMenuItem(child: Text("Occasional", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center), value: "Occasional"),
-                  DropdownMenuItem(child: Text("Frequently", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center), value: "Frequently")
+                  DropdownMenuItem(value: "Never", child: Text("Never", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
+                  DropdownMenuItem(value: "Rare", child: Text("Rare", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
+                  DropdownMenuItem(value: "Occasional", child: Text("Occasional", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
+                  DropdownMenuItem(value: "Frequently", child: Text("Frequently", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center))
                 ],
                 value: m_memory.m_testFrequecy,
                 onChanged: (String? selectedValue) {
