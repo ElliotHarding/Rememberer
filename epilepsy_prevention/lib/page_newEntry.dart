@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/page_home.dart';
-import 'package:hive/hive.dart';
 import 'package:epilepsy_prevention/Memory.dart';
 
 class PageNewEntry extends StatelessWidget
@@ -69,10 +68,12 @@ class PageNewEntry extends StatelessWidget
             }, child: const Text("Cancel")),
             TextButton(onPressed: () async {
 
-              Memory memory = Memory(m_questionTextController.text, m_answerTextController.text, m_wrongAnswersTextController.text);
-
-              var box = await Hive.openBox("Memories.db");
-              box.add(memory);
+              var box = Database().getMemoryBox();
+              if(box != null)
+              {
+                Memory memory = Memory(m_questionTextController.text, m_answerTextController.text, m_wrongAnswersTextController.text);
+                box.add(memory);
+              }
 
               Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome()));
             }, child: const Text("Add"))

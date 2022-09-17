@@ -9,6 +9,8 @@ void main() async {
   final appDocumentDirectory = await getApplicationDocumentsDirectory();
   Hive.init(appDocumentDirectory.path);
   Hive.registerAdapter(MemoryAdapter());
+  var database = Database();
+  await database.init();
   runApp(const App());
 }
 

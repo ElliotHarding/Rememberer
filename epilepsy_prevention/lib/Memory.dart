@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 
 @HiveType(typeId: 0)
@@ -35,5 +36,28 @@ class MemoryAdapter extends TypeAdapter<Memory>
     writer.write(obj.m_question);
     writer.write(obj.m_answer);
     writer.write(obj.m_falseAnswers);
+  }
+}
+
+class Database
+{
+  static final Database m_database = Database._internal();
+  static Box<Memory>? m_memoryBox;
+
+  factory Database()
+  {
+    return m_database;
+  }
+
+  Database._internal();
+
+  Future<void> init()
+  async {
+    m_memoryBox = await Hive.openBox("Memories.db");
+  }
+
+  Box<Memory>? getMemoryBox()
+  {
+    return m_memoryBox;
   }
 }

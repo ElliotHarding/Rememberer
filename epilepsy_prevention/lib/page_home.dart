@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/page_newEntry.dart';
+import 'package:epilepsy_prevention/page_memories.dart';
 
 class PageHome extends StatefulWidget
 {
@@ -29,6 +30,13 @@ class PageHomeState extends State<PageHome>
           TextButton(onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context) => PageNewEntry()));
           }, child: const Text("Add new entry"))
+        ]
+        ),
+
+        Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+          TextButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories()));
+          }, child: const Text("View Memories"))
         ]
         ),
       ],)
