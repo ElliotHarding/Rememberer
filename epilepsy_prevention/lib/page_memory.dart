@@ -156,35 +156,33 @@ class PageMemory extends StatelessWidget
                     if (m_memory.m_testFrequecy == "Rare") {
                       int notifyTime = 60;
                       notifyTimes.add(notifyTime);
-                      await notifications.scheduleNotification(
-                          m_memory, notifyTime,
-                          m_memory.key.toString() + "-" +
-                              notifyTime.toString());
                     }
                     else if (m_memory.m_testFrequecy == "Occasionally") {
                       int notifyTime = 30;
                       notifyTimes.add(notifyTime);
-                      await notifications.scheduleNotification(
-                          m_memory, notifyTime,
-                          m_memory.key.toString() + "-" +
-                              notifyTime.toString());
                     }
                     else if (m_memory.m_testFrequecy == "Frequently") {
                       int notifyTime = 1;
                       notifyTimes.add(notifyTime);
-                      await notifications.scheduleNotification(m_memory, notifyTime, m_memory.key.toString() + "-" + notifyTime.toString());
                     }
 
                     m_memory.m_notifyTimes = notifyTimes;
                   }
 
+                  var key;
                   if(db.getMemoryWithId(m_memory.key) == null)
                   {
-                    box.add(m_memory);
+                    key = box.add(m_memory);
                   }
                   else
                   {
                     box.put(m_memory.key, m_memory);
+                    key = m_memory.key;
+                  }
+
+                  for(int notifyTime in m_memory.m_notifyTimes)
+                  {
+                    await Notifications().scheduleNotification(key, m_memory, notifyTime, key.toString() + "-" + notifyTime.toString());
                   }
                 }
 

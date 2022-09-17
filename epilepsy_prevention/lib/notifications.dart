@@ -74,7 +74,7 @@ class Notifications
     return await androidImplementation?.requestPermission();
   }
 
-  Future<void> scheduleNotification(Memory memory, int secondsFromNow, String channelId) async
+  Future<void> scheduleNotification(int key, Memory memory, int secondsFromNow, String channelId) async
   {
     await _m_flutterLocalNotificationsPlugin.zonedSchedule(
         Database().getAndIncrementChannelNumber(),
@@ -87,7 +87,7 @@ class Notifications
                 channelDescription: 'Memory notification channel')
         ),
         androidAllowWhileIdle: true,
-        payload: memory.key.toString(),
+        payload: key.toString(),
         uiLocalNotificationDateInterpretation:
         UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time);

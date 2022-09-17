@@ -52,7 +52,7 @@ class PageHomeState extends State<PageHome>
                 {
                   for (int notifyTime in memory.m_notifyTimes)
                   {
-                    Notifications().scheduleNotification(memory, notifyTime, memory.key.toString() + "-" + notifyTime.toString());
+                    Notifications().scheduleNotification(memory.key, memory, notifyTime, memory.key.toString() + "-" + notifyTime.toString());
                   }
                 }
               }
