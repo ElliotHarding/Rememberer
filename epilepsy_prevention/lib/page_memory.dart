@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/page_home.dart';
 import 'package:epilepsy_prevention/Memory.dart';
 
-class PageNewEntry extends StatelessWidget
+class PageMemory extends StatelessWidget
 {
-  PageNewEntry({super.key});
+  PageMemory(this.m_memory);
+
+  Memory m_memory;
 
   bool m_bMultiChoice = false;
 
@@ -14,6 +16,10 @@ class PageNewEntry extends StatelessWidget
 
   Widget build(BuildContext context)
   {
+    m_questionTextController.text = m_memory.m_question;
+    m_answerTextController.text = m_memory.m_answer;
+    m_wrongAnswersTextController.text = m_memory.m_falseAnswers;
+
     return Scaffold(
         body: Column(children: <Widget>[
 
@@ -63,16 +69,27 @@ class PageNewEntry extends StatelessWidget
           const Spacer(),
 
           Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+
             TextButton(onPressed: (){
+
+              var box = Database().getMemoryBox();
+              if(box != null)
+              {
+                box.delete(m_memory.key);
+              }
+
               Navigator.push(context, MaterialPageRoute(builder: (context) => PageHome()));
-            }, child: const Text("Cancel")),
+            }, child: const Text("Delete")),
+
             TextButton(onPressed: () async {
 
               var box = Database().getMemoryBox();
               if(box != null)
               {
-                Memory memory = Memory(m_questionTextController.text, m_answerTextController.text, m_wrongAnswersTextController.text);
-                box.add(memory);
+                m_memory.m_question = m_questionTextController.text;
+                m_memory.m_answer = m_answerTextController.text;
+                m_memory.m_falseAnswers = m_wrongAnswersTextController.text;
+                box.add(m_memory);
               }
 
               Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome()));

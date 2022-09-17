@@ -1,8 +1,6 @@
-import 'dart:developer';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/Memory.dart';
+import 'package:epilepsy_prevention/page_memory.dart';
 
 class PageMemories extends StatelessWidget
 {
@@ -15,13 +13,13 @@ class PageMemories extends StatelessWidget
         [
         const Spacer(),
 
-        ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: getMemoryWidgets())
+        ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: getMemoryWidgets(context))
         ]
       )
     );
    }
 
-  List<Widget> getMemoryWidgets()
+  List<Widget> getMemoryWidgets(BuildContext context)
   {
     List<Widget> widgets = <Widget>[];
 
@@ -33,7 +31,7 @@ class PageMemories extends StatelessWidget
         widgets.add(Row(
           children: [
             TextButton(onPressed: (){
-              log(memory.m_question);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(memory)));
             }, child: Text(memory.m_question))
           ],
         ));
