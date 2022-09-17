@@ -86,7 +86,7 @@ class Database
 
   int getAndIncrementChannelNumber()
   {
-    int result = int.parse(m_notificationStatsBox?.get("channel number"));
+    int result = int.parse(m_notificationStatsBox?.get("channel number") ?? "256");
     result++;
 
     if(result >= 922337203685477580)
