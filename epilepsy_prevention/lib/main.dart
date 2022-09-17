@@ -39,7 +39,7 @@ class App extends StatelessWidget
     //Comming from notification
     if(_m_notificationPayload != null) {
       var database = Database();
-      Memory? mem = database.getMemoryWithId(_m_notificationPayload);
+      Memory? mem = database.getMemoryWithId(int.parse(_m_notificationPayload ?? "-1"));
       if (mem != null) {
         return MaterialApp(
             debugShowCheckedModeBanner: false,

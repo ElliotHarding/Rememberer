@@ -84,7 +84,7 @@ class Notifications
                 channelDescription: 'Memory notification channel')
         ),
         androidAllowWhileIdle: true,
-        payload: memory.key,
+        payload: memory.key.toString(),
         uiLocalNotificationDateInterpretation:
         UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time);
