@@ -12,16 +12,23 @@ class PageMemories extends StatelessWidget
     return Scaffold(
       body: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>
         [
+        const Spacer(),
+
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
           TextButton(onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory())));
-          }, child: const Text("Add new entry"))
+          }, child: const FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text("Add new entry")
+            ))
         ]
         ),
 
         const Spacer(),
 
-        ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: getMemoryWidgets(context))
+        ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: getMemoryWidgets(context)),
+
+        const Spacer()
         ]
       )
     );

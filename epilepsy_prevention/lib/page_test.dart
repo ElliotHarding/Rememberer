@@ -19,11 +19,17 @@ class PageTest extends StatelessWidget
 
         const Spacer(),
 
-        Text(m_memory.m_question, style: const TextStyle(fontSize: 10), textAlign: TextAlign.center),
+        FittedBox(
+            fit: BoxFit.fitWidth,
+            child: Text(m_memory.m_question, textAlign: TextAlign.center)
+        ),
 
         const Spacer(),
 
-        const Text("Answer", style: TextStyle(fontSize: 10), textAlign: TextAlign.left),
+        const FittedBox(
+            fit: BoxFit.fitWidth,
+            child: Text("Answer", textAlign: TextAlign.center)
+        ),
 
         Visibility(visible: !m_memory.m_bMultiChoice,
             child:  Column(children: <Widget>
@@ -38,7 +44,7 @@ class PageTest extends StatelessWidget
 
               TextButton(onPressed: () async {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, m_answerTextController.text == m_memory.m_answer)));
-              }, child: const Text("Guess"))
+              }, child: const Text("Guess", textAlign: TextAlign.center))
             ])
         ),
 
