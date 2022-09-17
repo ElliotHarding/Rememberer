@@ -72,4 +72,20 @@ class Database
   {
     return m_memoryBox;
   }
+
+  Memory? getMemoryWithId(dynamic key)
+  {
+    var box = Database().getMemoryBox();
+    if(box != null)
+    {
+      for(Memory memory in box.values)
+      {
+        if(memory.key == key)
+        {
+          return memory;
+        }
+      }
+    }
+    return null;
+  }
 }

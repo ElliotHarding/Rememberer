@@ -22,29 +22,7 @@ void main() async {
   var database = Database();
   await database.init();
 
-  setupTimezoneStuff();
 
-  //App launched by notification?
-  String? selectedNotificationPayload;
-  final NotificationAppLaunchDetails? notificationAppLaunchDetails = await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-  if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
-    selectedNotificationPayload = notificationAppLaunchDetails!.payload;
-  }
-
-  //Initalize local notifications plugin
-  await flutterLocalNotificationsPlugin.initialize(const InitializationSettings(android: AndroidInitializationSettings('@mipmap/ic_launcher')),
-      onSelectNotification: (String? payload) async {
-        selectedNotificationPayload = payload;
-      });
-
-  //Check if notification permissions are granted, if not ask.
-  bool? notificationPermissionGranted = false;
-  if(!(await isAndroidNotificationPermissionGranted()))
-  {
-    notificationPermissionGranted = await requestPermissionsForAndroid();
-  }
-
-  requestNotification();
 
   //Run app
   runApp(const App());
@@ -62,43 +40,4 @@ class App extends StatelessWidget
         home: PageHome()
       );
   }
-}
-
-Future<bool> isAndroidNotificationPermissionGranted() async {
-  return await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-      AndroidFlutterLocalNotificationsPlugin>()
-      ?.areNotificationsEnabled() ??
-      false;
-}
-
-Future<bool?> requestPermissionsForAndroid() async
-{
-  final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
-  flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-      AndroidFlutterLocalNotificationsPlugin>();
-
-  return await androidImplementation?.requestPermission();
-}
-
-Future<void> setupTimezoneStuff() async
-{
-  timeZone.initializeTimeZones();
-  final String? timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
-  timeZone.setLocalLocation(timeZone.getLocation(timeZoneName!));
-}
-
-Future<void> requestNotification() async {
-  await flutterLocalNotificationsPlugin.zonedSchedule(
-      0,
-      'scheduled title',
-      'scheduled body',
-      timeZone.TZDateTime.now(timeZone.local).add(const Duration(seconds: 5)),
-      const NotificationDetails(
-          android: AndroidNotificationDetails(
-              'your channel id', 'your channel name',
-              channelDescription: 'your channel description')),
-      androidAllowWhileIdle: true,
-      uiLocalNotificationDateInterpretation:
-      UILocalNotificationDateInterpretation.absoluteTime);
 }
