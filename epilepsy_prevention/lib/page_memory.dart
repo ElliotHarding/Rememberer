@@ -48,21 +48,30 @@ class PageMemory extends StatelessWidget
           ]),
 
           const Spacer(),
+          
+          StatefulBuilder(builder: (BuildContext context, StateSetter setState)
+          {
+            return Column(children: <Widget>
+              [
+                Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+                  const Text("Multi Choice: ", style: TextStyle(fontSize: 10), textAlign: TextAlign.center),
+                  Checkbox(value: m_memory.m_bMultiChoice, onChanged: (bool? value){if(value != null){ setState(() {
+                    m_memory.m_bMultiChoice = value;
+                  }); }})
+                ]
+                ),
 
-          Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-            const Text("Multi Choice: ", style: TextStyle(fontSize: 10), textAlign: TextAlign.center),
-            Checkbox(value: m_memory.m_bMultiChoice, onChanged: (bool? value){if(value != null){ m_memory.m_bMultiChoice = value;}})
-          ]
-          ),
-
-          Visibility(visible: m_memory.m_bMultiChoice,
-              child:  TextField(
-              decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter wrong answers.',
-              ),
-              controller: m_wrongAnswersTextController
-          )),
+                Visibility(visible: m_memory.m_bMultiChoice,
+                  child:  TextField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Enter wrong answers.',
+                      ),
+                      controller: m_wrongAnswersTextController
+                  )
+                )
+              ]);
+          }),
 
           const Spacer(),
 
