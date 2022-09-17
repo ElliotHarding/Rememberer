@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/Memory.dart';
 
@@ -14,7 +15,7 @@ class PageMemories extends StatelessWidget
         [
         const Spacer(),
 
-        ListView(children: getMemoryWidgets())
+        ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: getMemoryWidgets())
         ]
       )
     );
