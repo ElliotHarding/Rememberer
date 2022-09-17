@@ -23,23 +23,23 @@ class PageTest extends StatelessWidget
 
         const Spacer(),
 
-        const Text("Answer", style: const TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center),
+        const Text("Answer", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center),
 
-        Visibility(visible: !m_memory.m_bMultiChoice,
-            child:  Column(children: <Widget>
-            [
-              TextField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter a answer',
-                ),
-                controller: m_answerTextController
+        Visibility(visible: !m_memory.m_bMultiChoice, child:
+          TextField(
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Enter a answer',
               ),
+            controller: m_answerTextController
+          )
+        ),
 
-              TextButton(onPressed: () async {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, m_answerTextController.text == m_memory.m_answer)));
-              }, child: const Text("Guess", textAlign: TextAlign.center))
-            ])
+        Visibility(visible: !m_memory.m_bMultiChoice, child:
+          TextButton(onPressed: () async {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, m_answerTextController.text == m_memory.m_answer)));
+            }, child: const Text("Guess", style: TextStyle(fontSize: 30, color: Colors.black), textAlign: TextAlign.center)
+          )
         ),
 
         Visibility(visible: m_memory.m_bMultiChoice,
@@ -50,7 +50,7 @@ class PageTest extends StatelessWidget
 
         TextButton(onPressed: (){
           Navigator.push(context, MaterialPageRoute(builder: (context) => PageHome()));
-        }, child: const Text("Home")),
+        }, child: const Text("Home", style: TextStyle(fontSize: 30, color: Colors.black))),
       ]
       ),
     );
