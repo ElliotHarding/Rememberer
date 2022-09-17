@@ -33,15 +33,15 @@ class PageTestResult extends StatelessWidget
 
         const Spacer(),
 
-        Text(m_bSuccess ? "Correct!" : "Wrong!", style: const TextStyle(fontSize: 10), textAlign: TextAlign.left),
+        Text(m_bSuccess ? "Correct!" : "Wrong!", style: const TextStyle(fontSize: 30), textAlign: TextAlign.left),
 
         const Spacer(),
 
-        Text(m_memory.m_question, style: const TextStyle(fontSize: 10), textAlign: TextAlign.center),
+        Text(m_memory.m_question, style: const TextStyle(fontSize: 30), textAlign: TextAlign.center),
 
         const Spacer(),
 
-        Text(m_memory.m_answer, style: const TextStyle(fontSize: 10), textAlign: TextAlign.left),
+        Text(m_memory.m_answer, style: const TextStyle(fontSize: 30), textAlign: TextAlign.left),
 
         const Spacer(),
 

@@ -1,6 +1,6 @@
 import 'package:epilepsy_prevention/notifications.dart';
+import 'package:epilepsy_prevention/page_memories.dart';
 import 'package:flutter/material.dart';
-import 'package:epilepsy_prevention/page_home.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_test.dart';
 
@@ -144,8 +144,7 @@ class PageMemory extends StatelessWidget
                   box.delete(m_memory.key);
                 }
 
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => PageHome()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories()));
               },
                   child: const Text("Delete",
                       style: TextStyle(fontSize: 30, color: Colors.black))),
@@ -198,7 +197,7 @@ class PageMemory extends StatelessWidget
                   await Notifications().scheduleNotifications(key, m_memory.m_question, m_memory.m_notifyTimes);
                 }
 
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories()));
               },
                   child: const Text("Save", style: TextStyle(fontSize: 30, color: Colors.black)))
             ]),

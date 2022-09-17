@@ -1,3 +1,4 @@
+import 'package:epilepsy_prevention/page_memories.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/page_home.dart';
 import 'package:epilepsy_prevention/memory.dart';
@@ -64,9 +65,22 @@ class PageTest extends StatelessWidget
 
         const Spacer(),
 
-        TextButton(onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => PageHome()));
-        }, child: const Text("Home", style: TextStyle(fontSize: 30, color: Colors.black))),
+        Row(mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+
+              TextButton(onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories()));
+              },
+                  child: const Text("Memories", style: TextStyle(fontSize: 30, color: Colors.black))),
+
+              TextButton(onPressed: () async {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome()));
+              },
+                  child: const Text("Home", style: TextStyle(fontSize: 30, color: Colors.black)))
+            ]),
+
+        const Spacer()
       ]
       ),
     );
