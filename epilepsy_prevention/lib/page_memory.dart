@@ -118,6 +118,13 @@ class PageMemory extends StatelessWidget
               TextButton(onPressed: () {
                 var box = Database().getMemoryBox();
                 if (box != null) {
+
+                  //Clear notifications
+                  for (int notifyTime in m_memory.m_notifyTimes) {
+                    Notifications().removeNotification(
+                        m_memory.key.toString() + "-" + notifyTime.toString());
+                  }
+
                   box.delete(m_memory.key);
                 }
 
