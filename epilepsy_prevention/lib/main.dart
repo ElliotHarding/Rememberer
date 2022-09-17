@@ -32,7 +32,7 @@ void main() async {
   }
 
   //Initalize local notifications plugin
-  await flutterLocalNotificationsPlugin.initialize(const InitializationSettings(android: AndroidInitializationSettings('ic_launcher.png')),
+  await flutterLocalNotificationsPlugin.initialize(const InitializationSettings(android: AndroidInitializationSettings('@mipmap/ic_launcher')),
       onSelectNotification: (String? payload) async {
         selectedNotificationPayload = payload;
       });
