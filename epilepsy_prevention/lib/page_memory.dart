@@ -172,7 +172,7 @@ class PageMemory extends StatelessWidget
                   var key;
                   if(db.getMemoryWithId(m_memory.key) == null)
                   {
-                    key = box.add(m_memory);
+                    key = await box.add(m_memory);
                   }
                   else
                   {
