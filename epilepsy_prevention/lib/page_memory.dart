@@ -31,72 +31,88 @@ class PageMemory extends StatelessWidget
 
           const Spacer(),
 
-          Column(children: [
-            const Text("Question", style: TextStyle(fontSize: 30), textAlign: TextAlign.left),
-            TextField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Enter a search question',
-              ),
-              style: const TextStyle(fontSize: 30.0, color: Colors.black),
-              controller: m_questionTextController,
-            )
-          ],),
+          const Text("Question", style: TextStyle(fontSize: 30), textAlign: TextAlign.left),
+
+          TextField(
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Enter a search question',
+            ),
+            style: const TextStyle(fontSize: 30.0, color: Colors.black),
+            controller: m_questionTextController,
+          ),
 
           const Spacer(),
 
-          Column(children: [
-            const Text("Correct Answer", style: TextStyle(fontSize: 30, color: Colors.black), textAlign: TextAlign.left),
-            TextField(
+          const Text("Correct Answer", style: TextStyle(fontSize: 30, color: Colors.black), textAlign: TextAlign.left),
+
+          TextField(
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Enter a answer',
               ),
               controller: m_answerTextController
-            )
-          ]),
+          ),
 
           const Spacer(),
           
           StatefulBuilder(builder: (BuildContext context, StateSetter setState)
           {
-            return Column(children: <Widget>
-              [
-                Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-                  const Text("Multi Choice: ", style: TextStyle(fontSize: 30, color: Colors.black), textAlign: TextAlign.center),
-                  Checkbox(value: m_memory.m_bMultiChoice, onChanged: (bool? value){if(value != null){ setState(() {
+            return Expanded(child: Column(children: <Widget>
+            [
+              const Text("Multi Choice: ", style: TextStyle(fontSize: 30, color: Colors.black), textAlign: TextAlign.center),
+
+              Checkbox(value: m_memory.m_bMultiChoice, onChanged: (bool? value) {
+                if (value != null) {
+                  setState(() {
                     m_memory.m_bMultiChoice = value;
-                  }); }})
-                ]
-                ),
+                  });
+                }
+              }),
 
-                Visibility(visible: m_memory.m_bMultiChoice,
-                  child:  TextField(
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Enter wrong answers.',
-                      ),
-                      style: const TextStyle(fontSize: 30, color: Colors.black),
-                      controller: m_wrongAnswersTextController
-                  )
-                ),
+              const Spacer(),
 
-                const Spacer(),
+              Visibility(visible: m_memory.m_bMultiChoice, child:
+              TextField(
+                    decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter wrong answers.'),
+                    style: const TextStyle(fontSize: 30, color: Colors.black),
+                    controller: m_wrongAnswersTextController
+                )
+              ),
 
-                const Text("Reminder frequency", style: TextStyle(fontSize: 30), textAlign: TextAlign.left),
+              const Spacer(),
+
+              const Text("Reminder frequency", style: TextStyle(fontSize: 30), textAlign: TextAlign.left),
 
               DropdownButton(items: const [
-                  DropdownMenuItem(value: "Never", child: Text("Never", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
-                  DropdownMenuItem(value: "Rare", child: Text("Rare", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
-                  DropdownMenuItem(value: "Occasional", child: Text("Occasional", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
-                  DropdownMenuItem(value: "Frequently", child: Text("Frequently", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center))
+                DropdownMenuItem(
+                    value: "Never", child: Text("Never", style: TextStyle(
+                    fontSize: 25, color: Colors.black), textAlign: TextAlign
+                    .center)),
+                DropdownMenuItem(
+                    value: "Rare", child: Text("Rare", style: TextStyle(
+                    fontSize: 25, color: Colors.black), textAlign: TextAlign
+                    .center)),
+                DropdownMenuItem(value: "Occasional",
+                    child: Text("Occasional", style: TextStyle(
+                        fontSize: 25, color: Colors.black), textAlign: TextAlign
+                        .center)),
+                DropdownMenuItem(value: "Frequently",
+                    child: Text("Frequently", style: TextStyle(
+                        fontSize: 25, color: Colors.black), textAlign: TextAlign
+                        .center))
                 ],
                 value: m_memory.m_testFrequecy,
-                onChanged: (String? selectedValue) {
-                  setState((){if(selectedValue != null){ m_memory.m_testFrequecy = selectedValue; m_bChangeNotifyTimes = true;}});
+                onChanged: (String? selectedValue) {setState(() {
+                  if (selectedValue != null) {
+                    m_memory.m_testFrequecy = selectedValue;
+                    m_bChangeNotifyTimes = true;
+                  }
+                  });
                 }
               ),
-              ]);
+            ])
+            );
           }),
 
           const Spacer(),
