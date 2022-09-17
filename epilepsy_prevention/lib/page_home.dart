@@ -50,10 +50,7 @@ class PageHomeState extends State<PageHome>
 
                 for(Memory memory in box.values)
                 {
-                  for (int notifyTime in memory.m_notifyTimes)
-                  {
-                    Notifications().scheduleNotification(memory.key, memory, notifyTime, memory.key.toString() + "-" + notifyTime.toString());
-                  }
+                  Notifications().scheduleNotifications(memory.key, memory.m_question, memory.m_notifyTimes);
                 }
               }
               else
@@ -62,10 +59,7 @@ class PageHomeState extends State<PageHome>
 
                 for(Memory memory in box.values)
                 {
-                  for (int notifyTime in memory.m_notifyTimes)
-                  {
-                    Notifications().removeNotification(memory.key.toString() + "-" + notifyTime.toString());
-                  }
+                  Notifications().removeNotifications(memory.key, memory.m_notifyTimes);
                 }
               }
             }

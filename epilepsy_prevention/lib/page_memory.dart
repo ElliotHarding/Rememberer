@@ -143,16 +143,12 @@ class PageMemory extends StatelessWidget
                   m_memory.m_falseAnswers = m_wrongAnswersTextController.text;
 
                   if (m_bChangeNotifyTimes) {
-                    List<int> notifyTimes = <int>[];
-
-                    Notifications notifications = Notifications();
 
                     //Clear previous notifications
-                    for (int notifyTime in m_memory.m_notifyTimes) {
-                      notifications.removeNotification(
-                          m_memory.key.toString() + "-" + notifyTime.toString());
-                    }
+                    Notifications().removeNotifications(m_memory.key, m_memory.m_notifyTimes);
 
+                    //Gen new notify times
+                    List<int> notifyTimes = <int>[];
                     if (m_memory.m_testFrequecy == "Rare") {
                       int notifyTime = 60;
                       notifyTimes.add(notifyTime);
@@ -180,10 +176,7 @@ class PageMemory extends StatelessWidget
                     key = m_memory.key;
                   }
 
-                  for(int notifyTime in m_memory.m_notifyTimes)
-                  {
-                    await Notifications().scheduleNotification(key, m_memory, notifyTime, key.toString() + "-" + notifyTime.toString());
-                  }
+                  await Notifications().scheduleNotifications(key, m_memory.m_question, m_memory.m_notifyTimes);
                 }
 
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome()));
