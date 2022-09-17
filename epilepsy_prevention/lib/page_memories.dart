@@ -25,10 +25,9 @@ class PageMemories extends StatelessWidget
     List<Widget> widgets = <Widget>[];
 
     var box = Database().getMemoryBox();
-    var values = box?.values;
-    if(values != null)
+    if(box != null)
     {
-      for(Memory memory in values)
+      for(Memory memory in box.values)
       {
         widgets.add(Row(
           children: [
