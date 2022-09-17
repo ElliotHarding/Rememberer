@@ -73,7 +73,7 @@ class PageMemory extends StatelessWidget
               const Spacer(),
 
               Visibility(visible: m_memory.m_bMultiChoice, child:
-              TextField(
+                TextField(
                     decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter wrong answers.'),
                     style: const TextStyle(fontSize: 30, color: Colors.black),
                     controller: m_wrongAnswersTextController
