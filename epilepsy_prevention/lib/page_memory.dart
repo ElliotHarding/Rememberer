@@ -8,6 +8,8 @@ class PageMemory extends StatelessWidget
 
   Memory m_memory;
 
+  String m_notificationsFrequency = "Never";
+
   final m_questionTextController = TextEditingController();
   final m_answerTextController = TextEditingController();
   final m_wrongAnswersTextController = TextEditingController();
@@ -24,12 +26,13 @@ class PageMemory extends StatelessWidget
           const Spacer(),
 
           Column(children: [
-            const Text("Question", style: TextStyle(fontSize: 10), textAlign: TextAlign.left),
+            const Text("Question", style: TextStyle(fontSize: 30), textAlign: TextAlign.left),
             TextField(
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Enter a search question',
               ),
+              style: const TextStyle(fontSize: 30.0, color: Colors.black),
               controller: m_questionTextController,
             )
           ],),
@@ -37,7 +40,7 @@ class PageMemory extends StatelessWidget
           const Spacer(),
 
           Column(children: [
-            const Text("Correct Answer", style: TextStyle(fontSize: 10), textAlign: TextAlign.left),
+            const Text("Correct Answer", style: TextStyle(fontSize: 30, color: Colors.black), textAlign: TextAlign.left),
             TextField(
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
@@ -54,7 +57,7 @@ class PageMemory extends StatelessWidget
             return Column(children: <Widget>
               [
                 Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-                  const Text("Multi Choice: ", style: TextStyle(fontSize: 10), textAlign: TextAlign.center),
+                  const Text("Multi Choice: ", style: TextStyle(fontSize: 30, color: Colors.black), textAlign: TextAlign.center),
                   Checkbox(value: m_memory.m_bMultiChoice, onChanged: (bool? value){if(value != null){ setState(() {
                     m_memory.m_bMultiChoice = value;
                   }); }})
@@ -67,13 +70,30 @@ class PageMemory extends StatelessWidget
                         border: OutlineInputBorder(),
                         hintText: 'Enter wrong answers.',
                       ),
+                      style: const TextStyle(fontSize: 30, color: Colors.black),
                       controller: m_wrongAnswersTextController
                   )
-                )
+                ),
+
+                const Spacer(),
+
+                const Text("Reminder frequency", style: TextStyle(fontSize: 30), textAlign: TextAlign.left),
+
+              DropdownButton(items: const [
+                  DropdownMenuItem(child: Text("Never", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center), value: "Never"),
+                  DropdownMenuItem(child: Text("Rare", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center), value: "Rare"),
+                  DropdownMenuItem(child: Text("Occasional", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center), value: "Occasional"),
+                  DropdownMenuItem(child: Text("Frequently", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center), value: "Frequently")
+                )],
+                value: m_notificationsFrequency,
+                onChanged: (String? selectedValue) {
+                  setState((){if(selectedValue != null){ m_notificationsFrequency = selectedValue;}});
+                }
+              ),
               ]);
           }),
 
-          const Spacer(),
+          const Spacer()
 
           Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
 
@@ -86,7 +106,7 @@ class PageMemory extends StatelessWidget
               }
 
               Navigator.push(context, MaterialPageRoute(builder: (context) => PageHome()));
-            }, child: const Text("Delete")),
+            }, child: const Text("Delete", style: TextStyle(fontSize: 30, color: Colors.black))),
 
             TextButton(onPressed: () async {
 
@@ -100,7 +120,7 @@ class PageMemory extends StatelessWidget
               }
 
               Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome()));
-            }, child: const Text("Add"))
+            }, child: const Text("Add", style: TextStyle(fontSize: 30, color: Colors.black)))
           ]),
 
           const Spacer()
