@@ -1,4 +1,5 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:rxdart/subjects.dart';
 
 //Timezone imports
 import 'package:timezone/data/latest_all.dart' as timeZone;
@@ -19,6 +20,7 @@ class Notifications
   static final FlutterLocalNotificationsPlugin _m_flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   static String? _m_selectedNotificationPayload;
+  static BehaviorSubject<String?> m_selectedNotificationSubject = BehaviorSubject<String?>();
 
   Future<void> init() async
   {
@@ -39,6 +41,7 @@ class Notifications
     await _m_flutterLocalNotificationsPlugin.initialize(const InitializationSettings(android: AndroidInitializationSettings('@mipmap/ic_launcher')),
         onSelectNotification: (String? payload) async {
           _m_selectedNotificationPayload = payload;
+          m_selectedNotificationSubject.add(payload);
         });
   }
 

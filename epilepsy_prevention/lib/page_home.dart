@@ -1,7 +1,9 @@
+import 'package:epilepsy_prevention/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/page_memory.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_memories.dart';
+import 'package:epilepsy_prevention/page_test.dart';
 
 class PageHome extends StatefulWidget
 {
@@ -17,6 +19,17 @@ class PageHomeState extends State<PageHome>
 
   @override
   Widget build(BuildContext context) {
+
+    Notifications.m_selectedNotificationSubject.stream.listen((String? memoryKey) async {
+      if(memoryKey != null) {
+        var database = Database();
+        Memory? mem = database.getMemoryWithId(int.parse(memoryKey));
+        if (mem != null) {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(mem)));
+        }
+      }
+    });
+
     return Scaffold(
       body: Column(children: [
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
