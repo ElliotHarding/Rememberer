@@ -13,7 +13,7 @@ class PageMemories extends StatelessWidget
         [
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
           TextButton(onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory("", "", false, ""))));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory())));
           }, child: const Text("Add new entry"))
         ]
         ),

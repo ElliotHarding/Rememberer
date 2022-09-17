@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:hive/hive.dart';
 
 @HiveType(typeId: 0)
 class Memory extends HiveObject
 {
-  Memory(String question, String answer, bool multiChoice, String falseAnswers)
+  Memory({String question = "", String answer = "", bool multiChoice = false, String falseAnswers = ""})
   {
     m_question = question;
     m_answer = answer;
@@ -34,11 +34,11 @@ class MemoryAdapter extends TypeAdapter<Memory>
   Memory read(BinaryReader reader) {
     try
     {
-      return Memory(reader.read(), reader.read(), reader.readBool(), reader.read());
+      return Memory(question: reader.read(), answer: reader.read(), multiChoice: reader.readBool(), falseAnswers: reader.read());
     }
     catch (e)
     {
-      return Memory("", "", false, "");
+      return Memory();
     }
   }
 
@@ -65,6 +65,10 @@ class Database
 
   Future<void> init()
   async {
+    final appDocumentDirectory = await getApplicationDocumentsDirectory();
+    Hive.init(appDocumentDirectory.path);
+    Hive.registerAdapter(MemoryAdapter());
+
     m_memoryBox = await Hive.openBox("Memories.db");
   }
 

@@ -9,16 +9,16 @@ import 'package:epilepsy_prevention/memory.dart';
 
 class Notifications
 {
-  static final Notifications m_notifications = Notifications._internal();
+  static final Notifications _m_notifications = Notifications._internal();
   factory Notifications()
   {
-    return m_notifications;
+    return _m_notifications;
   }
   Notifications._internal();
 
   static FlutterLocalNotificationsPlugin _m_flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-  static String? m_selectedNotificationPayload;
+  static String? _m_selectedNotificationPayload;
 
   void init() async
   {
@@ -30,14 +30,19 @@ class Notifications
     //App launched by notification?
     final NotificationAppLaunchDetails? notificationAppLaunchDetails = await _m_flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
     if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
-      m_selectedNotificationPayload = notificationAppLaunchDetails!.payload;
+      _m_selectedNotificationPayload = notificationAppLaunchDetails!.payload;
     }
 
     //Initialize local notifications plugin
-    await m_flutterLocalNotificationsPlugin.initialize(const InitializationSettings(android: AndroidInitializationSettings('@mipmap/ic_launcher')),
+    await _m_flutterLocalNotificationsPlugin.initialize(const InitializationSettings(android: AndroidInitializationSettings('@mipmap/ic_launcher')),
         onSelectNotification: (String? payload) async {
-          m_selectedNotificationPayload = payload;
+          _m_selectedNotificationPayload = payload;
         });
+  }
+
+  String? getNotificationPayload()
+  {
+    return _m_selectedNotificationPayload;
   }
 
   Future<void> setupTimezoneStuff() async
