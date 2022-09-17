@@ -19,17 +19,11 @@ class PageTest extends StatelessWidget
 
         const Spacer(),
 
-        FittedBox(
-            fit: BoxFit.fitWidth,
-            child: Text(m_memory.m_question, textAlign: TextAlign.center)
-        ),
+        Text(m_memory.m_question, style: const TextStyle(fontSize: 35, color: Colors.black), textAlign: TextAlign.center),
 
         const Spacer(),
 
-        const FittedBox(
-            fit: BoxFit.fitWidth,
-            child: Text("Answer", textAlign: TextAlign.center)
-        ),
+        const Text("Answer", style: const TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center),
 
         Visibility(visible: !m_memory.m_bMultiChoice,
             child:  Column(children: <Widget>
