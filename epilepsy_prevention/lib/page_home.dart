@@ -28,6 +28,7 @@ class PageHomeState extends State<PageHome>
         {
           Memory? mem = database.getMemoryWithId(keyValue);
           if (mem != null) {
+            Notifications.m_selectedNotificationSubject.add(null);
             Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(mem)));
           }
         }
