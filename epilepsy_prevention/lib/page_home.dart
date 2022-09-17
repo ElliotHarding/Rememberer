@@ -23,9 +23,13 @@ class PageHomeState extends State<PageHome>
     Notifications.m_selectedNotificationSubject.stream.listen((String? memoryKey) async {
       if(memoryKey != null) {
         var database = Database();
-        Memory? mem = database.getMemoryWithId(int.parse(memoryKey));
-        if (mem != null) {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(mem)));
+        int? keyValue = int.tryParse(memoryKey);
+        if(keyValue != null)
+        {
+          Memory? mem = database.getMemoryWithId(keyValue);
+          if (mem != null) {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(mem)));
+          }
         }
       }
     });
