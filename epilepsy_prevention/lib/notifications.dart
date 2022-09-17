@@ -16,11 +16,11 @@ class Notifications
   }
   Notifications._internal();
 
-  static FlutterLocalNotificationsPlugin _m_flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  static final FlutterLocalNotificationsPlugin _m_flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   static String? _m_selectedNotificationPayload;
 
-  void init() async
+  Future<void> init() async
   {
     setupTimezoneStuff();
 
