@@ -65,6 +65,7 @@ class Database
 {
   static final Database m_database = Database._internal();
   static Box<Memory>? m_memoryBox;
+  static Box? m_notificationStatsBox;
 
   factory Database()
   {
@@ -80,6 +81,21 @@ class Database
     Hive.registerAdapter(MemoryAdapter());
 
     m_memoryBox = await Hive.openBox("Memories.db");
+    m_notificationStatsBox = Hive.box("notificationStats.db");
+  }
+
+  int getAndIncrementChannelNumber()
+  {
+    int result = int.parse(m_notificationStatsBox?.get("channel number"));
+    result++;
+
+    if(result >= 922337203685477580)
+    {
+      result = 0;
+    }
+
+    m_notificationStatsBox?.put("channel number", result.toString());
+    return result;
   }
 
   Box<Memory>? getMemoryBox()

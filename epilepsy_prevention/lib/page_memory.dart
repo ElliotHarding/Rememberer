@@ -150,7 +150,7 @@ class PageMemory extends StatelessWidget
                       int notifyTime = 60;
                       notifyTimes.add(notifyTime);
                       await notifications.scheduleNotification(
-                          m_memory, notifyTime, 0,
+                          m_memory, notifyTime,
                           m_memory.key.toString() + "-" +
                               notifyTime.toString());
                     }
@@ -158,17 +158,14 @@ class PageMemory extends StatelessWidget
                       int notifyTime = 30;
                       notifyTimes.add(notifyTime);
                       await notifications.scheduleNotification(
-                          m_memory, notifyTime, 1,
+                          m_memory, notifyTime,
                           m_memory.key.toString() + "-" +
                               notifyTime.toString());
                     }
                     else if (m_memory.m_testFrequecy == "Frequently") {
                       int notifyTime = 1;
                       notifyTimes.add(notifyTime);
-                      await notifications.scheduleNotification(
-                          m_memory, notifyTime, 2,
-                          m_memory.key.toString() + "-" +
-                              notifyTime.toString());
+                      await notifications.scheduleNotification(m_memory, notifyTime, m_memory.key.toString() + "-" + notifyTime.toString());
                     }
 
                     m_memory.m_notifyTimes = notifyTimes;

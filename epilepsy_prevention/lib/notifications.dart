@@ -71,10 +71,10 @@ class Notifications
     return await androidImplementation?.requestPermission();
   }
 
-  Future<void> scheduleNotification(Memory memory, int secondsFromNow, int id, String channelId) async
+  Future<void> scheduleNotification(Memory memory, int secondsFromNow, String channelId) async
   {
     await _m_flutterLocalNotificationsPlugin.zonedSchedule(
-        id,
+        Database().getAndIncrementChannelNumber(),
         'Time to remember!',
         memory.m_question,
         timeZone.TZDateTime.now(timeZone.local).add(const Duration(seconds: 1) * secondsFromNow),
