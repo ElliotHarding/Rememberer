@@ -74,21 +74,23 @@ class Notifications
     return await androidImplementation?.requestPermission();
   }
 
-  Future<void> scheduleNotifications(int key, String question, List<int> triggerTimesSeconds) async
+  Future<void> scheduleNotifications(int key, String question, List<int> triggerTimesMs) async
   {
-    for (int notifyTime in triggerTimesSeconds)
+    for (int notifyTime in triggerTimesMs)
     {
        await scheduleNotification(key, question, notifyTime, key.toString() + "-" + notifyTime.toString());
     }
   }
 
-  Future<void> scheduleNotification(int key, String question, int secondsFromNow, String channelId) async
+  Future<void> scheduleNotification(int key, String question, int triggerTimeMs, String channelId) async
   {
+    var timeSeconds = triggerTimeMs - DateTime.now().millisecondsSinceEpoch;
+
     await _m_flutterLocalNotificationsPlugin.zonedSchedule(
         Database().getAndIncrementChannelNumber(),
         'Time to remember!',
         question,
-        timeZone.TZDateTime.now(timeZone.local).add(const Duration(seconds: 1) * secondsFromNow),
+        timeZone.TZDateTime.now(timeZone.local).add(const Duration(seconds: 1) * timeSeconds),
         NotificationDetails(
             android: AndroidNotificationDetails(
                 channelId, 'Memory notification channel',
