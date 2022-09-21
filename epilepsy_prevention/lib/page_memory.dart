@@ -144,7 +144,7 @@ class PageMemory extends StatelessWidget
                   box.delete(m_memory.key);
                 }
 
-                Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories()));
+                Navigator.of(context).pop();
               },
                   child: const Text("Delete",
                       style: TextStyle(fontSize: 30, color: Colors.black))),
@@ -197,7 +197,7 @@ class PageMemory extends StatelessWidget
                   await Notifications().scheduleNotifications(key, m_memory.m_question, m_memory.m_notifyTimes);
                 }
 
-                Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories()));
+                Navigator.of(context).pop();
               },
                   child: const Text("Save", style: TextStyle(fontSize: 30, color: Colors.black)))
             ]),
