@@ -42,7 +42,7 @@ class PageHomeState extends State<PageHome>
               Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory())));
             }, child: const Text("New Memory", style: const TextStyle(fontSize: 30.0, color: Colors.blue)))),
             SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton(onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories(m_context: context)));
             }, child: const Text("View Memories", style: const TextStyle(fontSize: 30.0, color: Colors.blue)))),
             SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => const PageUpcommingNotifications()));

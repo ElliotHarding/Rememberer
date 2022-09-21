@@ -1,3 +1,4 @@
+import 'package:epilepsy_prevention/page_home.dart';
 import 'package:epilepsy_prevention/page_test.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
@@ -6,7 +7,9 @@ import 'package:epilepsy_prevention/notifications.dart';
 
 class PageMemories extends StatefulWidget
 {
-  const PageMemories({Key? key}) : super(key: key);
+  PageMemories({Key? key, required this.m_context}) : super(key: key);
+
+  BuildContext m_context;
 
   @override
   State<PageMemories> createState() => PageMemoriesState();
@@ -33,9 +36,10 @@ class PageMemoriesState extends State<PageMemories>
       }
     });
 
+    widget.m_context = context;
     m_memoryWidgets = getMemoryWidgets(context);
 
-    return Scaffold(
+    return WillPopScope(onWillPop: onBackPressed, child: Scaffold(
       body: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>
         [
         const Spacer(),
@@ -60,7 +64,7 @@ class PageMemoriesState extends State<PageMemories>
         const Spacer()
         ]
       )
-    );
+    ));
    }
 
   List<Widget> getMemoryWidgets(BuildContext context)
@@ -89,5 +93,11 @@ class PageMemoriesState extends State<PageMemories>
       }
     }
     return widgets;
+  }
+
+  Future<bool> onBackPressed() async
+  {
+    Navigator.push(widget.m_context, MaterialPageRoute(builder: (context) => const PageHome()));
+    return true;
   }
 }

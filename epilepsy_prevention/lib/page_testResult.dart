@@ -60,7 +60,7 @@ class PageTestResult extends StatelessWidget
 
   Future<bool> onBackPressed() async
   {
-    Navigator.push(m_context, MaterialPageRoute(builder: (context) => const PageMemories()));
+    Navigator.push(m_context, MaterialPageRoute(builder: (context) => PageMemories(m_context: m_context)));
     return true;
   }
 }

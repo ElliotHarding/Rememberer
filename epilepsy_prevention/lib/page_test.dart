@@ -70,7 +70,7 @@ class PageTest extends StatelessWidget
             children: <Widget>[
 
               TextButton(onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories(m_context: context,)));
               },
                   child: const Text("Memories", style: TextStyle(fontSize: 30, color: Colors.black))),
 
