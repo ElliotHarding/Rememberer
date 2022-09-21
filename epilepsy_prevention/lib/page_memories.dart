@@ -59,7 +59,7 @@ class PageMemories extends StatelessWidget
     {
       for(Memory memory in box.values)
       {
-        widgets.add(Row(
+        widgets.add(Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             TextButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(memory)));
