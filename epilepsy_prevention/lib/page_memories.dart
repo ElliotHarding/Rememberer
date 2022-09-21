@@ -4,9 +4,17 @@ import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_memory.dart';
 import 'package:epilepsy_prevention/notifications.dart';
 
-class PageMemories extends StatelessWidget
+class PageMemories extends StatefulWidget
 {
-  PageMemories({super.key});
+  const PageMemories({Key? key}) : super(key: key);
+
+  @override
+  State<PageMemories> createState() => PageMemoriesState();
+}
+
+class PageMemoriesState extends State<PageMemories>
+{
+  List<Widget> m_memoryWidgets = [];
 
   Widget build(BuildContext context)
   {
@@ -25,6 +33,8 @@ class PageMemories extends StatelessWidget
       }
     });
 
+    m_memoryWidgets = getMemoryWidgets(context);
+
     return Scaffold(
       body: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>
         [
@@ -42,7 +52,7 @@ class PageMemories extends StatelessWidget
 
         const Spacer(),
 
-        ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: getMemoryWidgets(context)),
+        ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: m_memoryWidgets),
 
         const Spacer()
         ]
@@ -61,12 +71,15 @@ class PageMemories extends StatelessWidget
       {
         widgets.add(Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            TextButton(onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(memory)));
+            TextButton(onPressed: () async {
+              await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(memory)));
+              setState(() {
+                m_memoryWidgets = getMemoryWidgets(context);
+              });
             }, child: Text(memory.m_question != "" ? memory.m_question : "Error")),
 
-            TextButton(onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(memory)));
+            TextButton(onPressed: () async {
+               Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(memory)));
             }, child: const Text("Test"))
           ],
         ));

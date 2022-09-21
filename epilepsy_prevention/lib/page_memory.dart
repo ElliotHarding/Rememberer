@@ -190,8 +190,7 @@ class PageMemory extends StatelessWidget
                   }
                   else
                   {
-                    box.put(m_memory.key, m_memory);
-                    key = m_memory.key;
+                    key = db.updateMemory(m_memory);
                   }
 
                   await Notifications().scheduleNotifications(key, m_memory.m_question, m_memory.m_notifyTimes);

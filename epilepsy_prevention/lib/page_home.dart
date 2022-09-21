@@ -36,29 +36,22 @@ class PageHomeState extends State<PageHome>
     });
 
     return Scaffold(
-      body: Column(children: [
-
-        const Spacer(),
-
-        SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child: ListView(
-            children: <Widget>[
-              SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton( onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory())));
-              }, child: const Text("New Memory", style: const TextStyle(fontSize: 30.0, color: Colors.blue)))),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton(onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories()));
-              }, child: const Text("View Memories", style: const TextStyle(fontSize: 30.0, color: Colors.blue)))),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton(onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const PageUpcommingNotifications()));
-              }, child: const Text("Notifications", style: const TextStyle(fontSize: 30.0, color: Colors.blue)))),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton(onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const PageSettings()));
-              }, child: const Text("Settings", style: const TextStyle(fontSize: 30.0, color: Colors.blue))))
-            ])
-        ),
-
-        const Spacer()
-      ],)
+      body:  SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child: ListView(
+          children: <Widget>[
+            SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton( onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory())));
+            }, child: const Text("New Memory", style: const TextStyle(fontSize: 30.0, color: Colors.blue)))),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories()));
+            }, child: const Text("View Memories", style: const TextStyle(fontSize: 30.0, color: Colors.blue)))),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const PageUpcommingNotifications()));
+            }, child: const Text("Notifications", style: const TextStyle(fontSize: 30.0, color: Colors.blue)))),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const PageSettings()));
+            }, child: const Text("Settings", style: const TextStyle(fontSize: 30.0, color: Colors.blue))))
+          ])
+      )
     );
   }
 }

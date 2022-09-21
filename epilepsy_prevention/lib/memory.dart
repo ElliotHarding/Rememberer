@@ -113,12 +113,13 @@ class Database
     return m_memoryBox;
   }
 
-  void updateMemory(Memory memory)
+  int updateMemory(Memory memory)
   {
     if(m_memoryBox != null)
     {
         m_memoryBox?.put(memory.key, memory);
     }
+    return memory.key;
   }
 
   Memory? getMemoryWithId(dynamic key)
