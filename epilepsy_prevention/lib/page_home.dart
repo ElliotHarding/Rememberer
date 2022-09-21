@@ -1,5 +1,6 @@
 import 'package:epilepsy_prevention/notifications.dart';
 import 'package:epilepsy_prevention/page_settings.dart';
+import 'package:epilepsy_prevention/page_upcommingNotifications.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/page_memory.dart';
 import 'package:epilepsy_prevention/memory.dart';
@@ -49,7 +50,10 @@ class PageHomeState extends State<PageHome>
               }, child: const Text("View Memories")),
               TextButton(onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const PageSettings()));
-              }, child: const Text("Settings"))
+              }, child: const Text("Settings")),
+              TextButton(onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const PageUpcommingNotifications()));
+              }, child: const Text("Notifications"))
             ])
         ),
 
