@@ -37,6 +37,9 @@ class PageHomeState extends State<PageHome>
 
     return Scaffold(
       body: Column(children: [
+
+        const Spacer(),
+
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
           const Text( "Enable: ", style: TextStyle(fontSize: 10), textAlign: TextAlign.center),
           Checkbox(value: m_bAppEnabled, onChanged: (bool? value){setState((){
@@ -70,19 +73,18 @@ class PageHomeState extends State<PageHome>
 
         const Spacer(),
 
-        Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-          TextButton(onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory())));
-          }, child: const Text("Add new entry"))
-        ]
+        SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * .5, child: GridView.count(crossAxisCount: 2,
+            children: <Widget>[
+              TextButton(onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory())));
+              }, child: const Text("New Memory")),
+              TextButton(onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories()));
+              }, child: const Text("View Memories"))
+            ])
         ),
 
-        Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-          TextButton(onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories()));
-          }, child: const Text("View Memories"))
-        ]
-        ),
+        const Spacer()
       ],)
     );
   }
