@@ -14,6 +14,8 @@ class PageUpcommingNotifications extends StatefulWidget
 
 class PageUpcommingNotificationsState extends State<PageUpcommingNotifications>
 {
+  List<Widget> m_notificationsWidget = [];
+
   @override
   Widget build(BuildContext context) {
 
@@ -32,13 +34,15 @@ class PageUpcommingNotificationsState extends State<PageUpcommingNotifications>
       }
     });
 
+    m_notificationsWidget = getNotificationWidgets(context);
+
     return Scaffold(
         body: Column(children: [
 
           const Spacer(),
 
           SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child: ListView(
-              children: getNotificationWidgets(context))
+              children: m_notificationsWidget)
           ),
 
           const Spacer()
@@ -48,8 +52,6 @@ class PageUpcommingNotificationsState extends State<PageUpcommingNotifications>
 
   List<Widget> getNotificationWidgets(BuildContext context)
   {
-
-
     List<MemoryNotification> notifications = <MemoryNotification>[];
 
     var box = Database().getMemoryBox();
@@ -81,13 +83,21 @@ class PageUpcommingNotificationsState extends State<PageUpcommingNotifications>
           }, child: Text(memNotification.m_notificationTime.toString(), style: const TextStyle(fontSize: 20.0, color: Colors.blue)))),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.2, height: MediaQuery.of(context).size.height * 0.1, child: TextButton(onPressed: () {
-
+            deleteNotification(memNotification);
+            setState(() {
+              m_notificationsWidget = getNotificationWidgets(context);
+            });
           }, child: const Text("X")))
         ],
       ));
     }
 
     return widgets;
+  }
+
+  void deleteNotification(MemoryNotification memoryNotification) async
+  {
+    await Notifications().removeNotification(memoryNotification.m_memory.key.toString() + "-" + memoryNotification.m_notificationTime.toString());
   }
 }
 
