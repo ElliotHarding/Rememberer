@@ -92,7 +92,7 @@ class PageMemory extends StatelessWidget
 
         SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Reminder frequency", style: TextStyle(fontSize: 30), textAlign: TextAlign.left)),
 
-        DropdownButton(
+        SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: DropdownButton(
           items: const [
             DropdownMenuItem(
                 value: "Never", child: Text("Never", style: TextStyle(
@@ -120,7 +120,7 @@ class PageMemory extends StatelessWidget
               }
             });
           }
-        ),
+        )),
 
         const Spacer(),
 
