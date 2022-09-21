@@ -54,7 +54,7 @@ class PageTest extends StatelessWidget
 
         Visibility(visible: !m_memory.m_bMultiChoice, child:
           TextButton(onPressed: () async {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, m_answerTextController.text == m_memory.m_answer)));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, m_answerTextController.text == m_memory.m_answer, context)));
             }, child: const Text("Guess", style: TextStyle(fontSize: 30, color: Colors.black), textAlign: TextAlign.center)
           )
         ),
@@ -100,7 +100,7 @@ class PageTest extends StatelessWidget
       widgets.add(Row(
         children: [
           TextButton(onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, option == m_memory.m_answer)));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, option == m_memory.m_answer, context)));
           }, child: Text(option))
         ],
       ));

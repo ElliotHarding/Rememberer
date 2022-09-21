@@ -1,3 +1,4 @@
+import 'package:epilepsy_prevention/page_memories.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/page_home.dart';
 import 'package:epilepsy_prevention/memory.dart';
@@ -6,10 +7,12 @@ import 'package:epilepsy_prevention/notifications.dart';
 
 class PageTestResult extends StatelessWidget
 {
-  PageTestResult(this.m_memory, this.m_bSuccess);
+  PageTestResult(this.m_memory, this.m_bSuccess, this.m_context);
 
   Memory m_memory;
   bool m_bSuccess;
+
+  BuildContext m_context;
 
   Widget build(BuildContext context)
   {
@@ -28,7 +31,9 @@ class PageTestResult extends StatelessWidget
       }
     });
 
-    return Scaffold(
+    m_context = context;
+
+    return WillPopScope(onWillPop: onBackPressed, child: Scaffold(
       body: Column(children: <Widget>[
 
         const Spacer(),
@@ -46,10 +51,16 @@ class PageTestResult extends StatelessWidget
         const Spacer(),
 
         TextButton(onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => PageHome()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome()));
         }, child: const Text("Home")),
       ]
       )
-    );
+    ));
+  }
+
+  Future<bool> onBackPressed() async
+  {
+    Navigator.push(m_context, MaterialPageRoute(builder: (context) => const PageMemories()));
+    return true;
   }
 }
