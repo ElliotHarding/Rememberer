@@ -41,8 +41,11 @@ class PageMemoriesState extends State<PageMemories>
         const Spacer(),
 
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-          TextButton(onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory())));
+          TextButton(onPressed: () async {
+            await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory())));
+            setState(() {
+              m_memoryWidgets = getMemoryWidgets(context);
+            });
           }, child: const FittedBox(
               fit: BoxFit.fitWidth,
               child: Text("Add new entry")
@@ -52,7 +55,7 @@ class PageMemoriesState extends State<PageMemories>
 
         const Spacer(),
 
-        ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: m_memoryWidgets),
+        SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.8, child: ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: m_memoryWidgets)),
 
         const Spacer()
         ]
