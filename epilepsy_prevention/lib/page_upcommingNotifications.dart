@@ -98,6 +98,9 @@ class PageUpcommingNotificationsState extends State<PageUpcommingNotifications>
   void deleteNotification(MemoryNotification memoryNotification) async
   {
     await Notifications().removeNotification(memoryNotification.m_memory.key.toString() + "-" + memoryNotification.m_notificationTime.toString());
+
+    memoryNotification.m_memory.m_notifyTimes.remove(memoryNotification.m_notificationTime);
+    Database().updateMemory(memoryNotification.m_memory);
   }
 }
 

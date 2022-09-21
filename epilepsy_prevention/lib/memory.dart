@@ -113,6 +113,14 @@ class Database
     return m_memoryBox;
   }
 
+  void updateMemory(Memory memory)
+  {
+    if(m_memoryBox != null)
+    {
+        m_memoryBox?.put(memory.key, memory);
+    }
+  }
+
   Memory? getMemoryWithId(dynamic key)
   {
     var box = Database().getMemoryBox();
