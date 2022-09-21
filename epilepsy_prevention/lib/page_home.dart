@@ -45,28 +45,7 @@ class PageHomeState extends State<PageHome>
           Checkbox(value: m_bAppEnabled, onChanged: (bool? value){setState((){
             m_bAppEnabled = value;
 
-            var box = Database().getMemoryBox();
-            if(box != null)
-            {
-              if(m_bAppEnabled == true)
-              {
-                Database().setNotificationsEnabledSetting(true);
-
-                for(Memory memory in box.values)
-                {
-                  Notifications().scheduleNotifications(memory.key, memory.m_question, memory.m_notifyTimes);
-                }
-              }
-              else
-              {
-                Database().setNotificationsEnabledSetting(false);
-
-                for(Memory memory in box.values)
-                {
-                  Notifications().removeNotifications(memory.key, memory.m_notifyTimes);
-                }
-              }
-            }
+            setEnableNotifications();
           });})
           ]
         ),
@@ -87,5 +66,31 @@ class PageHomeState extends State<PageHome>
         const Spacer()
       ],)
     );
+  }
+
+  void setEnableNotifications()
+  {
+    var box = Database().getMemoryBox();
+    if(box != null)
+    {
+      if(m_bAppEnabled == true)
+      {
+        Database().setNotificationsEnabledSetting(true);
+
+        for(Memory memory in box.values)
+        {
+          Notifications().scheduleNotifications(memory.key, memory.m_question, memory.m_notifyTimes);
+        }
+      }
+      else
+      {
+        Database().setNotificationsEnabledSetting(false);
+
+        for(Memory memory in box.values)
+        {
+          Notifications().removeNotifications(memory.key, memory.m_notifyTimes);
+        }
+      }
+    }
   }
 }
