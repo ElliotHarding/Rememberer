@@ -1,4 +1,5 @@
 import 'package:epilepsy_prevention/notifications.dart';
+import 'package:epilepsy_prevention/page_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/page_memory.dart';
 import 'package:epilepsy_prevention/memory.dart';
@@ -15,8 +16,6 @@ class PageHome extends StatefulWidget
 
 class PageHomeState extends State<PageHome>
 {
-  bool? m_bAppEnabled = Database().getNotificationsEnabledSetting();
-
   @override
   Widget build(BuildContext context) {
 
@@ -40,18 +39,6 @@ class PageHomeState extends State<PageHome>
 
         const Spacer(),
 
-        Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-          const Text( "Enable: ", style: TextStyle(fontSize: 10), textAlign: TextAlign.center),
-          Checkbox(value: m_bAppEnabled, onChanged: (bool? value){setState((){
-            m_bAppEnabled = value;
-
-            setEnableNotifications();
-          });})
-          ]
-        ),
-
-        const Spacer(),
-
         SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * .5, child: GridView.count(crossAxisCount: 2,
             children: <Widget>[
               TextButton(onPressed: (){
@@ -59,38 +46,15 @@ class PageHomeState extends State<PageHome>
               }, child: const Text("New Memory")),
               TextButton(onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories()));
-              }, child: const Text("View Memories"))
+              }, child: const Text("View Memories")),
+              TextButton(onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const PageSettings()));
+              }, child: const Text("Settings"))
             ])
         ),
 
         const Spacer()
       ],)
     );
-  }
-
-  void setEnableNotifications()
-  {
-    var box = Database().getMemoryBox();
-    if(box != null)
-    {
-      if(m_bAppEnabled == true)
-      {
-        Database().setNotificationsEnabledSetting(true);
-
-        for(Memory memory in box.values)
-        {
-          Notifications().scheduleNotifications(memory.key, memory.m_question, memory.m_notifyTimes);
-        }
-      }
-      else
-      {
-        Database().setNotificationsEnabledSetting(false);
-
-        for(Memory memory in box.values)
-        {
-          Notifications().removeNotifications(memory.key, memory.m_notifyTimes);
-        }
-      }
-    }
   }
 }
