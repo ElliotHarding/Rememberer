@@ -42,7 +42,7 @@ class MemoryAdapter extends TypeAdapter<Memory>
   Memory read(BinaryReader reader) {
     try
     {
-      return Memory(question: reader.read(), answer: reader.read(), multiChoice: reader.readBool(), falseAnswers: reader.read(), testFrequency: reader.read(), notifyTimes: reader.readIntList());
+      return Memory(question: reader.readString(), answer: reader.readString(), multiChoice: reader.readBool(), falseAnswers: reader.readString(), testFrequency: reader.readString(), notifyTimes: reader.readIntList());
     }
     catch (e)
     {
@@ -52,12 +52,12 @@ class MemoryAdapter extends TypeAdapter<Memory>
 
   @override
   void write(BinaryWriter writer, Memory obj) {
-    writer.write(obj.m_question);
-    writer.write(obj.m_answer);
+    writer.writeString(obj.m_question);
+    writer.writeString(obj.m_answer);
     writer.writeBool(obj.m_bMultiChoice);
-    writer.write(obj.m_falseAnswers);
-    writer.write(obj.m_testFrequecy);
-    writer.write(obj.m_notifyTimes);
+    writer.writeString(obj.m_falseAnswers);
+    writer.writeString(obj.m_testFrequecy);
+    writer.writeIntList(obj.m_notifyTimes);
   }
 }
 
