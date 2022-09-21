@@ -80,7 +80,7 @@ class PageUpcommingNotificationsState extends State<PageUpcommingNotifications>
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.4, height: MediaQuery.of(context).size.height * 0.1, child: TextButton(onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(memNotification.m_memory)));
-          }, child: Text(memNotification.m_notificationTime.toString(), style: const TextStyle(fontSize: 20.0, color: Colors.blue)))),
+          }, child: Text(epochMsToDate(memNotification.m_notificationTime), style: const TextStyle(fontSize: 20.0, color: Colors.blue)))),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.2, height: MediaQuery.of(context).size.height * 0.1, child: TextButton(onPressed: () {
             deleteNotification(memNotification);
@@ -101,6 +101,12 @@ class PageUpcommingNotificationsState extends State<PageUpcommingNotifications>
 
     memoryNotification.m_memory.m_notifyTimes.remove(memoryNotification.m_notificationTime);
     Database().updateMemory(memoryNotification.m_memory);
+  }
+
+  String epochMsToDate(int epochMs)
+  {
+    var date = DateTime.fromMillisecondsSinceEpoch(epochMs);
+    return date.toString();
   }
 }
 
