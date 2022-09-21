@@ -42,7 +42,7 @@ class PageMemory extends StatelessWidget
 
         const Spacer(),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Text("Question", style: TextStyle(fontSize: 30), textAlign: TextAlign.left)),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Question", style: TextStyle(fontSize: 30), textAlign: TextAlign.left)),
 
         IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: TextField(maxLines: null,
           decoration: const InputDecoration(
@@ -55,7 +55,7 @@ class PageMemory extends StatelessWidget
 
         const Spacer(),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Text("Correct Answer", style: TextStyle(fontSize: 30), textAlign: TextAlign.left)),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Correct Answer", style: TextStyle(fontSize: 30), textAlign: TextAlign.left)),
 
         IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: TextField(maxLines: null,
           decoration: const InputDecoration(
@@ -90,7 +90,7 @@ class PageMemory extends StatelessWidget
 
         const Spacer(),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Text("Reminder frequency", style: TextStyle(fontSize: 30), textAlign: TextAlign.left)),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Reminder frequency", style: TextStyle(fontSize: 30), textAlign: TextAlign.left)),
 
         DropdownButton(
           items: const [
