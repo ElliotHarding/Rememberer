@@ -71,15 +71,18 @@ class PageUpcommingNotificationsState extends State<PageUpcommingNotifications>
     {
       widgets.add(Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          TextButton(onPressed: (){
+
+          SizedBox(width: MediaQuery.of(context).size.width * 0.4, height: MediaQuery.of(context).size.height * 0.1, child: TextButton(onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(memNotification.m_memory)));
-          }, child: Text(memNotification.m_memory.m_question, style: const TextStyle(fontSize: 20.0, color: Colors.blue))),
+          }, child: Text(memNotification.m_memory.m_question, style: const TextStyle(fontSize: 20.0, color: Colors.blue)))),
 
-          Text(memNotification.m_notificationTime.toString(), style: const TextStyle(fontSize: 20.0, color: Colors.blue)),
+          SizedBox(width: MediaQuery.of(context).size.width * 0.4, height: MediaQuery.of(context).size.height * 0.1, child: TextButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(memNotification.m_memory)));
+          }, child: Text(memNotification.m_notificationTime.toString(), style: const TextStyle(fontSize: 20.0, color: Colors.blue)))),
 
-          TextButton(onPressed: () {
+          SizedBox(width: MediaQuery.of(context).size.width * 0.2, height: MediaQuery.of(context).size.height * 0.1, child: TextButton(onPressed: () {
 
-          }, child: const Text("X"))
+          }, child: const Text("X")))
         ],
       ));
     }
