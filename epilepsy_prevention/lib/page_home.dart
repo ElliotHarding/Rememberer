@@ -40,20 +40,20 @@ class PageHomeState extends State<PageHome>
 
         const Spacer(),
 
-        SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * .5, child: GridView.count(crossAxisCount: 2,
+        SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child: ListView(
             children: <Widget>[
-              TextButton(onPressed: (){
+              SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton( onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory())));
-              }, child: const Text("New Memory")),
-              TextButton(onPressed: (){
+              }, child: const Text("New Memory"))),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton(onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories()));
-              }, child: const Text("View Memories")),
-              TextButton(onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const PageSettings()));
-              }, child: const Text("Settings")),
-              TextButton(onPressed: (){
+              }, child: const Text("View Memories"))),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton(onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const PageUpcommingNotifications()));
-              }, child: const Text("Notifications"))
+              }, child: const Text("Notifications"))),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton(onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const PageSettings()));
+              }, child: const Text("Settings")))
             ])
         ),
 
