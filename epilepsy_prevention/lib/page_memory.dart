@@ -42,58 +42,55 @@ class PageMemory extends StatelessWidget
 
         const Spacer(),
 
-        const Text("Question", style: TextStyle(fontSize: 30),
-            textAlign: TextAlign.left),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Text("Question", style: TextStyle(fontSize: 30), textAlign: TextAlign.left)),
 
-        TextField(
+        IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: TextField(maxLines: null,
           decoration: const InputDecoration(
             border: OutlineInputBorder(),
             hintText: 'Enter a search question',
           ),
           style: const TextStyle(fontSize: 30.0, color: Colors.black),
           controller: m_questionTextController,
-        ),
+        ))),
 
         const Spacer(),
 
-        const Text("Correct Answer",
-            style: TextStyle(fontSize: 30, color: Colors.black),
-            textAlign: TextAlign.left),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Text("Correct Answer", style: TextStyle(fontSize: 30), textAlign: TextAlign.left)),
 
-        TextField(
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter a answer',
-            ),
-            controller: m_answerTextController
-        ),
-
-        const Spacer(),
-
-        const Text("Multi Choice: ", style: TextStyle(fontSize: 30, color: Colors.black), textAlign: TextAlign.center),
-
-        Checkbox(value: m_memory.m_bMultiChoice, onChanged: (bool? value) {
-          if (value != null) {
-            setState(() {
-              m_memory.m_bMultiChoice = value;
-            });
-          }
-        }),
+        IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: TextField(maxLines: null,
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            hintText: 'Enter a answer',
+          ),
+          style: const TextStyle(fontSize: 30.0, color: Colors.black),
+          controller: m_answerTextController,
+        ))),
 
         const Spacer(),
 
-        Visibility(visible: m_memory.m_bMultiChoice, child:
+        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Row(children: [
+          const Text("Multiple Choice: ", style: TextStyle(fontSize: 30), textAlign: TextAlign.left),
+          Checkbox(value: m_memory.m_bMultiChoice, onChanged: (bool? value) {
+            if (value != null) {
+              setState(() {
+                m_memory.m_bMultiChoice = value;
+              });
+            }
+          }),
+        ])),
+
+      IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Visibility(visible: m_memory.m_bMultiChoice, child:
         TextField(
             decoration: const InputDecoration(border: OutlineInputBorder(),
                 hintText: 'Enter wrong answers.'),
             style: const TextStyle(fontSize: 30, color: Colors.black),
             controller: m_wrongAnswersTextController
         )
-        ),
+      ))),
 
         const Spacer(),
 
-        const Text("Reminder frequency", style: TextStyle(fontSize: 30), textAlign: TextAlign.left),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Text("Reminder frequency", style: TextStyle(fontSize: 30), textAlign: TextAlign.left)),
 
         DropdownButton(
           items: const [
