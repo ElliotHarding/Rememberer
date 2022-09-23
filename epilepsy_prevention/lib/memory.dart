@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 @HiveType(typeId: 0)
 class Memory extends HiveObject
 {
-  Memory({String question = "", String answer = "", bool multiChoice = false, String falseAnswers = "", String testFrequency = "Never", List<int> notifyTimes = const []})
+  Memory({String question = "", String answer = "", bool multiChoice = false, List<String> falseAnswers = const [], String testFrequency = "Never", List<int> notifyTimes = const []})
   {
     m_question = question;
     m_answer = answer;
@@ -21,7 +21,7 @@ class Memory extends HiveObject
   String m_answer = "";
 
   @HiveField(2)
-  String m_falseAnswers = "";
+  List<String> m_falseAnswers = [];
 
   @HiveField(3)
   bool m_bMultiChoice = false;
@@ -39,10 +39,35 @@ class MemoryAdapter extends TypeAdapter<Memory>
   final typeId = 0;
 
   @override
-  Memory read(BinaryReader reader) {
+  Memory read(BinaryReader reader)
+  {
     try
     {
-      return Memory(question: reader.readString(), answer: reader.readString(), multiChoice: reader.readBool(), falseAnswers: reader.readString(), testFrequency: reader.readString(), notifyTimes: reader.readIntList());
+      String question = reader.readString();
+      if(question == "")
+      {
+          question = "Error";
+      }
+
+      String answer = reader.readString();
+      if(answer == "")
+      {
+          answer = "Error - Failed to load answer.";
+      }
+
+      bool multiChoice = reader.readBool();
+
+      List<String> falseAnswers = reader.readStringList();
+
+      String testFrequency = reader.readString();
+      if(testFrequency == "")
+      {
+          testFrequency = "Never";
+      }
+
+      List<int> notifyTimes = reader.readIntList();
+
+      return Memory(question: question, answer: answer, multiChoice: multiChoice, falseAnswers: falseAnswers, testFrequency: testFrequency, notifyTimes: notifyTimes);
     }
     catch (e)
     {
@@ -55,7 +80,7 @@ class MemoryAdapter extends TypeAdapter<Memory>
     writer.writeString(obj.m_question);
     writer.writeString(obj.m_answer);
     writer.writeBool(obj.m_bMultiChoice);
-    writer.writeString(obj.m_falseAnswers);
+    writer.writeStringList(obj.m_falseAnswers);
     writer.writeString(obj.m_testFrequecy);
     writer.writeIntList(obj.m_notifyTimes);
   }

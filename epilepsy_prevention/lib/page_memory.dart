@@ -35,7 +35,11 @@ class PageMemory extends StatelessWidget
 
     m_questionTextController.text = m_memory.m_question;
     m_answerTextController.text = m_memory.m_answer;
-    m_wrongAnswersTextController.text = m_memory.m_falseAnswers;
+
+    for(String falseAnswer in m_memory.m_falseAnswers)
+    {
+      m_wrongAnswersTextController.text += falseAnswer + ",";
+    }
 
     return Scaffold(body: StatefulBuilder(builder: (BuildContext context, StateSetter setState){
       return Column(children: <Widget>[
@@ -152,7 +156,7 @@ class PageMemory extends StatelessWidget
                 if (box != null) {
                   m_memory.m_question = m_questionTextController.text;
                   m_memory.m_answer = m_answerTextController.text;
-                  m_memory.m_falseAnswers = m_wrongAnswersTextController.text;
+                  m_memory.m_falseAnswers = m_wrongAnswersTextController.text.split(",");
 
                   if (m_bChangeNotifyTimes) {
 

@@ -78,16 +78,16 @@ class PageMemoriesState extends State<PageMemories>
       {
         widgets.add(Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            TextButton(onPressed: () async {
+            SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton( onPressed: () async {
               await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(memory)));
               setState(() {
                 m_memoryWidgets = getMemoryWidgets(context);
               });
-            }, child: Text(memory.m_question != "" ? memory.m_question : "Error")),
+            }, child: Text(memory.m_question, style: const TextStyle(fontSize: 30.0, color: Colors.blue)))),
 
-            TextButton(onPressed: () async {
-               Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(memory)));
-            }, child: const Text("Test"))
+            SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton( onPressed: () async {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(memory)));
+            }, child: const Text("Test", style: TextStyle(fontSize: 30.0, color: Colors.blue))))
           ],
         ));
       }

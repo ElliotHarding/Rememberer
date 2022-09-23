@@ -90,12 +90,7 @@ class PageTest extends StatelessWidget
   {
     List<Widget> widgets = <Widget>[];
 
-    //Todo randomize correct answer order, and split false answers
-    List<String> options = <String>[];
-    options.add(m_memory.m_answer);
-    options.add(m_memory.m_falseAnswers);
-
-    for(String option in options)
+    for(String option in m_memory.m_falseAnswers)
     {
       widgets.add(Row(
         children: [
