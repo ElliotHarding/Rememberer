@@ -90,12 +90,13 @@ class PageMemory extends StatelessWidget
 
         const Spacer(),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 70, child:
+        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 70, child: Row(children : [
+          const Text("Reminders: ", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left),
           TextButton(onPressed: () async {
             m_memory = await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemoryReminders(m_memory: m_memory)));
             m_bChangeNotifyTimes = true;
-          }, child: const Text("Reminders ⚙", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))
-        ),
+          }, child: const Text("⚙", style: TextStyle(fontSize: 30, color: Colors.black), textAlign: TextAlign.left))
+        ])),
 
         const Spacer(),
 
