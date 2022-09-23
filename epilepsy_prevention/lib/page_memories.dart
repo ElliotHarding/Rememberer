@@ -42,24 +42,28 @@ class PageMemoriesState extends State<PageMemories>
     return WillPopScope(onWillPop: onBackPressed, child: Scaffold(
       body: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>
         [
-        const Spacer(),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.height * 0.15, child:
+          Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+            const Spacer(),
 
-        Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-          TextButton(onPressed: () async {
-            await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory())));
-            setState(() {
-              m_memoryWidgets = getMemoryWidgets(context);
-            });
-          }, child: const FittedBox(
-              fit: BoxFit.fitWidth,
-              child: Text("Add new entry")
-            ))
-        ]
+            TextButton(onPressed: () async {
+              await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory())));
+              setState(() {
+                m_memoryWidgets = getMemoryWidgets(context);
+              });
+            },
+                child: const Text("Add New Memory", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
+            ),
+
+            const Spacer()
+          ],)
         ),
 
-        const Spacer(),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.height * 0.1, child:
+          const Text("Memories", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
+        ),
 
-        SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.8, child: ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: m_memoryWidgets)),
+        SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.75, child: ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: m_memoryWidgets)),
 
         const Spacer()
         ]
