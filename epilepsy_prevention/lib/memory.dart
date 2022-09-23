@@ -124,28 +124,6 @@ class Database
     //removeCompletedNotifyTimes();
   }
 
-  void removeCompletedNotifyTimes()
-  {
-    var memBox = getMemoryBox();
-    if(memBox != null)
-    {
-      for(Memory memory in memBox.values)
-      {
-        if(memory.m_notifyTimes.isNotEmpty)
-        {
-          for (int notifyTime in memory.m_notifyTimes)
-          {
-            if(notifyTime < DateTime.now().millisecondsSinceEpoch)
-            {
-              memory.m_notifyTimes.remove(notifyTime);
-            }
-          }
-          memBox.put(memory.key, memory);
-        }
-      }
-    }
-  }
-
   int getAndIncrementChannelNumber()
   {
     int result = int.parse(_m_settingsBox?.get("channel number") ?? "267");

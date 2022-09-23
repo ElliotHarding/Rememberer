@@ -146,21 +146,15 @@ class PageMemory extends StatelessWidget
         }
 
         //Gen new notify times
-        List<int> notifyTimes = <int>[];
         if (m_memory.m_testFrequecy == "Rare") {
-          int notifyTime = 60;
-          notifyTimes.add(notifyTime);
+          m_memory.m_notifyTimes = genNotifyTimes(0, 5, 4, 0.7);
         }
         else if (m_memory.m_testFrequecy == "Occasionally") {
-          int notifyTime = 30;
-          notifyTimes.add(notifyTime);
+          m_memory.m_notifyTimes = genNotifyTimes(0, 5, 4, 0.7);
         }
         else if (m_memory.m_testFrequecy == "Frequently") {
-          int notifyTime = 1;
-          notifyTimes.add(notifyTime);
+          m_memory.m_notifyTimes = genNotifyTimes(0, 5, 4, 0.7);
         }
-
-        m_memory.m_notifyTimes = notifyTimes;
       }
 
       var key;
@@ -197,7 +191,7 @@ class PageMemory extends StatelessWidget
   List<int> genNotifyTimes(int iStart, int iMaxNotifications, double b, double k)
   {
     List<int> values = [];
-    for(int i = iStart; i < iMaxNotifications; iStart++)
+    for(int i = iStart; i < iMaxNotifications; i++)
     {
         values.add(DateTime.now().millisecondsSinceEpoch + pow(b, k * i).toInt());
     }

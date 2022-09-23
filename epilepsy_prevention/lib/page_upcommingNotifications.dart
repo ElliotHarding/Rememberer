@@ -19,8 +19,6 @@ class PageUpcommingNotificationsState extends State<PageUpcommingNotifications>
   @override
   Widget build(BuildContext context) {
 
-    Database().removeCompletedNotifyTimes();
-
     Notifications.m_selectedNotificationSubject.stream.listen((String? memoryKey) async {
       if(memoryKey != null) {
         var database = Database();
