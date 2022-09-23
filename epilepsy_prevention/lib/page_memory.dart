@@ -1,8 +1,8 @@
 import 'package:epilepsy_prevention/notifications.dart';
-import 'package:epilepsy_prevention/page_memories.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_test.dart';
+import 'dart:math';
 
 class PageMemory extends StatelessWidget
 {
@@ -91,22 +91,10 @@ class PageMemory extends StatelessWidget
 
         SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: DropdownButton(
           items: const [
-            DropdownMenuItem(
-                value: "Never", child: Text("Never", style: TextStyle(
-                fontSize: 25, color: Colors.black), textAlign: TextAlign
-                .center)),
-            DropdownMenuItem(
-                value: "Rare", child: Text("Rare", style: TextStyle(
-                fontSize: 25, color: Colors.black), textAlign: TextAlign
-                .center)),
-            DropdownMenuItem(value: "Occasionally",
-                child: Text("Occasionally", style: TextStyle(
-                    fontSize: 25, color: Colors.black), textAlign: TextAlign
-                    .center)),
-            DropdownMenuItem(value: "Frequently",
-                child: Text("Frequently", style: TextStyle(
-                    fontSize: 25, color: Colors.black), textAlign: TextAlign
-                    .center))
+            DropdownMenuItem(value: "Never", child: Text("Never", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
+            DropdownMenuItem(value: "Rare", child: Text("Rare", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
+            DropdownMenuItem(value: "Occasionally", child: Text("Occasionally", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
+            DropdownMenuItem(value: "Frequently", child: Text("Frequently", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center))
           ],
           value: m_memory.m_testFrequecy,
           onChanged: (String? selectedValue) {
@@ -149,8 +137,8 @@ class PageMemory extends StatelessWidget
     var box = db.getMemoryBox();
     if (box != null)
     {
-      if (m_bChangeNotifyTimes) {
-
+      if (m_bChangeNotifyTimes)
+      {
         //Clear previous notifications
         if(m_memory.key != null)
         {
@@ -204,5 +192,15 @@ class PageMemory extends StatelessWidget
     }
 
     Navigator.of(context).pop();
+  }
+
+  List<int> genNotifyTimes(int iStart, int iMaxNotifications, double b, double k)
+  {
+    List<int> values = [];
+    for(int i = iStart; i < iMaxNotifications; iStart++)
+    {
+        values.add(DateTime.now().millisecondsSinceEpoch + pow(b, k * i).toInt());
+    }
+    return values;
   }
 }
