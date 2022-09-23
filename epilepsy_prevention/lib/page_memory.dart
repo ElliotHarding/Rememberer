@@ -46,7 +46,7 @@ class PageMemory extends StatelessWidget
 
         const Spacer(),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Question", style: TextStyle(fontSize: 30), textAlign: TextAlign.left)),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Question", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
 
         IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: TextField(maxLines: null,
           decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a search question'),
@@ -56,7 +56,7 @@ class PageMemory extends StatelessWidget
 
         const Spacer(),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Correct Answer", style: TextStyle(fontSize: 30), textAlign: TextAlign.left)),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Correct Answer", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
 
         IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: TextField(maxLines: null,
           decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a answer'),
@@ -67,7 +67,7 @@ class PageMemory extends StatelessWidget
         const Spacer(),
 
         SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Row(children: [
-          const Text("Multiple Choice: ", style: TextStyle(fontSize: 30), textAlign: TextAlign.left),
+          const Text("Multiple Choice: ", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left),
           Checkbox(value: m_memory.m_bMultiChoice, onChanged: (bool? value) {
             if (value != null) {
               setState(() {
@@ -87,7 +87,7 @@ class PageMemory extends StatelessWidget
 
         const Spacer(),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Reminder frequency", style: TextStyle(fontSize: 30), textAlign: TextAlign.left)),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Reminder frequency", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
 
         SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: DropdownButton(
           items: const [
@@ -110,9 +110,9 @@ class PageMemory extends StatelessWidget
         const Spacer(),
 
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-          TextButton(onPressed: () => onDelete(context), child: const Text("Delete", style: TextStyle(fontSize: 30, color: Colors.black))),
+          TextButton(onPressed: () => onDelete(context), child: const Text("Delete", style: TextStyle(fontSize: 30, color: Colors.blue))),
 
-          TextButton(onPressed: () => onSave(context), child: const Text("Save", style: TextStyle(fontSize: 30, color: Colors.black)))
+          TextButton(onPressed: () => onSave(context), child: const Text("Save", style: TextStyle(fontSize: 30, color: Colors.blue)))
         ]),
 
         const Spacer()
