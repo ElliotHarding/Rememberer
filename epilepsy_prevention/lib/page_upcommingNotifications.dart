@@ -43,8 +43,18 @@ class PageUpcommingNotificationsState extends State<PageUpcommingNotifications>
 
           const Spacer(),
 
-          SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child:
-            ListView(children: m_notificationsWidget)
+          SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.height * 0.1, child:
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [
+              Spacer(),
+              Text("Notifications", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left),
+              Spacer()
+            ])
+          ),
+
+          const Spacer(),
+
+          SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.8, child:
+            ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: m_notificationsWidget)
           ),
 
           const Spacer()
