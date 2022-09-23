@@ -1,14 +1,15 @@
 import 'package:epilepsy_prevention/notifications.dart';
+import 'package:epilepsy_prevention/page_memoryReminders.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_test.dart';
-import 'dart:math';
 
 class PageMemory extends StatelessWidget
 {
   PageMemory(this.m_memory);
 
-  final Memory m_memory;
+  Memory m_memory;
+  List<int> m_oldNotifyTimes = [];
 
   bool m_bChangeNotifyTimes = false;
 
@@ -32,6 +33,8 @@ class PageMemory extends StatelessWidget
         }
       }
     });
+
+    m_oldNotifyTimes = m_memory.m_notifyTimes;
 
     m_questionTextController.text = m_memory.m_question;
     m_answerTextController.text = m_memory.m_answer;
@@ -87,25 +90,12 @@ class PageMemory extends StatelessWidget
 
         const Spacer(),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Reminder frequency", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
-
-        SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: DropdownButton(
-          items: const [
-            DropdownMenuItem(value: "Never", child: Text("Never", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
-            DropdownMenuItem(value: "Rare", child: Text("Rare", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
-            DropdownMenuItem(value: "Occasionally", child: Text("Occasionally", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
-            DropdownMenuItem(value: "Frequently", child: Text("Frequently", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center))
-          ],
-          value: m_memory.m_testFrequecy,
-          onChanged: (String? selectedValue) {
-            setState(() {
-              if (selectedValue != null) {
-                m_memory.m_testFrequecy = selectedValue;
-                m_bChangeNotifyTimes = true;
-              }
-            });
-          }
-        )),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 70, child:
+          TextButton(onPressed: () async {
+            m_memory = await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemoryReminders(m_memory: m_memory)));
+            m_bChangeNotifyTimes = true;
+          }, child: const Text("Reminders ⚙", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))
+        ),
 
         const Spacer(),
 
@@ -142,18 +132,7 @@ class PageMemory extends StatelessWidget
         //Clear previous notifications
         if(m_memory.key != null)
         {
-          Notifications().removeNotifications(m_memory.key, m_memory.m_notifyTimes);
-        }
-
-        //Gen new notify times
-        if (m_memory.m_testFrequecy == "Rare") {
-          m_memory.m_notifyTimes = genNotifyTimes(0, 5, 4, 0.7);
-        }
-        else if (m_memory.m_testFrequecy == "Occasionally") {
-          m_memory.m_notifyTimes = genNotifyTimes(0, 5, 4, 0.7);
-        }
-        else if (m_memory.m_testFrequecy == "Frequently") {
-          m_memory.m_notifyTimes = genNotifyTimes(0, 5, 4, 0.7);
+          Notifications().removeNotifications(m_memory.key, m_oldNotifyTimes);
         }
       }
 
@@ -186,15 +165,5 @@ class PageMemory extends StatelessWidget
     }
 
     Navigator.of(context).pop();
-  }
-
-  List<int> genNotifyTimes(int iStart, int iMaxNotifications, double b, double k)
-  {
-    List<int> values = [];
-    for(int i = iStart; i < iMaxNotifications; i++)
-    {
-        values.add(DateTime.now().millisecondsSinceEpoch + pow(b, k * i).toInt());
-    }
-    return values;
   }
 }
