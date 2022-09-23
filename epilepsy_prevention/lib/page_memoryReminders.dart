@@ -1,7 +1,6 @@
 import 'package:epilepsy_prevention/page_test.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
-import 'package:epilepsy_prevention/page_memory.dart';
 import 'package:epilepsy_prevention/notifications.dart';
 import 'dart:math';
 
@@ -21,7 +20,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
   final m_maxNotificationsController = TextEditingController();
 
-  double m_startIteration = 0;
+  double m_currentIteration = 0;
   double m_maxNotifications = 0;
 
   Widget build(BuildContext context)
@@ -42,22 +41,25 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     });
 
     m_memoryBefore = widget.m_memory;
+    m_maxNotifications = widget.m_memory.m_notifyTimes.length.toDouble();
+    m_currentIteration = getCurrentIteration().toDouble();
+    m_maxNotificationsController.text = m_maxNotifications.toInt().toString();
 
-    m_maxNotificationsController.addListener(() { setState(() {
-
+    m_maxNotificationsController.addListener(() { setState(()
+    {
       double value = 0;
       if(m_maxNotificationsController.text != "")
       {
           value = int.parse(m_maxNotificationsController.text).toDouble();
       }
 
-      if(m_startIteration > value)
+      if(m_currentIteration > value)
       {
-        m_startIteration = value;
+        m_currentIteration = value;
       }
 
       m_maxNotifications = value;
-    }); });
+    });});
 
     return WillPopScope(onWillPop: () async {Navigator.pop(context, m_memoryBefore); return true;}, child:
       Scaffold(body:
@@ -99,16 +101,16 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
           const Spacer(),
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Text("Current Notification: " + m_startIteration.toInt().toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
+          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Text("Current Notification: " + m_currentIteration.toInt().toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child:
             Slider(
-              value: m_startIteration,
+              value: m_currentIteration,
               min: 0,
               max: m_maxNotifications,
               onChanged: (newValue) {
                 setState(() {
-                  m_startIteration = newValue;
+                  m_currentIteration = newValue;
                 });
               },
           )),
@@ -155,5 +157,27 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
       values.add(DateTime.now().millisecondsSinceEpoch + pow(b, k * i).toInt());
     }
     return values;
+  }
+
+  int getCurrentIteration()
+  {
+    if(widget.m_memory.m_notifyTimes.isEmpty)
+    {
+        return 0;
+    }
+
+    List<int> notifyTimesSorted = widget.m_memory.m_notifyTimes;
+    notifyTimesSorted.sort((a, b) => a.compareTo(b));
+
+    final int currentTime = DateTime.now().millisecondsSinceEpoch;
+    for(int i = 0; i < notifyTimesSorted.length; i++)
+    {
+      if(currentTime < notifyTimesSorted[i])
+      {
+        return i;
+      }
+    }
+
+    return notifyTimesSorted.length;
   }
 }
