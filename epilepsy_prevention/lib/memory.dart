@@ -44,29 +44,11 @@ class MemoryAdapter extends TypeAdapter<Memory>
     try
     {
       String question = reader.readString();
-      if(question == "")
-      {
-          question = "Error";
-      }
-
       String answer = reader.readString();
-      if(answer == "")
-      {
-          answer = "Error - Failed to load answer.";
-      }
-
       bool multiChoice = reader.readBool();
-
       List<String> falseAnswers = reader.readStringList();
-
       String testFrequency = reader.readString();
-      if(testFrequency == "")
-      {
-          testFrequency = "Never";
-      }
-
       List<int> notifyTimes = reader.readIntList();
-
       return Memory(question: question, answer: answer, multiChoice: multiChoice, falseAnswers: falseAnswers, testFrequency: testFrequency, notifyTimes: notifyTimes);
     }
     catch (e)
@@ -76,7 +58,8 @@ class MemoryAdapter extends TypeAdapter<Memory>
   }
 
   @override
-  void write(BinaryWriter writer, Memory obj) {
+  void write(BinaryWriter writer, Memory obj)
+  {
     writer.writeString(obj.m_question);
     writer.writeString(obj.m_answer);
     writer.writeBool(obj.m_bMultiChoice);
