@@ -49,10 +49,7 @@ class PageMemory extends StatelessWidget
         SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Question", style: TextStyle(fontSize: 30), textAlign: TextAlign.left)),
 
         IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: TextField(maxLines: null,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'Enter a search question',
-          ),
+          decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a search question'),
           style: const TextStyle(fontSize: 30.0, color: Colors.black),
           controller: m_questionTextController,
         ))),
@@ -62,10 +59,7 @@ class PageMemory extends StatelessWidget
         SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Correct Answer", style: TextStyle(fontSize: 30), textAlign: TextAlign.left)),
 
         IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: TextField(maxLines: null,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'Enter a answer',
-          ),
+          decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a answer'),
           style: const TextStyle(fontSize: 30.0, color: Colors.black),
           controller: m_answerTextController,
         ))),
@@ -85,8 +79,7 @@ class PageMemory extends StatelessWidget
 
       IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Visibility(visible: m_memory.m_bMultiChoice, child:
         TextField(
-            decoration: const InputDecoration(border: OutlineInputBorder(),
-                hintText: 'Enter wrong answers.'),
+            decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter wrong answers.'),
             style: const TextStyle(fontSize: 30, color: Colors.black),
             controller: m_wrongAnswersTextController
         )
