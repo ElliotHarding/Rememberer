@@ -43,6 +43,22 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
     m_memoryBefore = widget.m_memory;
 
+    m_maxNotificationsController.addListener(() { setState(() {
+
+      double value = 0;
+      if(m_maxNotificationsController.text != "")
+      {
+          value = int.parse(m_maxNotificationsController.text).toDouble();
+      }
+
+      if(m_startIteration > value)
+      {
+        m_startIteration = value;
+      }
+
+      m_maxNotifications = value;
+    }); });
+
     return WillPopScope(onWillPop: () async {Navigator.pop(context, m_memoryBefore); return true;}, child:
       Scaffold(body:
         Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
@@ -83,7 +99,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
           const Spacer(),
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Current Notification", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
+          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Text("Current Notification: " + m_startIteration.toInt().toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child:
             Slider(
