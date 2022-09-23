@@ -64,8 +64,6 @@ class PageMemoriesState extends State<PageMemories>
         ),
 
         SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.75, child: ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: m_memoryWidgets)),
-
-        const Spacer()
         ]
       )
     ));
