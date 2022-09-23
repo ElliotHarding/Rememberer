@@ -39,6 +39,11 @@ class Memory extends HiveObject
       return "Invalid question format";
     }
 
+    if(m_question[m_question.length-1] != "?")
+    {
+        m_question += "?";
+    }
+
     if(m_answer == "")
     {
       return "Invalid answer format";
