@@ -9,6 +9,8 @@ class PageMemoryReminders extends StatefulWidget
   PageMemoryReminders({required this.m_memory, Key? key}) : super(key: key);
 
   Memory m_memory;
+  double m_currentIteration = 0;
+  double m_maxNotifications = 0;
 
   @override
   State<PageMemoryReminders> createState() => PageMemoryRemindersState();
@@ -18,8 +20,11 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 {
   Memory m_memoryBefore = Memory();
 
-  double m_currentIteration = 0;
-  double m_maxNotifications = 0;
+  void initState()
+  {
+    widget.m_maxNotifications = widget.m_memory.m_notifyTimes.length.toDouble();
+    widget.m_currentIteration = getCurrentIteration().toDouble();
+  }
 
   Widget build(BuildContext context)
   {
@@ -39,8 +44,6 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     });
 
     m_memoryBefore = widget.m_memory;
-    m_maxNotifications = widget.m_memory.m_notifyTimes.length.toDouble();
-    m_currentIteration = getCurrentIteration().toDouble();
 
     return WillPopScope(onWillPop: () async {Navigator.pop(context, m_memoryBefore); return true;}, child:
       Scaffold(body:
@@ -68,11 +71,11 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
           const Spacer(),
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Text("Max Notifications: " + m_maxNotifications.toInt().toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
+          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Text("Max Notifications: " + widget.m_maxNotifications.toInt().toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child:
             Slider(
-              value: m_maxNotifications,
+              value: widget.m_maxNotifications,
               min: 0,
               max: 25,
               onChanged: (newValue) {
@@ -84,28 +87,28 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
                     newValue = 30;
                   }
 
-                  if(m_currentIteration > newValue)
+                  if(widget.m_currentIteration > newValue)
                   {
-                    m_currentIteration = newValue;
+                    widget.m_currentIteration = newValue;
                   }
 
-                  m_maxNotifications = newValue;
+                  widget.m_maxNotifications = newValue;
                 });
               },
           )),
 
           const Spacer(),
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Text("Current Notification: " + m_currentIteration.toInt().toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
+          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Text("Current Notification: " + widget.m_currentIteration.toInt().toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child:
             Slider(
-              value: m_currentIteration,
+              value: widget.m_currentIteration,
               min: 0,
-              max: m_maxNotifications,
+              max: widget.m_maxNotifications,
               onChanged: (newValue) {
                 setState(() {
-                  m_currentIteration = newValue;
+                  widget.m_currentIteration = newValue;
                 });
               },
           )),
@@ -132,13 +135,13 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   {
     //Gen new notify times
     if (widget.m_memory.m_testFrequecy == "Rare") {
-      widget.m_memory.m_notifyTimes = genNotifyTimes(m_currentIteration.toInt(), m_maxNotifications.toInt(), 4, 0.7);
+      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration.toInt(), widget.m_maxNotifications.toInt(), 4, 0.7);
     }
     else if (widget.m_memory.m_testFrequecy == "Occasionally") {
-      widget.m_memory.m_notifyTimes = genNotifyTimes(m_currentIteration.toInt(), m_maxNotifications.toInt(), 4, 0.7);
+      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration.toInt(), widget.m_maxNotifications.toInt(), 4, 0.7);
     }
     else if (widget.m_memory.m_testFrequecy == "Frequently") {
-      widget.m_memory.m_notifyTimes = genNotifyTimes(m_currentIteration.toInt(), m_maxNotifications.toInt(), 4, 0.7);
+      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration.toInt(), widget.m_maxNotifications.toInt(), 4, 0.7);
     }
 
     Navigator.pop(context, widget.m_memory);
