@@ -122,85 +122,87 @@ class PageMemory extends StatelessWidget
         const Spacer(),
 
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-          TextButton(onPressed: () {
-            var box = Database().getMemoryBox();
-            if (box != null) {
+          TextButton(onPressed: () => onDelete(context), child: const Text("Delete", style: TextStyle(fontSize: 30, color: Colors.black))),
 
-              //Clear notifications
-              Notifications().removeNotifications(m_memory.key, m_memory.m_notifyTimes);
-
-              box.delete(m_memory.key);
-            }
-
-            Navigator.of(context).pop();
-          },
-              child: const Text("Delete", style: TextStyle(fontSize: 30, color: Colors.black))),
-
-          TextButton(onPressed: () async {
-
-            m_memory.m_question = m_questionTextController.text;
-            m_memory.m_answer = m_answerTextController.text;
-            m_memory.m_falseAnswers = m_wrongAnswersTextController.text.split(",");
-
-            final String validationResult = m_memory.validate();
-            if(validationResult == "Success")
-            {
-              Database db = Database();
-              var box = db.getMemoryBox();
-              if (box != null)
-              {
-                if (m_bChangeNotifyTimes) {
-
-                  //Clear previous notifications
-                  if(m_memory.key != null)
-                  {
-                    Notifications().removeNotifications(m_memory.key, m_memory.m_notifyTimes);
-                  }
-
-                  //Gen new notify times
-                  List<int> notifyTimes = <int>[];
-                  if (m_memory.m_testFrequecy == "Rare") {
-                    int notifyTime = 60;
-                    notifyTimes.add(notifyTime);
-                  }
-                  else if (m_memory.m_testFrequecy == "Occasionally") {
-                    int notifyTime = 30;
-                    notifyTimes.add(notifyTime);
-                  }
-                  else if (m_memory.m_testFrequecy == "Frequently") {
-                    int notifyTime = 1;
-                    notifyTimes.add(notifyTime);
-                  }
-
-                  m_memory.m_notifyTimes = notifyTimes;
-                }
-
-                var key;
-                if(db.getMemoryWithId(m_memory.key) == null)
-                {
-                  key = await box.add(m_memory);
-                }
-                else
-                {
-                  key = db.updateMemory(m_memory);
-                }
-
-                await Notifications().scheduleNotifications(key, m_memory.m_question, m_memory.m_notifyTimes);
-              }
-
-              Navigator.of(context).pop();
-            }
-            else
-            {
-              showDialog(context: context, builder: (context){return AlertDialog(title: const Text("Adding Memory Failed!"), content: Text(validationResult));});
-            }
-          },
-              child: const Text("Save", style: TextStyle(fontSize: 30, color: Colors.black))
-          )
-            ]),
+          TextButton(onPressed: () => onSave(context), child: const Text("Save", style: TextStyle(fontSize: 30, color: Colors.black)))
+        ]),
 
         const Spacer()
       ]);
   }));
+  }
+
+  void onSave(BuildContext context) async
+  {
+    m_memory.m_question = m_questionTextController.text;
+    m_memory.m_answer = m_answerTextController.text;
+    m_memory.m_falseAnswers = m_wrongAnswersTextController.text.split(",");
+
+    final String validationResult = m_memory.validate();
+    if(validationResult != "Success")
+    {
+      showDialog(context: context, builder: (context){return AlertDialog(title: const Text("Adding Memory Failed!"), content: Text(validationResult));});
+      return;
+    }
+
+    Database db = Database();
+    var box = db.getMemoryBox();
+    if (box != null)
+    {
+      if (m_bChangeNotifyTimes) {
+
+        //Clear previous notifications
+        if(m_memory.key != null)
+        {
+          Notifications().removeNotifications(m_memory.key, m_memory.m_notifyTimes);
+        }
+
+        //Gen new notify times
+        List<int> notifyTimes = <int>[];
+        if (m_memory.m_testFrequecy == "Rare") {
+          int notifyTime = 60;
+          notifyTimes.add(notifyTime);
+        }
+        else if (m_memory.m_testFrequecy == "Occasionally") {
+          int notifyTime = 30;
+          notifyTimes.add(notifyTime);
+        }
+        else if (m_memory.m_testFrequecy == "Frequently") {
+          int notifyTime = 1;
+          notifyTimes.add(notifyTime);
+        }
+
+        m_memory.m_notifyTimes = notifyTimes;
+      }
+
+      var key;
+      if(db.getMemoryWithId(m_memory.key) == null)
+      {
+        key = await box.add(m_memory);
+      }
+      else
+      {
+        key = db.updateMemory(m_memory);
+      }
+
+      await Notifications().scheduleNotifications(key, m_memory.m_question, m_memory.m_notifyTimes);
+    }
+
+    Navigator.of(context).pop();
+  }
+
+  void onDelete(BuildContext context)
+  {
+    var box = Database().getMemoryBox();
+    if (box != null && m_memory.key != null)
+    {
+      //Clear notifications
+      Notifications().removeNotifications(m_memory.key, m_memory.m_notifyTimes);
+
+      //Delete
+      box.delete(m_memory.key);
+    }
+
+    Navigator.of(context).pop();
   }
 }

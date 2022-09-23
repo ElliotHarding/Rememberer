@@ -121,7 +121,7 @@ class Database
     _m_memoryBox = await Hive.openBox("Memories.db");
     _m_settingsBox = await Hive.openBox("settings.db");
 
-    removeCompletedNotifyTimes();
+    //removeCompletedNotifyTimes();
   }
 
   void removeCompletedNotifyTimes()
@@ -131,14 +131,17 @@ class Database
     {
       for(Memory memory in memBox.values)
       {
-        for (int notifyTime in memory.m_notifyTimes)
+        if(memory.m_notifyTimes.isNotEmpty)
         {
-          if(notifyTime < DateTime.now().millisecondsSinceEpoch)
+          for (int notifyTime in memory.m_notifyTimes)
           {
+            if(notifyTime < DateTime.now().millisecondsSinceEpoch)
+            {
               memory.m_notifyTimes.remove(notifyTime);
+            }
           }
+          memBox.put(memory.key, memory);
         }
-        memBox.put(memory.key, memory);
       }
     }
   }
