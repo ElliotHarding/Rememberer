@@ -31,6 +31,31 @@ class Memory extends HiveObject
 
   @HiveField(5)
   List<int> m_notifyTimes = <int>[];
+
+  String validate()
+  {
+    if(m_question == "")
+    {
+      return "Invalid question format";
+    }
+
+    if(m_answer == "")
+    {
+      return "Invalid answer format";
+    }
+
+    if(m_bMultiChoice && m_falseAnswers.isEmpty)
+    {
+        return "Must have at least one false answer";
+    }
+
+    if(m_testFrequecy == "")
+    {
+        return "Invalid test frequency";
+    }
+
+    return "Success";
+  }
 }
 
 class MemoryAdapter extends TypeAdapter<Memory>

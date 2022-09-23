@@ -137,10 +137,7 @@ class PageMemory extends StatelessWidget
                 if (box != null) {
 
                   //Clear notifications
-                  for (int notifyTime in m_memory.m_notifyTimes) {
-                    Notifications().removeNotification(
-                        m_memory.key.toString() + "-" + notifyTime.toString());
-                  }
+                  Notifications().removeNotifications(m_memory.key, m_memory.m_notifyTimes);
 
                   box.delete(m_memory.key);
                 }
@@ -151,53 +148,63 @@ class PageMemory extends StatelessWidget
                       style: TextStyle(fontSize: 30, color: Colors.black))),
 
               TextButton(onPressed: () async {
-                Database db = Database();
-                var box = db.getMemoryBox();
-                if (box != null) {
-                  m_memory.m_question = m_questionTextController.text;
-                  m_memory.m_answer = m_answerTextController.text;
-                  m_memory.m_falseAnswers = m_wrongAnswersTextController.text.split(",");
 
-                  if (m_bChangeNotifyTimes) {
+                m_memory.m_question = m_questionTextController.text;
+                m_memory.m_answer = m_answerTextController.text;
+                m_memory.m_falseAnswers = m_wrongAnswersTextController.text.split(",");
 
-                    //Clear previous notifications
-                    if(m_memory.key != null)
+                final String validationResult = m_memory.validate();
+                if(validationResult == "Success")
+                {
+                  Database db = Database();
+                  var box = db.getMemoryBox();
+                  if (box != null)
+                  {
+                    if (m_bChangeNotifyTimes) {
+
+                      //Clear previous notifications
+                      if(m_memory.key != null)
+                      {
+                        Notifications().removeNotifications(m_memory.key, m_memory.m_notifyTimes);
+                      }
+
+                      //Gen new notify times
+                      List<int> notifyTimes = <int>[];
+                      if (m_memory.m_testFrequecy == "Rare") {
+                        int notifyTime = 60;
+                        notifyTimes.add(notifyTime);
+                      }
+                      else if (m_memory.m_testFrequecy == "Occasionally") {
+                        int notifyTime = 30;
+                        notifyTimes.add(notifyTime);
+                      }
+                      else if (m_memory.m_testFrequecy == "Frequently") {
+                        int notifyTime = 1;
+                        notifyTimes.add(notifyTime);
+                      }
+
+                      m_memory.m_notifyTimes = notifyTimes;
+                    }
+
+                    var key;
+                    if(db.getMemoryWithId(m_memory.key) == null)
                     {
-                      Notifications().removeNotifications(m_memory.key, m_memory.m_notifyTimes);
+                      key = await box.add(m_memory);
+                    }
+                    else
+                    {
+                      key = db.updateMemory(m_memory);
                     }
 
-                    //Gen new notify times
-                    List<int> notifyTimes = <int>[];
-                    if (m_memory.m_testFrequecy == "Rare") {
-                      int notifyTime = 60;
-                      notifyTimes.add(notifyTime);
-                    }
-                    else if (m_memory.m_testFrequecy == "Occasionally") {
-                      int notifyTime = 30;
-                      notifyTimes.add(notifyTime);
-                    }
-                    else if (m_memory.m_testFrequecy == "Frequently") {
-                      int notifyTime = 1;
-                      notifyTimes.add(notifyTime);
-                    }
-
-                    m_memory.m_notifyTimes = notifyTimes;
+                    await Notifications().scheduleNotifications(key, m_memory.m_question, m_memory.m_notifyTimes);
                   }
 
-                  var key;
-                  if(db.getMemoryWithId(m_memory.key) == null)
-                  {
-                    key = await box.add(m_memory);
-                  }
-                  else
-                  {
-                    key = db.updateMemory(m_memory);
-                  }
-
-                  await Notifications().scheduleNotifications(key, m_memory.m_question, m_memory.m_notifyTimes);
+                  Navigator.of(context).pop();
                 }
-
-                Navigator.of(context).pop();
+                else
+                {
+                  showDialog(context: context, builder: (context){return AlertDialog(title: const Text("Adding Memory Failed!"), content: Text(validationResult));});
+                }
               },
                   child: const Text("Save", style: TextStyle(fontSize: 30, color: Colors.black)))
             ]),
