@@ -101,13 +101,13 @@ class MemoryAdapter extends TypeAdapter<Memory>
 
 class Database
 {
-  static final Database m_database = Database._internal();
-  static Box<Memory>? m_memoryBox;
+  static final Database _m_database = Database._internal();
+  static Box<Memory>? _m_memoryBox;
   static Box? _m_settingsBox;
 
   factory Database()
   {
-    return m_database;
+    return _m_database;
   }
 
   Database._internal();
@@ -118,8 +118,29 @@ class Database
     Hive.init(appDocumentDirectory.path);
     Hive.registerAdapter(MemoryAdapter());
 
-    m_memoryBox = await Hive.openBox("Memories.db");
+    _m_memoryBox = await Hive.openBox("Memories.db");
     _m_settingsBox = await Hive.openBox("settings.db");
+
+    removeCompletedNotifyTimes();
+  }
+
+  void removeCompletedNotifyTimes()
+  {
+    var memBox = getMemoryBox();
+    if(memBox != null)
+    {
+      for(Memory memory in memBox.values)
+      {
+        for (int notifyTime in memory.m_notifyTimes)
+        {
+          if(notifyTime < DateTime.now().millisecondsSinceEpoch)
+          {
+              memory.m_notifyTimes.remove(notifyTime);
+          }
+        }
+        memBox.put(memory.key, memory);
+      }
+    }
   }
 
   int getAndIncrementChannelNumber()
@@ -148,14 +169,14 @@ class Database
 
   Box<Memory>? getMemoryBox()
   {
-    return m_memoryBox;
+    return _m_memoryBox;
   }
 
   int updateMemory(Memory memory)
   {
-    if(m_memoryBox != null)
+    if(_m_memoryBox != null)
     {
-        m_memoryBox?.put(memory.key, memory);
+      _m_memoryBox?.put(memory.key, memory);
     }
     return memory.key;
   }
