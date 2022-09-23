@@ -19,6 +19,8 @@ class PageUpcommingNotificationsState extends State<PageUpcommingNotifications>
   @override
   Widget build(BuildContext context) {
 
+    Database().removeCompletedNotifyTimes();
+
     Notifications.m_selectedNotificationSubject.stream.listen((String? memoryKey) async {
       if(memoryKey != null) {
         var database = Database();
@@ -41,8 +43,8 @@ class PageUpcommingNotificationsState extends State<PageUpcommingNotifications>
 
           const Spacer(),
 
-          SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child: ListView(
-              children: m_notificationsWidget)
+          SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child:
+            ListView(children: m_notificationsWidget)
           ),
 
           const Spacer()
