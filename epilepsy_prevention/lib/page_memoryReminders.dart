@@ -43,7 +43,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     m_memoryBefore = widget.m_memory;
     m_maxNotifications = widget.m_memory.m_notifyTimes.length.toDouble();
     m_currentIteration = getCurrentIteration().toDouble();
-    m_maxNotificationsController.text = m_maxNotifications.toInt().toString();
+    //m_maxNotificationsController.text = m_maxNotifications.toInt().toString();
 
     m_maxNotificationsController.addListener(() { setState(()
     {
@@ -51,6 +51,11 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
       if(m_maxNotificationsController.text != "")
       {
           value = int.parse(m_maxNotificationsController.text).toDouble();
+      }
+
+      if(value > 30)
+      {
+        value = 30;
       }
 
       if(m_currentIteration > value)
@@ -94,7 +99,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
                 decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter wrong answers.'),
                 style: const TextStyle(fontSize: 30, color: Colors.black),
                 controller: m_maxNotificationsController,
-                keyboardType: TextInputType.number
+                keyboardType: TextInputType.number,
               )
             )
           ])),
@@ -137,13 +142,13 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   {
     //Gen new notify times
     if (widget.m_memory.m_testFrequecy == "Rare") {
-      widget.m_memory.m_notifyTimes = genNotifyTimes(0, 5, 4, 0.7);
+      widget.m_memory.m_notifyTimes = genNotifyTimes(m_currentIteration.toInt(), m_maxNotifications.toInt(), 4, 0.7);
     }
     else if (widget.m_memory.m_testFrequecy == "Occasionally") {
-      widget.m_memory.m_notifyTimes = genNotifyTimes(0, 5, 4, 0.7);
+      widget.m_memory.m_notifyTimes = genNotifyTimes(m_currentIteration.toInt(), m_maxNotifications.toInt(), 4, 0.7);
     }
     else if (widget.m_memory.m_testFrequecy == "Frequently") {
-      widget.m_memory.m_notifyTimes = genNotifyTimes(0, 5, 4, 0.7);
+      widget.m_memory.m_notifyTimes = genNotifyTimes(m_currentIteration.toInt(), m_maxNotifications.toInt(), 4, 0.7);
     }
 
     Navigator.pop(context, widget.m_memory);
