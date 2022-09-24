@@ -61,7 +61,7 @@ class PageMemoryState extends State<PageMemory>
 
         const Spacer(),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Row(children: [
+        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 70, child: Row(children: [
 
           const Text("Multiple Choice: ", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left),
 
