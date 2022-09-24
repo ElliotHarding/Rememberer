@@ -2,9 +2,8 @@ import 'package:epilepsy_prevention/notifications.dart';
 import 'package:epilepsy_prevention/page_memoryReminders.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
-import 'package:epilepsy_prevention/page_common.dart';
 
-class PageMemory extends StatelessWidget with BasePage
+class PageMemory extends StatelessWidget
 {
   PageMemory(this.m_memory);
 
@@ -19,7 +18,7 @@ class PageMemory extends StatelessWidget with BasePage
 
   Widget build(BuildContext context)
   {
-    BasePage.setupNotificationActionListener(context);
+    Notifications.setupNotificationActionListener(context);
 
     m_oldNotifyTimes = m_memory.m_notifyTimes;
 

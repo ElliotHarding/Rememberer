@@ -2,9 +2,9 @@ import 'package:epilepsy_prevention/page_memories.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/page_home.dart';
 import 'package:epilepsy_prevention/memory.dart';
-import 'package:epilepsy_prevention/page_common.dart';
+import 'package:epilepsy_prevention/notifications.dart';
 
-class PageTestResult extends StatelessWidget with BasePage
+class PageTestResult extends StatelessWidget
 {
   PageTestResult(this.m_memory, this.m_bSuccess);
 
@@ -13,7 +13,7 @@ class PageTestResult extends StatelessWidget with BasePage
 
   Widget build(BuildContext context)
   {
-    BasePage.setupNotificationActionListener(context);
+    Notifications.setupNotificationActionListener(context);
 
     return WillPopScope(onWillPop: () async {Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories())); return true;}, child: Scaffold(body:
     Column(children: <Widget>[

@@ -2,9 +2,8 @@ import 'package:epilepsy_prevention/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_memory.dart';
-import 'package:epilepsy_prevention/page_common.dart';
 
-class PageUpcommingNotifications extends StatefulWidget with BasePage
+class PageUpcommingNotifications extends StatefulWidget
 {
   const PageUpcommingNotifications({Key? key}) : super(key: key);
 
@@ -19,7 +18,7 @@ class PageUpcommingNotificationsState extends State<PageUpcommingNotifications>
   @override
   Widget build(BuildContext context) {
 
-    BasePage.setupNotificationActionListener(context);
+    Notifications.setupNotificationActionListener(context);
 
     m_notificationsWidget = getNotificationWidgets(context);
 

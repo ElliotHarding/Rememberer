@@ -3,9 +3,9 @@ import 'package:epilepsy_prevention/page_test.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_memory.dart';
-import 'package:epilepsy_prevention/page_common.dart';
+import 'package:epilepsy_prevention/notifications.dart';
 
-class PageMemories extends StatefulWidget with BasePage
+class PageMemories extends StatefulWidget
 {
   PageMemories({Key? key}) : super(key: key);
 
@@ -19,7 +19,7 @@ class PageMemoriesState extends State<PageMemories>
 
   Widget build(BuildContext context)
   {
-    BasePage.setupNotificationActionListener(context);
+    Notifications.setupNotificationActionListener(context);
 
     m_memoryWidgets = getMemoryWidgets(context);
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'dart:math';
-import 'package:epilepsy_prevention/page_common.dart';
+import 'package:epilepsy_prevention/notifications.dart';
 
 class PageMemoryReminders extends StatefulWidget
 {
@@ -15,7 +15,7 @@ class PageMemoryReminders extends StatefulWidget
   State<PageMemoryReminders> createState() => PageMemoryRemindersState();
 }
 
-class PageMemoryRemindersState extends State<PageMemoryReminders> with BasePage
+class PageMemoryRemindersState extends State<PageMemoryReminders>
 {
   Memory m_memoryBefore = Memory();
 
@@ -27,7 +27,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders> with BasePage
 
   Widget build(BuildContext context)
   {
-    BasePage.setupNotificationActionListener(context);
+    Notifications.setupNotificationActionListener(context);
 
     m_memoryBefore = widget.m_memory;
 

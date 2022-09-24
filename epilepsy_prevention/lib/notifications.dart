@@ -8,6 +8,10 @@ import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 import 'package:epilepsy_prevention/memory.dart';
 
+import 'package:flutter/material.dart';
+
+import 'package:epilepsy_prevention/page_test.dart';
+
 class Notifications
 {
   static final Notifications _m_notifications = Notifications._internal();
@@ -18,9 +22,9 @@ class Notifications
   Notifications._internal();
 
   static final FlutterLocalNotificationsPlugin _m_flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
   static String? _m_selectedNotificationPayload;
-  static BehaviorSubject<String?> m_selectedNotificationSubject = BehaviorSubject<String?>();
+  static BehaviorSubject<String?> _m_selectedNotificationSubject = BehaviorSubject<String?>();
+  static var _m_currentContext = null;
 
   Future<void> init() async
   {
@@ -42,11 +46,42 @@ class Notifications
     }
 
     //Initialize local notifications plugin
-    await _m_flutterLocalNotificationsPlugin.initialize(const InitializationSettings(android: AndroidInitializationSettings('@mipmap/ic_launcher')),
+    await _m_flutterLocalNotificationsPlugin.initialize(const InitializationSettings(android:
+      AndroidInitializationSettings('@mipmap/ic_launcher')),
         onSelectNotification: (String? payload) async {
           _m_selectedNotificationPayload = payload;
-          m_selectedNotificationSubject.add(payload);
-        });
+          _m_selectedNotificationSubject.add(payload);
+        }
+      );
+
+    initNotificationActionListener();
+  }
+
+  static void initNotificationActionListener()
+  {
+    _m_selectedNotificationSubject.stream.listen((String? memoryKey) async {
+      if(memoryKey != null) {
+        var database = Database();
+        int? keyValue = int.tryParse(memoryKey);
+        if(keyValue != null)
+        {
+          Memory? mem = database.getMemoryWithId(keyValue);
+          if (mem != null)
+          {
+            if(_m_currentContext != null)
+            {
+              Notifications._m_selectedNotificationSubject.add(null);
+              Navigator.push(_m_currentContext, MaterialPageRoute(builder: (context) => PageTest(mem)));
+            }
+          }
+        }
+      }
+    });
+  }
+
+  static void setupNotificationActionListener(BuildContext context)
+  {
+    _m_currentContext = context;
   }
 
   String? getNotificationPayload()

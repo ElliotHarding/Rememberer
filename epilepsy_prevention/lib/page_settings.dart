@@ -1,7 +1,6 @@
 import 'package:epilepsy_prevention/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
-import 'package:epilepsy_prevention/page_common.dart';
 
 class PageSettings extends StatefulWidget
 {
@@ -11,14 +10,14 @@ class PageSettings extends StatefulWidget
   State<PageSettings> createState() => PageSettingsState();
 }
 
-class PageSettingsState extends State<PageSettings> with BasePage
+class PageSettingsState extends State<PageSettings>
 {
   bool? m_bAppEnabled = Database().getNotificationsEnabledSetting();
 
   @override
   Widget build(BuildContext context) {
 
-    BasePage.setupNotificationActionListener(context);
+    Notifications.setupNotificationActionListener(context);
 
     return Scaffold(
         body: Column(children: [

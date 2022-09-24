@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/page_home.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_testResult.dart';
-import 'package:epilepsy_prevention/page_common.dart';
+import 'package:epilepsy_prevention/notifications.dart';
 
-class PageTest extends StatelessWidget with BasePage
+class PageTest extends StatelessWidget
 {
   PageTest(this.m_memory);
 
@@ -15,7 +15,7 @@ class PageTest extends StatelessWidget with BasePage
 
   Widget build(BuildContext context)
   {
-    BasePage.setupNotificationActionListener(context);
+    Notifications.setupNotificationActionListener(context);
 
     m_answerTextController.text = "";
     return Scaffold(

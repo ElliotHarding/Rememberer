@@ -1,12 +1,12 @@
+import 'package:epilepsy_prevention/notifications.dart';
 import 'package:epilepsy_prevention/page_settings.dart';
 import 'package:epilepsy_prevention/page_upcommingNotifications.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/page_memory.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_memories.dart';
-import 'package:epilepsy_prevention/page_common.dart';
 
-class PageHome extends StatefulWidget with BasePage
+class PageHome extends StatefulWidget
 {
   const PageHome({Key? key}) : super(key: key);
 
@@ -19,7 +19,7 @@ class PageHomeState extends State<PageHome>
   @override
   Widget build(BuildContext context) {
 
-    BasePage.setupNotificationActionListener(context);
+    Notifications.setupNotificationActionListener(context);
 
     return Scaffold(
       body:  SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child: ListView(
