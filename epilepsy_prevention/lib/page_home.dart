@@ -1,13 +1,12 @@
-import 'package:epilepsy_prevention/notifications.dart';
 import 'package:epilepsy_prevention/page_settings.dart';
 import 'package:epilepsy_prevention/page_upcommingNotifications.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/page_memory.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_memories.dart';
-import 'package:epilepsy_prevention/page_test.dart';
+import 'package:epilepsy_prevention/page_common.dart';
 
-class PageHome extends StatefulWidget
+class PageHome extends StatefulWidget with BasePage
 {
   const PageHome({Key? key}) : super(key: key);
 
@@ -20,20 +19,7 @@ class PageHomeState extends State<PageHome>
   @override
   Widget build(BuildContext context) {
 
-    Notifications.m_selectedNotificationSubject.stream.listen((String? memoryKey) async {
-      if(memoryKey != null) {
-        var database = Database();
-        int? keyValue = int.tryParse(memoryKey);
-        if(keyValue != null)
-        {
-          Memory? mem = database.getMemoryWithId(keyValue);
-          if (mem != null) {
-            Notifications.m_selectedNotificationSubject.add(null);
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(mem)));
-          }
-        }
-      }
-    });
+    BasePage.setupNotificationActionListener(context);
 
     return Scaffold(
       body:  SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child: ListView(

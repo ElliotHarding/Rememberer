@@ -1,7 +1,7 @@
 import 'package:epilepsy_prevention/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
-import 'package:epilepsy_prevention/page_test.dart';
+import 'package:epilepsy_prevention/page_common.dart';
 
 class PageSettings extends StatefulWidget
 {
@@ -11,27 +11,14 @@ class PageSettings extends StatefulWidget
   State<PageSettings> createState() => PageSettingsState();
 }
 
-class PageSettingsState extends State<PageSettings>
+class PageSettingsState extends State<PageSettings> with BasePage
 {
   bool? m_bAppEnabled = Database().getNotificationsEnabledSetting();
 
   @override
   Widget build(BuildContext context) {
 
-    Notifications.m_selectedNotificationSubject.stream.listen((String? memoryKey) async {
-      if(memoryKey != null) {
-        var database = Database();
-        int? keyValue = int.tryParse(memoryKey);
-        if(keyValue != null)
-        {
-          Memory? mem = database.getMemoryWithId(keyValue);
-          if (mem != null) {
-            Notifications.m_selectedNotificationSubject.add(null);
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(mem)));
-          }
-        }
-      }
-    });
+    BasePage.setupNotificationActionListener(context);
 
     return Scaffold(
         body: Column(children: [
