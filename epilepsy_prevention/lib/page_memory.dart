@@ -180,7 +180,9 @@ class PageMemoryState extends State<PageMemory>
   {
     for(String falseAnswer in widget.m_memory.m_falseAnswers)
     {
-      m_falseAnswerTextEditControllers.add(TextEditingController());
+      TextEditingController txtEditController = TextEditingController();
+      txtEditController.text = falseAnswer;
+      m_falseAnswerTextEditControllers.add(txtEditController);
     }
   }
 
