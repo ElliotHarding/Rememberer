@@ -101,9 +101,15 @@ class PageMemory extends StatelessWidget
         const Spacer(),
 
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+          const Spacer(),
+
           TextButton(onPressed: () => onDelete(context), child: const Text("Delete", style: TextStyle(fontSize: 30, color: Colors.blue))),
 
-          TextButton(onPressed: () => onSave(context), child: const Text("Save", style: TextStyle(fontSize: 30, color: Colors.blue)))
+          const Spacer(),
+
+          TextButton(onPressed: () => onSave(context), child: const Text("Save", style: TextStyle(fontSize: 30, color: Colors.blue))),
+
+          const Spacer()
         ]),
 
         const Spacer()

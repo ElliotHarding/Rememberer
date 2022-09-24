@@ -29,28 +29,41 @@ class PageTestResult extends StatelessWidget
       }
     });
 
-    return WillPopScope(onWillPop: () async {Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories())); return true;}, child: Scaffold(
-      body: Column(children: <Widget>[
+    return WillPopScope(onWillPop: () async {Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories())); return true;}, child: Scaffold(body:
+    Column(children: <Widget>[
 
-        const Spacer(),
+      const Spacer(),
 
-        Text(m_bSuccess ? "Correct!" : "Wrong!", style: const TextStyle(fontSize: 30), textAlign: TextAlign.left),
+      SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.25, child:
+        Text(m_bSuccess ? "Correct!" : "Wrong!", style: const TextStyle(fontSize: 30), textAlign: TextAlign.center)
+      ),
 
-        const Spacer(),
+      SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.1, child:
+        const Text("Question", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center)
+      ),
 
-        Text(m_memory.m_question, style: const TextStyle(fontSize: 30), textAlign: TextAlign.center),
+      SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.1, child:
+        Text(m_memory.m_question, style: const TextStyle(fontSize: 30), textAlign: TextAlign.center)
+      ),
 
-        const Spacer(),
+      const Spacer(),
 
-        Text(m_memory.m_answer, style: const TextStyle(fontSize: 30), textAlign: TextAlign.left),
+      SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.1, child:
+        const Text("Answer", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center)
+      ),
 
-        const Spacer(),
+      SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.1, child:
+        Text(m_memory.m_answer, style: const TextStyle(fontSize: 30), textAlign: TextAlign.center)
+      ),
 
+      const Spacer(),
+
+      SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.2, child:
         TextButton(onPressed: (){
           Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome()));
-        }, child: const Text("Home")),
-      ]
+        }, child: const Text("Home", style: TextStyle(fontSize: 30, color: Colors.blue))),
       )
+    ])
     ));
   }
 }
