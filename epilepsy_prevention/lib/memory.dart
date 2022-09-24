@@ -49,9 +49,20 @@ class Memory extends HiveObject
       return "Invalid answer format";
     }
 
-    if(m_bMultiChoice && m_falseAnswers.isEmpty)
+    if(m_bMultiChoice)
     {
+      if(m_falseAnswers.isEmpty)
+      {
         return "Must have at least one false answer";
+      }
+
+      for(String falseAnswer in m_falseAnswers)
+      {
+        if(falseAnswer == "")
+        {
+          return "Can't have blank false answer";
+        }
+      }
     }
 
     if(m_testFrequecy == "")

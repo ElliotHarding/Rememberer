@@ -3,35 +3,41 @@ import 'package:epilepsy_prevention/page_memoryReminders.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
 
-class PageMemory extends StatelessWidget
+class PageMemory extends StatefulWidget
 {
-  PageMemory(this.m_memory);
+  PageMemory(this.m_memory, {Key? key}) : super(key: key);
 
   Memory m_memory;
-  List<int> m_oldNotifyTimes = [];
 
+  @override
+  State<PageMemory> createState() => PageMemoryState();
+}
+
+class PageMemoryState extends State<PageMemory>
+{
+  List<int> m_oldNotifyTimes = [];
   bool m_bChangeNotifyTimes = false;
 
+  List<TextEditingController> m_falseAnswerTextEditControllers = [];
   final m_questionTextController = TextEditingController();
   final m_answerTextController = TextEditingController();
-  final m_wrongAnswersTextController = TextEditingController();
+
+  void initState()
+  {
+    initialFalseAnswerList();
+
+    m_oldNotifyTimes = widget.m_memory.m_notifyTimes;
+
+    m_questionTextController.text = widget.m_memory.m_question;
+    m_answerTextController.text = widget.m_memory.m_answer;
+  }
 
   Widget build(BuildContext context)
   {
     Notifications.setupNotificationActionListener(context);
 
-    m_oldNotifyTimes = m_memory.m_notifyTimes;
-
-    m_questionTextController.text = m_memory.m_question;
-    m_answerTextController.text = m_memory.m_answer;
-
-    for(String falseAnswer in m_memory.m_falseAnswers)
-    {
-      m_wrongAnswersTextController.text += falseAnswer + ",";
-    }
-
     return Scaffold(body: StatefulBuilder(builder: (BuildContext context, StateSetter setState){
-      return Column(children: <Widget>[
+      return Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
 
         const Spacer(),
 
@@ -56,30 +62,34 @@ class PageMemory extends StatelessWidget
         const Spacer(),
 
         SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Row(children: [
+
           const Text("Multiple Choice: ", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left),
-          Checkbox(value: m_memory.m_bMultiChoice, onChanged: (bool? value) {
+
+          Checkbox(value: widget.m_memory.m_bMultiChoice, onChanged: (bool? value) {
             if (value != null) {
               setState(() {
-                m_memory.m_bMultiChoice = value;
+                widget.m_memory.m_bMultiChoice = value;
               });
             }
           }),
+
+          const Spacer(),
+
+          Visibility(visible: widget.m_memory.m_bMultiChoice, child:
+            TextButton(onPressed: addFalseAnswer, child: const Text("+", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center))
+          )
         ])),
 
-      IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Visibility(visible: m_memory.m_bMultiChoice, child:
-        TextField(
-            decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter wrong answers.'),
-            style: const TextStyle(fontSize: 30, color: Colors.black),
-            controller: m_wrongAnswersTextController
-        )
-      ))),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 210, child: Visibility(visible: widget.m_memory.m_bMultiChoice, child:
+          ListView.builder(itemCount: m_falseAnswerTextEditControllers.length, shrinkWrap: true, scrollDirection: Axis.vertical, itemBuilder: (context, i){ return genFalseAnswerWidget(context, i);}))
+        ),
 
         const Spacer(),
 
         SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 70, child: Row(children : [
           const Text("Reminders: ", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left),
           TextButton(onPressed: () async {
-            m_memory = await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemoryReminders(m_memory: m_memory)));
+            widget.m_memory = await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemoryReminders(m_memory: widget.m_memory)));
             m_bChangeNotifyTimes = true;
           }, child: const Text("⚙", style: TextStyle(fontSize: 30, color: Colors.black), textAlign: TextAlign.left))
         ])),
@@ -105,11 +115,17 @@ class PageMemory extends StatelessWidget
 
   void onSave(BuildContext context) async
   {
-    m_memory.m_question = m_questionTextController.text;
-    m_memory.m_answer = m_answerTextController.text;
-    m_memory.m_falseAnswers = m_wrongAnswersTextController.text.split(",");
+    widget.m_memory.m_question = m_questionTextController.text;
+    widget.m_memory.m_answer = m_answerTextController.text;
 
-    final String validationResult = m_memory.validate();
+    List<String> falseAnswers = [];
+    for(TextEditingController txtCtrllr in m_falseAnswerTextEditControllers)
+    {
+      falseAnswers.add(txtCtrllr.text);
+    }
+    widget.m_memory.m_falseAnswers = falseAnswers;
+
+    final String validationResult = widget.m_memory.validate();
     if(validationResult != "Success")
     {
       showDialog(context: context, builder: (context){return AlertDialog(title: const Text("Adding Memory Failed!"), content: Text(validationResult));});
@@ -123,23 +139,23 @@ class PageMemory extends StatelessWidget
       if (m_bChangeNotifyTimes)
       {
         //Clear previous notifications
-        if(m_memory.key != null)
+        if(widget.m_memory.key != null)
         {
-          Notifications().removeNotifications(m_memory.key, m_oldNotifyTimes);
+          Notifications().removeNotifications(widget.m_memory.key, m_oldNotifyTimes);
         }
       }
 
       var key;
-      if(db.getMemoryWithId(m_memory.key) == null)
+      if(db.getMemoryWithId(widget.m_memory.key) == null)
       {
-        key = await box.add(m_memory);
+        key = await box.add(widget.m_memory);
       }
       else
       {
-        key = db.updateMemory(m_memory);
+        key = db.updateMemory(widget.m_memory);
       }
 
-      await Notifications().scheduleNotifications(key, m_memory.m_question, m_memory.m_notifyTimes);
+      await Notifications().scheduleNotifications(key, widget.m_memory.m_question, widget.m_memory.m_notifyTimes);
     }
 
     Navigator.of(context).pop();
@@ -148,15 +164,50 @@ class PageMemory extends StatelessWidget
   void onDelete(BuildContext context)
   {
     var box = Database().getMemoryBox();
-    if (box != null && m_memory.key != null)
+    if (box != null && widget.m_memory.key != null)
     {
       //Clear notifications
-      Notifications().removeNotifications(m_memory.key, m_memory.m_notifyTimes);
+      Notifications().removeNotifications(widget.m_memory.key, widget.m_memory.m_notifyTimes);
 
       //Delete
-      box.delete(m_memory.key);
+      box.delete(widget.m_memory.key);
     }
 
     Navigator.of(context).pop();
+  }
+
+  void initialFalseAnswerList()
+  {
+    for(String falseAnswer in widget.m_memory.m_falseAnswers)
+    {
+      m_falseAnswerTextEditControllers.add(TextEditingController());
+    }
+  }
+
+  void addFalseAnswer()
+  {
+    setState(() {
+      m_falseAnswerTextEditControllers.add(TextEditingController());
+    });
+  }
+
+  Widget genFalseAnswerWidget(BuildContext context, int iFalseAnswer)
+  {
+    return IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
+      Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+        SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
+          TextField(
+              decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter wrong answer.'),
+              style: const TextStyle(fontSize: 30, color: Colors.black),
+              controller: m_falseAnswerTextEditControllers[iFalseAnswer]
+          )
+        ),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
+          TextButton(onPressed: () { setState(() {
+            m_falseAnswerTextEditControllers.removeAt(iFalseAnswer);
+          });}, child: const Text("X", style: TextStyle(fontSize: 30, color: Colors.black))),
+        )
+      ])
+    ));
   }
 }

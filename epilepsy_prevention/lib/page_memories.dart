@@ -24,31 +24,33 @@ class PageMemoriesState extends State<PageMemories>
     m_memoryWidgets = getMemoryWidgets(context);
 
     return WillPopScope(onWillPop: () async { Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome())); return true;}, child: Scaffold(body:
-      Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-        
-        SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.height * 0.15, child:
-          Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-            const Spacer(),
+      SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child:
+        Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
 
-            TextButton(onPressed: () async {
-              await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory())));
-              setState(() {
-                m_memoryWidgets = getMemoryWidgets(context);
-              });
-              },
-                child: const Text("Add New Memory", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
-            ),
+          SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.height * 0.15, child:
+            Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+              const Spacer(),
 
-            const Spacer()
-          ],)
-        ),
+              TextButton(onPressed: () async {
+                await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory())));
+                setState(() {
+                  m_memoryWidgets = getMemoryWidgets(context);
+                });
+                },
+                  child: const Text("Add New Memory", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
+              ),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.height * 0.1, child:
-          const Text("Memories", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
-        ),
+              const Spacer()
+            ],)
+          ),
 
-        SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.75, child: ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: m_memoryWidgets)),
-        ]
+          SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.height * 0.1, child:
+            const Text("Memories", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
+          ),
+
+          SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.75, child: ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: m_memoryWidgets)),
+          ]
+        )
       )
     ));
    }
