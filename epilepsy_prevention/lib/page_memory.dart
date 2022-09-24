@@ -199,9 +199,10 @@ class PageMemoryState extends State<PageMemory>
       Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
         SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
           TextField(
-              decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter wrong answer.'),
-              style: const TextStyle(fontSize: 30, color: Colors.black),
-              controller: m_falseAnswerTextEditControllers[iFalseAnswer]
+            decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter wrong answer.'),
+            style: const TextStyle(fontSize: 30, color: Colors.black),
+            controller: m_falseAnswerTextEditControllers[iFalseAnswer],
+            maxLines: null,
           )
         ),
         SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
