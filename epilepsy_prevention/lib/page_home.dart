@@ -26,16 +26,16 @@ class PageHomeState extends State<PageHome>
           children: <Widget>[
             SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton( onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory())));
-            }, child: const Text("New Memory", style: const TextStyle(fontSize: 30.0, color: Colors.blue)))),
+            }, child: const Text("New Memory", style: TextStyle(fontSize: 30.0, color: Colors.blue)))),
             SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories()));
-            }, child: const Text("Memories", style: const TextStyle(fontSize: 30.0, color: Colors.blue)))),
+            }, child: const Text("Memories", style: TextStyle(fontSize: 30.0, color: Colors.blue)))),
             SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => const PageUpcommingNotifications()));
-            }, child: const Text("Notifications", style: const TextStyle(fontSize: 30.0, color: Colors.blue)))),
+            }, child: const Text("Notifications", style: TextStyle(fontSize: 30.0, color: Colors.blue)))),
             SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => const PageSettings()));
-            }, child: const Text("Settings", style: const TextStyle(fontSize: 30.0, color: Colors.blue))))
+            }, child: const Text("Settings", style: TextStyle(fontSize: 30.0, color: Colors.blue))))
           ])
       )
     );
