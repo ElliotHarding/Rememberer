@@ -28,7 +28,11 @@ class Notifications
 
     if(!(await isNotificationPermissionGranted()))
     {
-      await requestNotificationPermissions();
+      bool? result = await requestNotificationPermissions();
+      if(result == true)
+        {
+          int x = 0;
+        }
     }
 
     //App launched by notification?
@@ -84,18 +88,12 @@ class Notifications
 
   Future<void> scheduleNotification(int key, String question, int triggerTimeMs, String channelId) async
   {
-    var timeSeconds = triggerTimeMs - DateTime.now().millisecondsSinceEpoch;
-
     await _m_flutterLocalNotificationsPlugin.zonedSchedule(
         Database().getAndIncrementChannelNumber(),
         'Time to remember!',
         question,
-        timeZone.TZDateTime.now(timeZone.local).add(const Duration(seconds: 1) * timeSeconds),
-        NotificationDetails(
-            android: AndroidNotificationDetails(
-                channelId, 'Memory notification channel',
-                channelDescription: 'Memory notification channel')
-        ),
+        timeZone.TZDateTime.fromMillisecondsSinceEpoch(timeZone.local, triggerTimeMs),
+        NotificationDetails(android: AndroidNotificationDetails(channelId, channelId, channelDescription: channelId)),
         androidAllowWhileIdle: true,
         payload: key.toString(),
         uiLocalNotificationDateInterpretation:

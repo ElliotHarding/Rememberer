@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 
 class BasePage
 {
-  static void setupNotificationActionListener(BuildContext context)
+  static var m_currentContext;
+
+  static void initNotificationActionListener()
   {
     Notifications.m_selectedNotificationSubject.stream.listen((String? memoryKey) async {
       if(memoryKey != null) {
@@ -14,12 +16,21 @@ class BasePage
         if(keyValue != null)
         {
           Memory? mem = database.getMemoryWithId(keyValue);
-          if (mem != null) {
-            Notifications.m_selectedNotificationSubject.add(null);
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(mem)));
+          if (mem != null)
+          {
+            if(m_currentContext != null)
+            {
+                Notifications.m_selectedNotificationSubject.add(null);
+                Navigator.push(m_currentContext, MaterialPageRoute(builder: (context) => PageTest(mem)));
+            }
           }
         }
       }
     });
+  }
+
+  static void setupNotificationActionListener(BuildContext context)
+  {
+    m_currentContext = context;
   }
 }

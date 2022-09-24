@@ -1,3 +1,4 @@
+import 'package:epilepsy_prevention/page_common.dart';
 import 'package:epilepsy_prevention/page_home.dart';
 import 'package:epilepsy_prevention/page_test.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,8 @@ void main() async {
   //Setup notifications stuff
   var notifications = Notifications();
   await notifications.init();
+
+  BasePage.initNotificationActionListener();
 
   //Run app
   runApp(App(notifications.getNotificationPayload()));

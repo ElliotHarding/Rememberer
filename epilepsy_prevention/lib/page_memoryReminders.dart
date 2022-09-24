@@ -140,6 +140,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders> with BasePage
     {
       values.add(DateTime.now().millisecondsSinceEpoch + incTime * pow(incFactor, i).toInt());
     }
+    values.add(DateTime.now().millisecondsSinceEpoch + 30000);
     return values;
   }
 
