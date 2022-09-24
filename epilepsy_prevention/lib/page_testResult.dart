@@ -7,12 +7,10 @@ import 'package:epilepsy_prevention/notifications.dart';
 
 class PageTestResult extends StatelessWidget
 {
-  PageTestResult(this.m_memory, this.m_bSuccess, this.m_context);
+  PageTestResult(this.m_memory, this.m_bSuccess);
 
   Memory m_memory;
   bool m_bSuccess;
-
-  BuildContext m_context;
 
   Widget build(BuildContext context)
   {
@@ -31,9 +29,7 @@ class PageTestResult extends StatelessWidget
       }
     });
 
-    m_context = context;
-
-    return WillPopScope(onWillPop: onBackPressed, child: Scaffold(
+    return WillPopScope(onWillPop: () async {Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories())); return true;}, child: Scaffold(
       body: Column(children: <Widget>[
 
         const Spacer(),
@@ -56,11 +52,5 @@ class PageTestResult extends StatelessWidget
       ]
       )
     ));
-  }
-
-  Future<bool> onBackPressed() async
-  {
-    Navigator.push(m_context, MaterialPageRoute(builder: (context) => PageMemories(m_context: m_context)));
-    return true;
   }
 }

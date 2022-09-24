@@ -7,11 +7,9 @@ import 'package:epilepsy_prevention/notifications.dart';
 
 class PageMemories extends StatefulWidget
 {
-  PageMemories({Key? key, required this.m_context}) : super(key: key);
+  PageMemories({Key? key}) : super(key: key);
 
-  BuildContext m_context;
-
-  @override
+   @override
   State<PageMemories> createState() => PageMemoriesState();
 }
 
@@ -36,10 +34,9 @@ class PageMemoriesState extends State<PageMemories>
       }
     });
 
-    widget.m_context = context;
     m_memoryWidgets = getMemoryWidgets(context);
 
-    return WillPopScope(onWillPop: onBackPressed, child: Scaffold(
+    return WillPopScope(onWillPop: () async { Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome())); return true;}, child: Scaffold(
       body: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>
         [
         SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.height * 0.15, child:
@@ -51,7 +48,7 @@ class PageMemoriesState extends State<PageMemories>
               setState(() {
                 m_memoryWidgets = getMemoryWidgets(context);
               });
-            },
+              },
                 child: const Text("Add New Memory", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
             ),
 
@@ -95,11 +92,5 @@ class PageMemoriesState extends State<PageMemories>
       }
     }
     return widgets;
-  }
-
-  Future<bool> onBackPressed() async
-  {
-    Navigator.push(widget.m_context, MaterialPageRoute(builder: (context) => const PageHome()));
-    return true;
   }
 }
