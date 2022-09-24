@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_memory.dart';
 
-class PageUpcommingNotifications extends StatefulWidget
+class PageUpcomingNotifications extends StatefulWidget
 {
-  const PageUpcommingNotifications({Key? key}) : super(key: key);
+  const PageUpcomingNotifications({Key? key}) : super(key: key);
 
   @override
-  State<PageUpcommingNotifications> createState() => PageUpcommingNotificationsState();
+  State<PageUpcomingNotifications> createState() => PageUpcomingNotificationsState();
 }
 
-class PageUpcommingNotificationsState extends State<PageUpcommingNotifications>
+class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
 {
   List<Widget> m_notificationsWidget = [];
 
@@ -57,7 +57,10 @@ class PageUpcommingNotificationsState extends State<PageUpcommingNotifications>
       {
         for (int notifyTime in memory.m_notifyTimes)
         {
-          notifications.add(MemoryNotification(notifyTime, memory));
+          if(notifyTime > DateTime.now().millisecondsSinceEpoch)
+          {
+            notifications.add(MemoryNotification(notifyTime, memory));
+          }
         }
       }
     }

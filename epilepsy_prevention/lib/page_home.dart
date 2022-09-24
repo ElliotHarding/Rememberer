@@ -1,6 +1,6 @@
 import 'package:epilepsy_prevention/notifications.dart';
 import 'package:epilepsy_prevention/page_settings.dart';
-import 'package:epilepsy_prevention/page_upcommingNotifications.dart';
+import 'package:epilepsy_prevention/page_upcomingNotifications.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/page_memory.dart';
 import 'package:epilepsy_prevention/memory.dart';
@@ -31,7 +31,7 @@ class PageHomeState extends State<PageHome>
               Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories()));
             }, child: const Text("Memories", style: TextStyle(fontSize: 30.0, color: Colors.blue)))),
             SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton(onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const PageUpcommingNotifications()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const PageUpcomingNotifications()));
             }, child: const Text("Notifications", style: TextStyle(fontSize: 30.0, color: Colors.blue)))),
             SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.25, child: TextButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => const PageSettings()));
