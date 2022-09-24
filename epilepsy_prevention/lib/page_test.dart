@@ -44,10 +44,7 @@ class PageTest extends StatelessWidget
 
         Visibility(visible: !m_memory.m_bMultiChoice, child:
           TextField(
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter a answer',
-              ),
+            decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a answer'),
             controller: m_answerTextController
           )
         ),
@@ -59,26 +56,21 @@ class PageTest extends StatelessWidget
           )
         ),
 
-        Visibility(visible: m_memory.m_bMultiChoice,
-            child: ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: getMultiChoiceAnswers(context))
+        Visibility(visible: m_memory.m_bMultiChoice, child:
+          ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: getMultiChoiceAnswers(context))
         ),
 
         const Spacer(),
 
-        Row(mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
+        Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+          TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories())); }, child:
+            const Text("Memories", style: TextStyle(fontSize: 30, color: Colors.black))
+          ),
 
-              TextButton(onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories()));
-              },
-                  child: const Text("Memories", style: TextStyle(fontSize: 30, color: Colors.black))),
-
-              TextButton(onPressed: () async {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome()));
-              },
-                  child: const Text("Home", style: TextStyle(fontSize: 30, color: Colors.black)))
-            ]),
+          TextButton(onPressed: () async { Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome())); }, child:
+            const Text("Home", style: TextStyle(fontSize: 30, color: Colors.black))
+          )
+        ]),
 
         const Spacer()
       ]
@@ -92,11 +84,10 @@ class PageTest extends StatelessWidget
 
     for(String option in m_memory.m_falseAnswers)
     {
-      widgets.add(Row(
-        children: [
-          TextButton(onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, option == m_memory.m_answer)));
-          }, child: Text(option))
+      widgets.add(Row(children: [
+          TextButton(onPressed: (){ Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, option == m_memory.m_answer))); }, child:
+            Text(option)
+          )
         ],
       ));
     }
