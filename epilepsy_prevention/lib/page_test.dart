@@ -36,23 +36,31 @@ class PageTest extends StatelessWidget
 
         const Spacer(),
 
-        Text(m_memory.m_question, style: const TextStyle(fontSize: 35, color: Colors.black), textAlign: TextAlign.center),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.height * 0.1, child:
+          Text(m_memory.m_question, style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center)
+        ),
 
         const Spacer(),
 
-        const Text("Answer", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: 50, child:
+          const Text("Answer", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
+        ),
 
         Visibility(visible: !m_memory.m_bMultiChoice, child:
-          TextField(
-            decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a answer'),
-            controller: m_answerTextController
-          )
-        ),
+          IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
+            TextField(
+              decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a answer'),
+              style: const TextStyle(fontSize: 30, color: Colors.black),
+              controller: m_answerTextController
+            )
+        ))),
+
+        const Spacer(),
 
         Visibility(visible: !m_memory.m_bMultiChoice, child:
           TextButton(onPressed: () async {
               Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, m_answerTextController.text == m_memory.m_answer)));
-            }, child: const Text("Guess", style: TextStyle(fontSize: 30, color: Colors.black), textAlign: TextAlign.center)
+            }, child: const Text("Guess", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center)
           )
         ),
 
@@ -63,13 +71,19 @@ class PageTest extends StatelessWidget
         const Spacer(),
 
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+          const Spacer(),
+
           TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories())); }, child:
-            const Text("Memories", style: TextStyle(fontSize: 30, color: Colors.black))
+            const Text("Memories", style: TextStyle(fontSize: 30, color: Colors.blue))
           ),
 
+          const Spacer(),
+
           TextButton(onPressed: () async { Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome())); }, child:
-            const Text("Home", style: TextStyle(fontSize: 30, color: Colors.black))
-          )
+            const Text("Home", style: TextStyle(fontSize: 30, color: Colors.blue))
+          ),
+
+          const Spacer()
         ]),
 
         const Spacer()
