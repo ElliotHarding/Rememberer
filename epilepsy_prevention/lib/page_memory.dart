@@ -41,50 +41,55 @@ class PageMemoryState extends State<PageMemory>
 
         //const Spacer(),
 
-        Center(child:SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Question", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
-
-        Center(child:IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: TextField(maxLines: null,
-          decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a search question'),
-          style: const TextStyle(fontSize: 30.0, color: Colors.black),
-          controller: m_questionTextController,
-        )))),
-
-        //const Spacer(),
-
-        Center(child:SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Correct Answer", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
-
-        Center(child:IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: TextField(maxLines: null,
-          decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a answer'),
-          style: const TextStyle(fontSize: 30.0, color: Colors.black),
-          controller: m_answerTextController,
-        )))),
+        Center(child: Column(children: [
+          SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: const Text("Question", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
+          IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: TextField(maxLines: null,
+            decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a search question'),
+            style: const TextStyle(fontSize: 30.0, color: Colors.black),
+            controller: m_questionTextController,
+          )))
+          ])
+        ),
 
         //const Spacer(),
 
-        Center(child:SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 70, child: Row(children: [
+        Center(child: Column(children: [
+          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Correct Answer", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
 
-          const Text("Multiple Choice: ", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left),
+          IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: TextField(maxLines: null,
+            decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a answer'),
+            style: const TextStyle(fontSize: 30.0, color: Colors.black),
+            controller: m_answerTextController,
+          ))),
+        ])),
 
-          Checkbox(value: widget.m_memory.m_bMultiChoice, onChanged: (bool? value) {
-            if (value != null) {
-              setState(() {
-                widget.m_memory.m_bMultiChoice = value;
-              });
-            }
-          }),
+        //const Spacer(),
 
-          const Spacer(),
+        Center(child: Column(children: [
+          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 70, child: Row(children: [
 
-          Visibility(visible: widget.m_memory.m_bMultiChoice, child:
+            const Text("Multiple Choice: ", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left),
+
+            Checkbox(value: widget.m_memory.m_bMultiChoice, onChanged: (bool? value) {
+              if (value != null) {
+                setState(() {
+                  widget.m_memory.m_bMultiChoice = value;
+                });
+              }
+            }),
+
+            const Spacer(),
+
+            Visibility(visible: widget.m_memory.m_bMultiChoice, child:
             TextButton(onPressed: addFalseAnswer, child: const Text("+", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center))
+            )
+          ])),
+
+          SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Visibility(visible: widget.m_memory.m_bMultiChoice, child:
+            ListView.builder(itemCount: m_falseAnswerTextEditControllers.length, shrinkWrap: true, scrollDirection: Axis.vertical, itemBuilder: (context, i){ return genFalseAnswerWidget(context, i);}))
           )
-        ]))),
-
-        Center(child:SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Visibility(visible: widget.m_memory.m_bMultiChoice, child:
-          ListView.builder(itemCount: m_falseAnswerTextEditControllers.length, shrinkWrap: true, scrollDirection: Axis.vertical, itemBuilder: (context, i){ return genFalseAnswerWidget(context, i);}))
-        )),
-
-        //const Spacer(),
+        ])),
+        //const Spacer(), 
 
         Center(child:SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 70, child: Row(children : [
           const Text("Reminders: ", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left),
