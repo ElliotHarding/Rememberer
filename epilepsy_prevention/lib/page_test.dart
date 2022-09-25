@@ -4,6 +4,7 @@ import 'package:epilepsy_prevention/page_home.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_testResult.dart';
 import 'package:epilepsy_prevention/notifications.dart';
+import 'dart:math';
 
 class PageTest extends StatelessWidget
 {
@@ -29,8 +30,10 @@ class PageTest extends StatelessWidget
 
         const Spacer(),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: 50, child:
-          const Text("Answer", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
+        Visibility(visible: !m_memory.m_bMultiChoice, child:
+          SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: 50, child:
+            const Text("Answer", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
+          )
         ),
 
         Visibility(visible: !m_memory.m_bMultiChoice, child:
@@ -38,13 +41,12 @@ class PageTest extends StatelessWidget
             TextField(
               decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a answer'),
               style: const TextStyle(fontSize: 30, color: Colors.black),
-              controller: m_answerTextController
+              controller: m_answerTextController,
+              maxLines: null
             )
         ))),
 
-        const Spacer(),
-
-        Visibility(visible: !m_memory.m_bMultiChoice, child:
+         Visibility(visible: !m_memory.m_bMultiChoice, child:
           TextButton(onPressed: () async {
               Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, m_answerTextController.text == m_memory.m_answer)));
             }, child: const Text("Guess", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center)
@@ -83,16 +85,27 @@ class PageTest extends StatelessWidget
   {
     List<Widget> widgets = <Widget>[];
 
-    for(String option in m_memory.m_falseAnswers)
+    int iAnswer = Random().nextInt(m_memory.m_falseAnswers.length);
+
+    for(int i = 0; i < m_memory.m_falseAnswers.length; i++)
     {
-      widgets.add(Row(children: [
-          TextButton(onPressed: (){ Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, option == m_memory.m_answer))); }, child:
-            Text(option)
-          )
-        ],
-      ));
+      if(i == iAnswer)
+      {
+        widgets.add(genMultiChoiceOption(context, m_memory.m_answer, true));
+      }
+
+      widgets.add(genMultiChoiceOption(context, m_memory.m_falseAnswers[i], false));
     }
 
     return widgets;
+  }
+
+  Widget genMultiChoiceOption(BuildContext context, String option, bool success)
+  {
+    return SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: 
+      TextButton(onPressed: (){ Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, success))); }, child:
+        Text(option, style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center)
+      )
+    );
   }
 }
