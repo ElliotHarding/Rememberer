@@ -53,9 +53,9 @@ class PageTest extends StatelessWidget
           )
         ),
 
-        Visibility(visible: m_memory.m_bMultiChoice, child:
+        Visibility(visible: m_memory.m_bMultiChoice, child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
           ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: getMultiChoiceAnswers(context))
-        ),
+        )),
 
         const Spacer(),
 
@@ -102,10 +102,23 @@ class PageTest extends StatelessWidget
 
   Widget genMultiChoiceOption(BuildContext context, String option, bool success)
   {
-    return SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: 
-      TextButton(onPressed: (){ Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, success))); }, child:
-        Text(option, style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center)
-      )
+    return SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Column(children: [
+
+      const SizedBox(height: 20),
+
+      Row(children: [
+
+        SizedBox(width: MediaQuery.of(context).size.width * 0.75, child:
+          Text(option, style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
+        ),
+
+        Checkbox(value: false, onChanged: (bool? value) {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, success)));
+        }),
+      ]),
+
+      const SizedBox(height: 20)
+      ])
     );
   }
 }
