@@ -39,6 +39,8 @@ class PageMemoryState extends State<PageMemory>
     return Scaffold(body: SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child:
       ListView(shrinkWrap: true, children: <Widget>[
 
+        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+
         Center(child: Column(children: [
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: const Text("Question", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
           IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: TextField(maxLines: null,
@@ -49,8 +51,10 @@ class PageMemoryState extends State<PageMemory>
           ])
         ),
 
+        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+
         Center(child: Column(children: [
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Correct Answer", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
+          SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: const Text("Correct Answer", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
 
           IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: TextField(maxLines: null,
             decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a answer'),
@@ -59,8 +63,10 @@ class PageMemoryState extends State<PageMemory>
           ))),
         ])),
 
+        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+
         Center(child: Column(children: [
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 70, child: Row(children: [
+          SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Row(children: [
 
             const Text("Multiple Choice: ", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left),
 
@@ -84,13 +90,17 @@ class PageMemoryState extends State<PageMemory>
           )
         ])),
 
-        Center(child:SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 70, child: Row(children : [
+        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+
+        Center(child:SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Row(children : [
           const Text("Reminders: ", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left),
           TextButton(onPressed: () async {
             widget.m_memory = await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemoryReminders(m_memory: widget.m_memory)));
             m_bChangeNotifyTimes = true;
           }, child: const Text("⚙", style: TextStyle(fontSize: 30, color: Colors.black), textAlign: TextAlign.left))
         ]))),
+
+        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
           const Spacer(),
@@ -103,6 +113,8 @@ class PageMemoryState extends State<PageMemory>
 
           const Spacer()
         ]),
+
+        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
         //const Spacer()
       ])
