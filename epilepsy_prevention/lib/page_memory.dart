@@ -39,8 +39,6 @@ class PageMemoryState extends State<PageMemory>
     return Scaffold(body: SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child:
       ListView(shrinkWrap: true, children: <Widget>[
 
-        //const Spacer(),
-
         Center(child: Column(children: [
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: const Text("Question", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
           IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: TextField(maxLines: null,
@@ -51,8 +49,6 @@ class PageMemoryState extends State<PageMemory>
           ])
         ),
 
-        //const Spacer(),
-
         Center(child: Column(children: [
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Correct Answer", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
 
@@ -62,8 +58,6 @@ class PageMemoryState extends State<PageMemory>
             controller: m_answerTextController,
           ))),
         ])),
-
-        //const Spacer(),
 
         Center(child: Column(children: [
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 70, child: Row(children: [
@@ -86,10 +80,9 @@ class PageMemoryState extends State<PageMemory>
           ])),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Visibility(visible: widget.m_memory.m_bMultiChoice, child:
-            ListView.builder(itemCount: m_falseAnswerTextEditControllers.length, shrinkWrap: true, scrollDirection: Axis.vertical, itemBuilder: (context, i){ return genFalseAnswerWidget(context, i);}))
+            ListView.builder(itemCount: m_falseAnswerTextEditControllers.length, physics: const NeverScrollableScrollPhysics(), shrinkWrap: true, scrollDirection: Axis.vertical, itemBuilder: (context, i){ return genFalseAnswerWidget(context, i);}))
           )
         ])),
-        //const Spacer(), 
 
         Center(child:SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 70, child: Row(children : [
           const Text("Reminders: ", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left),
@@ -98,8 +91,6 @@ class PageMemoryState extends State<PageMemory>
             m_bChangeNotifyTimes = true;
           }, child: const Text("⚙", style: TextStyle(fontSize: 30, color: Colors.black), textAlign: TextAlign.left))
         ]))),
-
-        //const Spacer(),
 
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
           const Spacer(),
