@@ -163,7 +163,10 @@ class PageMemoryState extends State<PageMemory>
         key = db.updateMemory(widget.m_memory);
       }
 
-      await Notifications().scheduleNotifications(key, widget.m_memory.m_question, widget.m_memory.m_notifyTimes);
+      if(Database().getNotificationsEnabledSetting())
+      {
+        await Notifications().scheduleNotifications(key, widget.m_memory.m_question, widget.m_memory.m_notifyTimes);
+      }
     }
 
     Navigator.of(context).pop();
