@@ -8,16 +8,17 @@ class PageMemoryReminders extends StatefulWidget
 {
   PageMemoryReminders({required this.m_memory, Key? key}) : super(key: key);
 
+  Memory m_memoryBefore = Memory();
   Memory m_memory;
 
   //Notification gen vars
-  int m_currentIteration = 0;
-  int m_maxNotifications = 0;
+  int m_currentIteration = 1;
+  int m_maxNotifications = 1;
 
   //Graph stuff
   int m_graphMaxTime = 0;
   int m_graphMinTime = 0;
-  int m_graphViewIterationsCount = 0;
+  int m_graphViewIterationsCount = 1;
   List<ScatterSpot> m_graphDataPoints = [];
 
   @override
@@ -26,13 +27,22 @@ class PageMemoryReminders extends StatefulWidget
 
 class PageMemoryRemindersState extends State<PageMemoryReminders>
 {
-  Memory m_memoryBefore = Memory();
 
   void initState()
   {
     setState(()
     {
-      widget.m_maxNotifications = widget.m_memory.m_notifyTimes.length;
+      widget.m_memoryBefore = widget.m_memory;
+
+      if(widget.m_memory.m_notifyTimes.isEmpty)
+      {
+        widget.m_maxNotifications = 1;
+      }
+      else
+      {
+        widget.m_maxNotifications = widget.m_memory.m_notifyTimes.length;
+      }
+
       widget.m_currentIteration = getCurrentIteration();
       widget.m_graphViewIterationsCount = widget.m_maxNotifications;
 
@@ -43,8 +53,6 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   Widget build(BuildContext context)
   {
     Notifications.setupNotificationActionListener(context);
-
-    m_memoryBefore = widget.m_memory;
 
     return WillPopScope(onWillPop: () async {onUpdate(context); return true;}, child:
       Scaffold(body: ListView(shrinkWrap: true, children: <Widget>[
@@ -284,7 +292,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
   void onCancel(BuildContext context)
   {
-    Navigator.pop(context, m_memoryBefore);
+    Navigator.pop(context, widget.m_memoryBefore);
   }
 
   void onUpdate(BuildContext context)
