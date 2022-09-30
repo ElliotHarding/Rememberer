@@ -67,7 +67,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Text("Max Notifications: " + widget.m_maxNotifications.toInt().toString(), style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
 
         Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
-          Slider(value: widget.m_maxNotifications.toDouble(), min: 0, max: 25, onChanged: (newValue) => onMaxNotificationSliderChanged(newValue.toInt())
+          Slider(value: widget.m_maxNotifications.toDouble(), min: 1, max: 25, onChanged: (newValue) => onMaxNotificationSliderChanged(newValue.toInt())
         ))),
 
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
@@ -75,7 +75,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Text("Current Notification: " + widget.m_currentIteration.toInt().toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
 
         Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
-          Slider(value: widget.m_currentIteration.toDouble(), min: 0, max: widget.m_maxNotifications.toDouble(), onChanged: (newValue) => onCurrentIterationSliderChanged(newValue.toInt())
+          Slider(value: widget.m_currentIteration.toDouble(), min: 1, max: widget.m_maxNotifications.toDouble(), onChanged: (newValue) => onCurrentIterationSliderChanged(newValue.toInt())
         ))),
 
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
@@ -88,7 +88,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
               )),
 
               Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child:
-                Slider(value: widget.m_graphViewIterationsCount.toDouble(), min: 0, max: widget.m_maxNotifications.toDouble(), onChanged: (newValue) => onGraphViewIterationsCountChanged(newValue.toInt())
+                Slider(value: widget.m_graphViewIterationsCount.toDouble(), min: 1, max: widget.m_maxNotifications.toDouble(), onChanged: (newValue) => onGraphViewIterationsSliderChanged(newValue.toInt())
               ))),
 
               const SizedBox(height: 10),
@@ -236,7 +236,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     });
   }
 
-  void onGraphViewIterationsCountChanged(int newValue)
+  void onGraphViewIterationsSliderChanged(int newValue)
   {
     setState(()
     {
@@ -307,7 +307,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   {
     if(widget.m_memory.m_notifyTimes.isEmpty)
     {
-        return 0;
+        return 1;
     }
 
     List<int> notifyTimesSorted = widget.m_memory.m_notifyTimes;
@@ -318,7 +318,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     {
       if(currentTime < notifyTimesSorted[i])
       {
-        return i;
+        return i + 1;
       }
     }
 
