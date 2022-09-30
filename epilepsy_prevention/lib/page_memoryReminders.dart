@@ -91,7 +91,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
                     ),
                     titlesData: FlTitlesData(
                         show: true,
-                        bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: true)),
+                        bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: true, getTitlesWidget: getIterationIndexValues)),
                         leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: true, reservedSize: 50, getTitlesWidget: getDateIndexValues)),
                         rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
                         topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false))
@@ -103,6 +103,12 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
                   swapAnimationDuration: const Duration(milliseconds: 600),
                   swapAnimationCurve: Curves.fastOutSlowIn,
                 ),
+              ),
+
+              const SizedBox(height: 10),
+
+              SizedBox(width: MediaQuery.of(context).size.width, child:
+                const Text("Test number", style: TextStyle(fontSize: 15, color: Colors.blue), textAlign: TextAlign.center)
               ),
 
             ],),
@@ -148,6 +154,14 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     return SideTitleWidget(
       axisSide: meta.axisSide,
       child: Text(timeStr, style: const TextStyle(color: Colors.blue, fontSize: 15)),
+    );
+  }
+
+  Widget getIterationIndexValues(double value, TitleMeta meta)
+  {
+    return SideTitleWidget(
+      axisSide: meta.axisSide,
+      child: Text(value.toInt().toString(), style: const TextStyle(color: Colors.blue, fontSize: 15)),
     );
   }
 
