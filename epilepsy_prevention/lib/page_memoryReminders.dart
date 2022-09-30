@@ -66,13 +66,9 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
-        AspectRatio(
-          aspectRatio: 0.5,
-          child: Card(
-            color: const Color(0xffffffff),
-            elevation: 6,
-            child: ScatterChart(
+        SizedBox(width: MediaQuery.of(context).size.width * 0.7, height: MediaQuery.of(context).size.height * 0.7, child:
+          Card(color: const Color(0xffffffff), elevation: 2, child:
+            ScatterChart(
               ScatterChartData(
                 scatterSpots: [ScatterSpot(20, 14.5, color: Colors.blue, radius: 5)],
                 minX: 0,
@@ -96,7 +92,6 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
               swapAnimationCurve: Curves.fastOutSlowIn,
             ),
           ),
-        ),
         ),
 
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
