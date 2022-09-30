@@ -77,7 +77,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
             Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
 
               SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: const Padding(padding: const EdgeInsets.all(16), child:
-                Text("Time", style: TextStyle(fontSize: 15, color: Colors.blue), textAlign: TextAlign.start)
+                Text("Time", style: TextStyle(fontSize: 20, color: Colors.blue), textAlign: TextAlign.start)
               )),
 
               const SizedBox(height: 10),
@@ -99,7 +99,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
                     titlesData: FlTitlesData(
                         show: true,
                         bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: true, getTitlesWidget: getIterationIndexValues)),
-                        leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: true, reservedSize: 50, getTitlesWidget: getDateIndexValues)),
+                        leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: true, reservedSize: 70, getTitlesWidget: getDateIndexValues)),
                         rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
                         topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false))
                     ),
@@ -115,7 +115,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
               const SizedBox(height: 10),
 
               SizedBox(width: MediaQuery.of(context).size.width, height: 15, child:
-                const Text("Test number", style: TextStyle(fontSize: 15, color: Colors.blue), textAlign: TextAlign.center)
+                const Text("Test number", style: TextStyle(fontSize: 20, color: Colors.blue), textAlign: TextAlign.center)
               ),
             ],),
         ),
@@ -137,25 +137,30 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
   Widget getDateIndexValues(double value, TitleMeta meta)
   {
-    var hours = value.toInt() / 3600000;
-
     String timeStr;
-    if(hours < 48)
+
+    var minutes = value.toInt() / 60000;
+    if(minutes < 120 && minutes > -120)
     {
-      timeStr = hours.toString() + " Hrs";
+      timeStr = minutes.toInt().toString() + " min";
     }
     else
     {
+      var hours = value.toInt() / 3600000;
+      if(hours < 48 && hours > -48)
+      {
+        timeStr = hours.toInt().toString() + " Hrs";
+      }
+      else
+      {
         var days = hours / 24;
-        timeStr = days.toString() + " Days";
+        timeStr = days.toInt().toString() + " Days";
+      }
     }
-
-    //debug
-    timeStr = value.toInt().toString();
 
     return SideTitleWidget(
       axisSide: meta.axisSide,
-      child: Text(timeStr, style: const TextStyle(color: Colors.blue, fontSize: 15)),
+      child: Text(timeStr, style: const TextStyle(color: Colors.blue, fontSize: 13)),
     );
   }
 
@@ -163,7 +168,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   {
     return SideTitleWidget(
       axisSide: meta.axisSide,
-      child: Text(value.toInt().toString(), style: const TextStyle(color: Colors.blue, fontSize: 15)),
+      child: Text(value.toInt().toString(), style: const TextStyle(color: Colors.blue, fontSize: 13)),
     );
   }
 
