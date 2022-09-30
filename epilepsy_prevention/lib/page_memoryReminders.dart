@@ -66,13 +66,16 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: MediaQuery.of(context).size.height * 0.7, child: Padding(padding: const EdgeInsets.all(5), child:
+        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: MediaQuery.of(context).size.height * 0.7, child:
             Row(children: [
+
               SizedBox(width: MediaQuery.of(context).size.width * 0.1, height: MediaQuery.of(context).size.height * 0.7, child:
-                const Text("Value", style: TextStyle(fontSize: 15, color: Colors.blue), textAlign: TextAlign.center,),
+                  const RotatedBox(quarterTurns: 1, child: Center(child:
+                    Text("Value", style: TextStyle(fontSize: 15, color: Colors.blue), textAlign: TextAlign.center,),
+                  ))
               ),
 
-              SizedBox(width: MediaQuery.of(context).size.width * 0.7, height: MediaQuery.of(context).size.height * 0.7, child:
+              SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.height * 0.7, child:
                 ScatterChart(
                   ScatterChartData(
                     scatterSpots: [ScatterSpot(20, 14.5, color: Colors.blue, radius: 5)],
@@ -98,8 +101,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
                 ),
               )
             ],)
-
-        )),
+        ),
 
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
