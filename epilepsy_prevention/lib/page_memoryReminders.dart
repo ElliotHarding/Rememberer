@@ -12,6 +12,11 @@ class PageMemoryReminders extends StatefulWidget
   double m_currentIteration = 0;
   double m_maxNotifications = 0;
 
+  int m_graphMaxTime = 0;
+  int m_graphMinTime = 0;
+
+  List<ScatterSpot> m_graphDataPoints = [];
+
   @override
   State<PageMemoryReminders> createState() => PageMemoryRemindersState();
 }
@@ -24,6 +29,8 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   {
     widget.m_maxNotifications = widget.m_memory.m_notifyTimes.length.toDouble();
     widget.m_currentIteration = getCurrentIteration().toDouble();
+
+    updateGraphValues(widget.m_memory.m_notifyTimes);
   }
 
   Widget build(BuildContext context)
@@ -66,10 +73,10 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
-        SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 1.4, child:
+        SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.7 + 85, child:
             Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
 
-              SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: const Padding(padding: const EdgeInsets.all(16), child:
+              SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: const Padding(padding: const EdgeInsets.all(16), child:
                 Text("Time", style: TextStyle(fontSize: 15, color: Colors.blue), textAlign: TextAlign.start)
               )),
 
@@ -78,11 +85,11 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
               SizedBox(width: MediaQuery.of(context).size.width * 0.95, height: MediaQuery.of(context).size.height * 0.7, child:
                 ScatterChart(
                   ScatterChartData(
-                    scatterSpots: [ScatterSpot(20, 14.5, color: Colors.blue, radius: 5)],
+                    scatterSpots: widget.m_graphDataPoints,
                     minX: 0,
                     maxX: 30,
-                    minY: 0,
-                    maxY: 30,
+                    minY: widget.m_graphMinTime.toDouble(),
+                    maxY: widget.m_graphMaxTime.toDouble(),
                     borderData: FlBorderData(
                       show: true,
                     ),
@@ -107,13 +114,10 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
               const SizedBox(height: 10),
 
-              SizedBox(width: MediaQuery.of(context).size.width, child:
+              SizedBox(width: MediaQuery.of(context).size.width, height: 15, child:
                 const Text("Test number", style: TextStyle(fontSize: 15, color: Colors.blue), textAlign: TextAlign.center)
               ),
-
             ],),
-
-
         ),
 
 
@@ -165,6 +169,59 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     );
   }
 
+  void updateGraphValues(List<int> notifyTimes)
+  {
+    if(notifyTimes.isEmpty)
+    {
+      setState(()
+      {
+        widget.m_graphMaxTime = 0;
+        widget.m_graphMinTime = 0;
+        widget.m_graphDataPoints = [];
+      });
+      return;
+    }
+
+    notifyTimes.sort((a, b) => a.compareTo(b));
+
+    var nowMs = DateTime.now().millisecondsSinceEpoch;
+    widget.m_graphMinTime = notifyTimes[0] - nowMs;
+    widget.m_graphMaxTime = notifyTimes[notifyTimes.length-1] - nowMs;
+
+    List<ScatterSpot> graphData = [];
+    for(int i = 1; i <= notifyTimes.length; i++)
+    {
+        graphData.add(ScatterSpot(i.toDouble(), (notifyTimes[i] - nowMs).toDouble(), color: Colors.blue, radius: 5));
+    }
+
+    setState(()
+    {
+      widget.m_graphDataPoints = graphData;
+    });
+  }
+
+  void updateNotifyTimes()
+  {
+    setState(()
+    {
+      if (widget.m_memory.m_testFrequecy == "Rare") {
+        widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration.toInt() + 1, widget.m_maxNotifications.toInt(), 4, 1800000);
+      }
+      else if (widget.m_memory.m_testFrequecy == "Occasionally") {
+        widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration.toInt(), widget.m_maxNotifications.toInt(), 3, 1200000);
+      }
+      else if (widget.m_memory.m_testFrequecy == "Frequently") {
+        widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration.toInt(), widget.m_maxNotifications.toInt(), 2, 900000);
+      }
+      else
+      {
+        widget.m_memory.m_notifyTimes = [];
+      }
+    });
+
+    updateGraphValues(widget.m_memory.m_notifyTimes);
+  }
+
   void onCurrentIterationSliderChanged(double newValue)
   {
     setState(() {
@@ -208,17 +265,6 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
   void onUpdate(BuildContext context)
   {
-    //Gen new notify times
-    if (widget.m_memory.m_testFrequecy == "Rare") {
-      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration.toInt() + 1, widget.m_maxNotifications.toInt(), 4, 1800000);
-    }
-    else if (widget.m_memory.m_testFrequecy == "Occasionally") {
-      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration.toInt(), widget.m_maxNotifications.toInt(), 3, 1200000);
-    }
-    else if (widget.m_memory.m_testFrequecy == "Frequently") {
-      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration.toInt(), widget.m_maxNotifications.toInt(), 2, 900000);
-    }
-
     Navigator.pop(context, widget.m_memory);
   }
 
