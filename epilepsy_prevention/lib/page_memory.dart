@@ -141,18 +141,17 @@ class PageMemoryState extends State<PageMemory>
     }
 
     Database db = Database();
+
+    //If not new memory, and updated notify times, and notifcations are enabled: clear old scheduled notifications
+    if(widget.m_memory.key != null && db.getNotificationsEnabledSetting() && m_bChangeNotifyTimes)
+    {
+      Notifications().removeNotifications(widget.m_memory.key, m_oldNotifyTimes);
+    }
+
+    //Add or update memory to database and schedule its notifcations
     var box = db.getMemoryBox();
     if (box != null)
     {
-      if (m_bChangeNotifyTimes)
-      {
-        //Clear previous notifications
-        if(widget.m_memory.key != null)
-        {
-          Notifications().removeNotifications(widget.m_memory.key, m_oldNotifyTimes);
-        }
-      }
-
       var key;
       if(db.getMemoryWithId(widget.m_memory.key) == null)
       {
@@ -163,7 +162,7 @@ class PageMemoryState extends State<PageMemory>
         key = db.updateMemory(widget.m_memory);
       }
 
-      if(Database().getNotificationsEnabledSetting())
+      if(db.getNotificationsEnabledSetting())
       {
         await Notifications().scheduleNotifications(key, widget.m_memory.m_question, widget.m_memory.m_notifyTimes);
       }
