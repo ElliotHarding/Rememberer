@@ -65,16 +65,25 @@ class PageMemoriesState extends State<PageMemories>
       {
         widgets.add(Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(width: MediaQuery.of(context).size.width * 0.7, height: MediaQuery.of(context).size.height * 0.1, child: TextButton( onPressed: () async {
-              await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(memory)));
-              setState(() {
-                m_memoryWidgets = getMemoryWidgets(context);
-              });
-            }, child: Text(memory.m_question, style: const TextStyle(fontSize: 30.0, color: Colors.blue)))),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
+              TextButton( onPressed: () async {
+                await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(memory)));
+                setState(() {
+                  m_memoryWidgets = getMemoryWidgets(context);
+                });
+                }, child: Text(memory.m_question, style: const TextStyle(fontSize: 30.0, color: Colors.blue))
+              )
+            ),
 
-            SizedBox(width: MediaQuery.of(context).size.width * 0.3, height: MediaQuery.of(context).size.height * 0.1, child: TextButton( onPressed: () async {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(memory)));
-            }, child: const Text("Test", style: TextStyle(fontSize: 30.0, color: Colors.blue))))
+            SizedBox(width: MediaQuery.of(context).size.width * 0.3, child:
+              TextButton(onPressed: () async {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(memory)));
+              }, child:
+                const Text("Test", style: TextStyle(fontSize: 30.0, color: Colors.blue))
+              )
+            ),
+
+            SizedBox(height: MediaQuery.of(context).size.height * 0.1)
           ],
         ));
       }
