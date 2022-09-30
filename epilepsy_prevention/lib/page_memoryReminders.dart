@@ -14,7 +14,7 @@ class PageMemoryReminders extends StatefulWidget
 
   int m_graphMaxTime = 0;
   int m_graphMinTime = 0;
-
+  int m_graphViewIterationsCount = 0;
   List<ScatterSpot> m_graphDataPoints = [];
 
   @override
@@ -29,6 +29,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   {
     widget.m_maxNotifications = widget.m_memory.m_notifyTimes.length.toDouble();
     widget.m_currentIteration = getCurrentIteration().toDouble();
+    widget.m_graphViewIterationsCount = widget.m_maxNotifications.toInt();
 
     updateGraphValues(widget.m_memory.m_notifyTimes);
   }
@@ -65,20 +66,24 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
-        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Text("Current Notification: " + widget.m_currentIteration.toInt().toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
+        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Text("Current Notification: " + widget.m_currentIteration.toInt().toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
 
-        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child:
+        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
           Slider(value: widget.m_currentIteration, min: 0, max: widget.m_maxNotifications, onChanged: (newValue) => onCurrentIterationSliderChanged(newValue)
         ))),
 
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
-        SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.7 + 85, child:
+        SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.7 + 125, child:
             Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
 
-              SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: const Padding(padding: const EdgeInsets.all(16), child:
-                Text("Time", style: TextStyle(fontSize: 20, color: Colors.blue), textAlign: TextAlign.start)
+              Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child:
+                const Text("Graph Timescale:", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
               )),
+
+              Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child:
+                Slider(value: widget.m_graphViewIterationsCount.toDouble(), min: 0, max: widget.m_maxNotifications, onChanged: (newValue) => onGraphViewIterationsCountChanged(newValue)
+              ))),
 
               const SizedBox(height: 10),
 
@@ -114,7 +119,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
               const SizedBox(height: 10),
 
-              SizedBox(width: MediaQuery.of(context).size.width, height: 15, child:
+              SizedBox(width: MediaQuery.of(context).size.width, height: 20, child:
                 const Text("Test number", style: TextStyle(fontSize: 20, color: Colors.blue), textAlign: TextAlign.center)
               ),
             ],),
@@ -189,10 +194,10 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
     var nowMs = DateTime.now().millisecondsSinceEpoch;
     widget.m_graphMinTime = notifyTimes[0] - nowMs;
-    widget.m_graphMaxTime = notifyTimes[notifyTimes.length-1] - nowMs;
+    widget.m_graphMaxTime = notifyTimes[widget.m_graphViewIterationsCount] - nowMs;
 
     List<ScatterSpot> graphData = [];
-    for(int i = 1; i <= notifyTimes.length; i++)
+    for(int i = 1; i <= widget.m_graphViewIterationsCount; i++)
     {
         graphData.add(ScatterSpot(i.toDouble(), (notifyTimes[i-1] - nowMs).toDouble(), color: Colors.blue, radius: 5));
     }
@@ -208,7 +213,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     setState(()
     {
       if (widget.m_memory.m_testFrequecy == "Rare") {
-        widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration.toInt() + 1, widget.m_maxNotifications.toInt(), 4, 1800000);
+        widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration.toInt(), widget.m_maxNotifications.toInt(), 4, 1800000);
       }
       else if (widget.m_memory.m_testFrequecy == "Occasionally") {
         widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration.toInt(), widget.m_maxNotifications.toInt(), 3, 1200000);
@@ -227,9 +232,20 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
   void onCurrentIterationSliderChanged(double newValue)
   {
-    setState(() {
+    setState(()
+    {
       widget.m_currentIteration = newValue;
     });
+  }
+
+  void onGraphViewIterationsCountChanged(double newValue)
+  {
+    setState(()
+    {
+      widget.m_graphViewIterationsCount = newValue.toInt();
+    });
+
+    updateGraphValues(widget.m_memory.m_notifyTimes);
   }
 
   void onMaxNotificationSliderChanged(double newValue)
@@ -246,6 +262,11 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
       if(widget.m_currentIteration > newValue)
       {
         widget.m_currentIteration = newValue;
+      }
+
+      if(widget.m_graphViewIterationsCount > newValue)
+      {
+        widget.m_graphViewIterationsCount = newValue.toInt();
       }
 
       widget.m_maxNotifications = newValue;
@@ -278,11 +299,11 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   List<int> genNotifyTimes(int iStart, int iMaxNotifications, double incFactor, int incTime)
   {
     List<int> values = [];
-    for(int i = iStart; i < iMaxNotifications; i++)
+    values.add(DateTime.now().millisecondsSinceEpoch + 30000);
+    for(int i = iStart; i < iMaxNotifications-1 /*TEST CODE '-1'*/; i++)
     {
       values.add(DateTime.now().millisecondsSinceEpoch + incTime * pow(incFactor, i).toInt());
     }
-    values.add(DateTime.now().millisecondsSinceEpoch + 30000);
     return values;
   }
 
