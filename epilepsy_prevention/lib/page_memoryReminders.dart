@@ -191,7 +191,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     List<ScatterSpot> graphData = [];
     for(int i = 1; i <= notifyTimes.length; i++)
     {
-        graphData.add(ScatterSpot(i.toDouble(), (notifyTimes[i] - nowMs).toDouble(), color: Colors.blue, radius: 5));
+        graphData.add(ScatterSpot(i.toDouble(), (notifyTimes[i-1] - nowMs).toDouble(), color: Colors.blue, radius: 5));
     }
 
     setState(()
@@ -247,6 +247,8 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
       widget.m_maxNotifications = newValue;
     });
+
+    updateNotifyTimes();
   }
 
   void onFrequencyDropDownChanged(String? selectedValue)
@@ -256,6 +258,8 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         widget.m_memory.m_testFrequecy = selectedValue;
       }
     });
+
+    updateNotifyTimes();
   }
 
   void onCancel(BuildContext context)
