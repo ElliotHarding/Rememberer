@@ -66,16 +66,16 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: MediaQuery.of(context).size.height * 0.7, child:
-            Row(children: [
+        SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 1.4, child:
+            Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
 
-              SizedBox(width: MediaQuery.of(context).size.width * 0.1, height: MediaQuery.of(context).size.height * 0.7, child:
-                  const RotatedBox(quarterTurns: 1, child: Center(child:
-                    Text("Value", style: TextStyle(fontSize: 15, color: Colors.blue), textAlign: TextAlign.center,),
-                  ))
-              ),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: const Padding(padding: const EdgeInsets.all(16), child:
+                Text("Time", style: TextStyle(fontSize: 15, color: Colors.blue), textAlign: TextAlign.start)
+              )),
 
-              SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.height * 0.7, child:
+              const SizedBox(height: 10),
+
+              SizedBox(width: MediaQuery.of(context).size.width * 0.95, height: MediaQuery.of(context).size.height * 0.7, child:
                 ScatterChart(
                   ScatterChartData(
                     scatterSpots: [ScatterSpot(20, 14.5, color: Colors.blue, radius: 5)],
@@ -90,11 +90,11 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
                       show: false,
                     ),
                     titlesData: FlTitlesData(
-                      show: true,
-                      bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: true)),
-                      leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: true, reservedSize: 50)),
-                      rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                      topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false))
+                        show: true,
+                        bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: true)),
+                        leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: true, reservedSize: 50, getTitlesWidget: getDateIndexValues)),
+                        rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                        topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false))
                     ),
                     scatterTouchData: ScatterTouchData(
                       enabled: true,
@@ -103,9 +103,14 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
                   swapAnimationDuration: const Duration(milliseconds: 600),
                   swapAnimationCurve: Curves.fastOutSlowIn,
                 ),
-              )
-            ],)
+              ),
+
+            ],),
+
+
         ),
+
+
 
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
@@ -120,42 +125,29 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     ));
   }
 
-  Widget getTitles(double value, TitleMeta meta) {
-    const style = TextStyle(
-      color: Colors.blue,
-      fontSize: 15
-    );
-    Widget text;
-    switch (value.toInt()) {
-      case 0:
-        text = const Text('M', style: style);
-        break;
-      case 1:
-        text = const Text('T', style: style);
-        break;
-      case 2:
-        text = const Text('W', style: style);
-        break;
-      case 3:
-        text = const Text('T', style: style);
-        break;
-      case 4:
-        text = const Text('F', style: style);
-        break;
-      case 5:
-        text = const Text('S', style: style);
-        break;
-      case 6:
-        text = const Text('S', style: style);
-        break;
-      default:
-        text = const Text('', style: style);
-        break;
+  Widget getDateIndexValues(double value, TitleMeta meta)
+  {
+    var difference = value.toInt() - DateTime.now().millisecondsSinceEpoch;
+
+    var hours = difference / 3600000;
+
+    String timeStr;
+    if(hours < 48)
+    {
+      timeStr = hours.toString() + " Hrs";
     }
+    else
+    {
+        var days = hours / 24;
+        timeStr = days.toString() + " Days";
+    }
+
+    //debug
+    timeStr = value.toInt().toString();
+
     return SideTitleWidget(
       axisSide: meta.axisSide,
-      space: 16,
-      child: text,
+      child: Text(timeStr, style: const TextStyle(color: Colors.blue, fontSize: 15)),
     );
   }
 
