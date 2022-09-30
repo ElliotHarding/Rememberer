@@ -90,16 +90,23 @@ class PageTest extends StatelessWidget
   {
     List<Widget> widgets = <Widget>[];
 
-    int iAnswer = Random().nextInt(m_memory.m_falseAnswers.length);
-
-    for(int i = 0; i < m_memory.m_falseAnswers.length; i++)
+    if(m_memory.m_falseAnswers.length > 0)
     {
-      if(i == iAnswer)
-      {
-        widgets.add(genMultiChoiceOption(context, m_memory.m_answer, true));
-      }
+      int iAnswer = Random().nextInt(m_memory.m_falseAnswers.length);
 
-      widgets.add(genMultiChoiceOption(context, m_memory.m_falseAnswers[i], false));
+      for(int i = 0; i < m_memory.m_falseAnswers.length; i++)
+      {
+        if(i == iAnswer)
+        {
+          widgets.add(genMultiChoiceOption(context, m_memory.m_answer, true));
+        }
+
+        widgets.add(genMultiChoiceOption(context, m_memory.m_falseAnswers[i], false));
+      }
+    }
+    else
+    {
+      widgets.add(genMultiChoiceOption(context, m_memory.m_answer, true));
     }
 
     return widgets;

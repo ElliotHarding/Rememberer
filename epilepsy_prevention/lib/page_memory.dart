@@ -42,12 +42,12 @@ class PageMemoryState extends State<PageMemory>
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
         Center(child: Column(children: [
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: const Text("Question", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
-          IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: TextField(maxLines: null,
-            decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a search question'),
-            style: const TextStyle(fontSize: 30.0, color: Colors.black),
-            controller: m_questionTextController,
-          )))
+          SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
+            const Text("Question", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
+          ),
+          IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
+            TextField(maxLines: null, decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a search question'), style: const TextStyle(fontSize: 30.0, color: Colors.black), controller: m_questionTextController)
+          ))
           ])
         ),
 
@@ -70,13 +70,7 @@ class PageMemoryState extends State<PageMemory>
 
             const Text("Multiple Choice: ", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left),
 
-            Checkbox(value: widget.m_memory.m_bMultiChoice, onChanged: (bool? value) {
-              if (value != null) {
-                setState(() {
-                  widget.m_memory.m_bMultiChoice = value;
-                });
-              }
-            }),
+            Checkbox(value: widget.m_memory.m_bMultiChoice, onChanged: (bool? value) => setMultiChoice(value)),
 
             const Spacer(),
 
@@ -94,10 +88,9 @@ class PageMemoryState extends State<PageMemory>
 
         Center(child:SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Row(children : [
           const Text("Reminders: ", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left),
-          TextButton(onPressed: () async {
-            widget.m_memory = await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemoryReminders(m_memory: widget.m_memory)));
-            m_bChangeNotifyTimes = true;
-          }, child: const Text("⚙", style: TextStyle(fontSize: 30, color: Colors.black), textAlign: TextAlign.left))
+          TextButton(onPressed: () => onPressReminders(context), child:
+            const Text("⚙", style: TextStyle(fontSize: 30, color: Colors.black), textAlign: TextAlign.left)
+          )
         ]))),
 
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
@@ -121,7 +114,7 @@ class PageMemoryState extends State<PageMemory>
     ));
   }
 
-  void onSave(BuildContext context) async
+  bool getMemorySettingsAndValidate(BuildContext context)
   {
     widget.m_memory.m_question = m_questionTextController.text;
     widget.m_memory.m_answer = m_answerTextController.text;
@@ -137,6 +130,15 @@ class PageMemoryState extends State<PageMemory>
     if(validationResult != "Success")
     {
       showDialog(context: context, builder: (context){return AlertDialog(title: const Text("Adding Memory Failed!"), content: Text(validationResult));});
+      return false;
+    }
+    return true;
+  }
+
+  void onSave(BuildContext context) async
+  {
+    if(!getMemorySettingsAndValidate(context))
+    {
       return;
     }
 
@@ -184,6 +186,23 @@ class PageMemoryState extends State<PageMemory>
     }
 
     Navigator.of(context).pop();
+  }
+
+  void onPressReminders(BuildContext context) async
+  {
+    widget.m_memory = await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemoryReminders(m_memory: widget.m_memory)));
+    m_bChangeNotifyTimes = true;
+  }
+
+  void setMultiChoice(bool? value)
+  {
+    if (value != null)
+    {
+      setState(()
+      {
+        widget.m_memory.m_bMultiChoice = value;
+      });
+    }
   }
 
   void initialFalseAnswerList()
