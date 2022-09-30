@@ -32,7 +32,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
     m_memoryBefore = widget.m_memory;
 
-    return WillPopScope(onWillPop: () async {Navigator.pop(context, m_memoryBefore); return true;}, child:
+    return WillPopScope(onWillPop: () async {onUpdate(context); return true;}, child:
       Scaffold(body: ListView(shrinkWrap: true, children: <Widget>[
 
         SizedBox(height: MediaQuery.of(context).size.height * 0.02),
