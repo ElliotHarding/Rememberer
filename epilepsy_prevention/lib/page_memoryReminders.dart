@@ -218,15 +218,15 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   {
     if (widget.m_memory.m_testFrequecy == "Rare")
     {
-      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration.toInt(), widget.m_maxNotifications.toInt(), 4, 1800000);
+      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration.toInt(), widget.m_maxNotifications, 4, 1800000);
     }
     else if (widget.m_memory.m_testFrequecy == "Occasionally")
     {
-      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration.toInt(), widget.m_maxNotifications.toInt(), 3, 1200000);
+      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration.toInt(), widget.m_maxNotifications, 3, 1200000);
     }
     else if (widget.m_memory.m_testFrequecy == "Frequently")
     {
-      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration.toInt(), widget.m_maxNotifications.toInt(), 2, 900000);
+      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration.toInt(), widget.m_maxNotifications, 2, 900000);
     }
     else
     {
@@ -249,9 +249,8 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     setState(()
     {
       widget.m_graphViewIterationsCount = newValue;
+      updateGraphValues(widget.m_memory.m_notifyTimes);
     });
-
-    updateGraphValues(widget.m_memory.m_notifyTimes);
   }
 
   void onMaxNotificationSliderChanged(int newValue)
@@ -304,7 +303,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   {
     List<int> values = [];
     values.add(DateTime.now().millisecondsSinceEpoch + 30000);
-    for(int i = iStart; i < iMaxNotifications-1 /*TEST CODE '-1'*/; i++)
+    for(int i = iStart; i < iMaxNotifications; i++)
     {
       values.add(DateTime.now().millisecondsSinceEpoch + incTime * pow(incFactor, i).toInt());
     }
