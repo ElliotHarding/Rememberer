@@ -25,23 +25,15 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
     return Scaffold(
         body: Column(children: [
 
-          const Spacer(),
-
-          SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.height * 0.1, child:
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [
-              Spacer(),
-              Text("Notifications", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left),
-              Spacer()
-            ])
+          SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.height * 0.2, child:
+            const Center(child:
+              Text("Notifications", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.blue), textAlign: TextAlign.left),
+            )
           ),
-
-          const Spacer(),
 
           SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.8, child:
             ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: m_notificationsWidget)
           ),
-
-          const Spacer()
         ],)
     );
   }
