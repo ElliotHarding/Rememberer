@@ -33,40 +33,40 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     m_memoryBefore = widget.m_memory;
 
     return WillPopScope(onWillPop: () async {Navigator.pop(context, m_memoryBefore); return true;}, child:
-      Scaffold(body:
-        Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-          const Spacer(),
+      Scaffold(body: ListView(shrinkWrap: true, children: <Widget>[
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Reminder frequency", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.02),
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
-            DropdownButton(value: widget.m_memory.m_testFrequecy, onChanged: (String? selectedValue) => onFrequencyDropDownChanged(selectedValue), items: const [
-                DropdownMenuItem(value: "Never", child: Text("Never", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
-                DropdownMenuItem(value: "Rare", child: Text("Rare", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
-                DropdownMenuItem(value: "Occasionally", child: Text("Occasionally", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
-                DropdownMenuItem(value: "Frequently", child: Text("Frequently", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center))
-              ],
-          )),
+        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Reminder frequency", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
 
-          const Spacer(),
+        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
+          DropdownButton(value: widget.m_memory.m_testFrequecy, onChanged: (String? selectedValue) => onFrequencyDropDownChanged(selectedValue), items: const [
+              DropdownMenuItem(value: "Never", child: Text("Never", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
+              DropdownMenuItem(value: "Rare", child: Text("Rare", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
+              DropdownMenuItem(value: "Occasionally", child: Text("Occasionally", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
+              DropdownMenuItem(value: "Frequently", child: Text("Frequently", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center))
+            ],
+        ))),
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Text("Max Notifications: " + widget.m_maxNotifications.toInt().toString(), style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child:
-            Slider(value: widget.m_maxNotifications, min: 0, max: 25, onChanged: (newValue) => onMaxNotificationSliderChanged(newValue)
-          )),
+        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Text("Max Notifications: " + widget.m_maxNotifications.toInt().toString(), style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
 
-          const Spacer(),
+        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
+          Slider(value: widget.m_maxNotifications, min: 0, max: 25, onChanged: (newValue) => onMaxNotificationSliderChanged(newValue)
+        ))),
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Text("Current Notification: " + widget.m_currentIteration.toInt().toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child:
-            Slider(value: widget.m_currentIteration, min: 0, max: widget.m_maxNotifications, onChanged: (newValue) => onCurrentIterationSliderChanged(newValue)
-          )),
+        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Text("Current Notification: " + widget.m_currentIteration.toInt().toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
 
-          const Spacer(),
+        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child:
+          Slider(value: widget.m_currentIteration, min: 0, max: widget.m_maxNotifications, onChanged: (newValue) => onCurrentIterationSliderChanged(newValue)
+        ))),
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
+        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+
+        SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
           GestureDetector(
             onTap: () {
               setState(() {
@@ -104,16 +104,18 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
               ),
             ),
           )
-          ),
+        ),
 
-          Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-            TextButton(onPressed: () => onCancel(context), child: const Text("Cancel", style: TextStyle(fontSize: 30, color: Colors.blue))),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
-            TextButton(onPressed: () => onUpdate(context), child: const Text("Update", style: TextStyle(fontSize: 30, color: Colors.blue)))
-          ]),
+        Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+          TextButton(onPressed: () => onCancel(context), child: const Text("Cancel", style: TextStyle(fontSize: 30, color: Colors.blue))),
 
-          const Spacer()
-        ])
+          TextButton(onPressed: () => onUpdate(context), child: const Text("Update", style: TextStyle(fontSize: 30, color: Colors.blue)))
+        ]),
+
+        SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+       ])
     ));
   }
 
