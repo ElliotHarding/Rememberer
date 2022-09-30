@@ -18,6 +18,13 @@ class PageTestResult extends StatelessWidget
     return WillPopScope(onWillPop: () async {Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories())); return true;}, child: Scaffold(body:
       ListView(shrinkWrap: true, children: <Widget>[
 
+        Row(mainAxisAlignment: MainAxisAlignment.end, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+          TextButton(onPressed: () => onHomePressed(context), child:
+            const Text("Home", style: TextStyle(fontSize: 30, color: Colors.blue))
+          ),
+          SizedBox(width: MediaQuery.of(context).size.width * 0.02)
+        ]),
+
         SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.25, child:
           Center(child:
             Text(m_bSuccess ? "Correct!" : "Wrong!", style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.blue), textAlign: TextAlign.center)
@@ -37,12 +44,6 @@ class PageTestResult extends StatelessWidget
 
         SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.25, child:
           Text(m_memory.m_answer, style: const TextStyle(fontSize: 30), textAlign: TextAlign.center)
-        ),
-
-        SizedBox(width: MediaQuery.of(context).size.width, child:
-          TextButton(onPressed: () => onHomePressed(context), child:
-            const Text("Home", style: TextStyle(fontSize: 30, color: Colors.blue))
-          )
         )
       ])
     ));
