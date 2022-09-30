@@ -67,43 +67,36 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
         SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
-          GestureDetector(
-            onTap: () {
-              setState(() {
-
-              });
-            },
-            child: AspectRatio(
-              aspectRatio: 1,
-              child: Card(
-                color: const Color(0xffffffff),
-                elevation: 6,
-                child: ScatterChart(
-                  ScatterChartData(
-                    scatterSpots: [ScatterSpot(20, 14.5, color: Colors.blue, radius: 5)],
-                    minX: 0,
-                    maxX: 30,
-                    minY: 0,
-                    maxY: 30,
-                    borderData: FlBorderData(
-                      show: false,
-                    ),
-                    gridData: FlGridData(
-                      show: false,
-                    ),
-                    titlesData: FlTitlesData(
-                      show: false,
-                    ),
-                    scatterTouchData: ScatterTouchData(
-                      enabled: false,
-                    ),
-                  ),
-                  swapAnimationDuration: const Duration(milliseconds: 600),
-                  swapAnimationCurve: Curves.fastOutSlowIn,
+        AspectRatio(
+          aspectRatio: 0.5,
+          child: Card(
+            color: const Color(0xffffffff),
+            elevation: 6,
+            child: ScatterChart(
+              ScatterChartData(
+                scatterSpots: [ScatterSpot(20, 14.5, color: Colors.blue, radius: 5)],
+                minX: 0,
+                maxX: 30,
+                minY: 0,
+                maxY: 30,
+                borderData: FlBorderData(
+                  show: false,
+                ),
+                gridData: FlGridData(
+                  show: false,
+                ),
+                titlesData: FlTitlesData(
+                  show: false,
+                ),
+                scatterTouchData: ScatterTouchData(
+                  enabled: true,
                 ),
               ),
+              swapAnimationDuration: const Duration(milliseconds: 600),
+              swapAnimationCurve: Curves.fastOutSlowIn,
             ),
-          )
+          ),
+        ),
         ),
 
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
