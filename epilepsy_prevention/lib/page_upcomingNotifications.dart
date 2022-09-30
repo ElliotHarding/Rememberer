@@ -40,24 +40,7 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
 
   List<Widget> getNotificationWidgets(BuildContext context)
   {
-    List<MemoryNotification> notifications = <MemoryNotification>[];
-
-    var box = Database().getMemoryBox();
-    if(box != null)
-    {
-      for(Memory memory in box.values)
-      {
-        for (int notifyTime in memory.m_notifyTimes)
-        {
-          if(notifyTime > DateTime.now().millisecondsSinceEpoch)
-          {
-            notifications.add(MemoryNotification(notifyTime, memory));
-          }
-        }
-      }
-    }
-
-    notifications.sort((a, b) => a.m_notificationTime.compareTo(b.m_notificationTime));
+    List<MemoryNotification> notifications = getUppcommingNotifications();
 
     List<Widget> widgets = <Widget>[];
     for(MemoryNotification memNotification in notifications)
@@ -78,6 +61,30 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
     }
 
     return widgets;
+  }
+
+  List<MemoryNotification> getUppcommingNotifications()
+  {
+    List<MemoryNotification> notifications = <MemoryNotification>[];
+
+    var box = Database().getMemoryBox();
+    if(box != null)
+    {
+      for(Memory memory in box.values)
+      {
+        for (int notifyTime in memory.m_notifyTimes)
+        {
+          if(notifyTime > DateTime.now().millisecondsSinceEpoch)
+          {
+            notifications.add(MemoryNotification(notifyTime, memory));
+          }
+        }
+      }
+    }
+
+    notifications.sort((a, b) => a.m_notificationTime.compareTo(b.m_notificationTime));
+
+    return notifications;
   }
 
   void deleteNotification(MemoryNotification memoryNotification) async

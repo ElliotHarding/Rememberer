@@ -57,7 +57,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
           const Spacer(),
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Text("Max Notifications: " + widget.m_maxNotifications.toInt().toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
+          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Text("Max Notifications: " + widget.m_maxNotifications.toInt().toString(), style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child:
             Slider(
