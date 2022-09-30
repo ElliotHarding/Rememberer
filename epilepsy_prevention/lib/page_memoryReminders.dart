@@ -66,33 +66,40 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.7, height: MediaQuery.of(context).size.height * 0.7, child:
-          Card(color: const Color(0xffffffff), elevation: 2, child:
-            ScatterChart(
-              ScatterChartData(
-                scatterSpots: [ScatterSpot(20, 14.5, color: Colors.blue, radius: 5)],
-                minX: 0,
-                maxX: 30,
-                minY: 0,
-                maxY: 30,
-                borderData: FlBorderData(
-                  show: false,
-                ),
-                gridData: FlGridData(
-                  show: false,
-                ),
-                titlesData: FlTitlesData(
-                  show: false,
-                ),
-                scatterTouchData: ScatterTouchData(
-                  enabled: true,
-                ),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: MediaQuery.of(context).size.height * 0.7, child: Padding(padding: const EdgeInsets.all(5), child:
+            Row(children: [
+              SizedBox(width: MediaQuery.of(context).size.width * 0.1, height: MediaQuery.of(context).size.height * 0.7, child:
+                const Text("Value", style: TextStyle(fontSize: 15, color: Colors.blue), textAlign: TextAlign.center,),
               ),
-              swapAnimationDuration: const Duration(milliseconds: 600),
-              swapAnimationCurve: Curves.fastOutSlowIn,
-            ),
-          ),
-        ),
+
+              SizedBox(width: MediaQuery.of(context).size.width * 0.7, height: MediaQuery.of(context).size.height * 0.7, child:
+                ScatterChart(
+                  ScatterChartData(
+                    scatterSpots: [ScatterSpot(20, 14.5, color: Colors.blue, radius: 5)],
+                    minX: 0,
+                    maxX: 30,
+                    minY: 0,
+                    maxY: 30,
+                    borderData: FlBorderData(
+                      show: true,
+                    ),
+                    gridData: FlGridData(
+                      show: false,
+                    ),
+                    titlesData: FlTitlesData(
+                      show: false,
+                    ),
+                    scatterTouchData: ScatterTouchData(
+                      enabled: true,
+                    ),
+                  ),
+                  swapAnimationDuration: const Duration(milliseconds: 600),
+                  swapAnimationCurve: Curves.fastOutSlowIn,
+                ),
+              )
+            ],)
+
+        )),
 
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
