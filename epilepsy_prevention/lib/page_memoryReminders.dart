@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'dart:math';
 import 'package:epilepsy_prevention/notifications.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class PageMemoryReminders extends StatefulWidget
 {
@@ -64,6 +65,46 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
           )),
 
           const Spacer(),
+
+          SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
+          GestureDetector(
+            onTap: () {
+              setState(() {
+
+              });
+            },
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: Card(
+                color: const Color(0xffffffff),
+                elevation: 6,
+                child: ScatterChart(
+                  ScatterChartData(
+                    scatterSpots: [ScatterSpot(20, 14.5, color: Colors.blue, radius: 5)],
+                    minX: 0,
+                    maxX: 30,
+                    minY: 0,
+                    maxY: 30,
+                    borderData: FlBorderData(
+                      show: false,
+                    ),
+                    gridData: FlGridData(
+                      show: false,
+                    ),
+                    titlesData: FlTitlesData(
+                      show: false,
+                    ),
+                    scatterTouchData: ScatterTouchData(
+                      enabled: false,
+                    ),
+                  ),
+                  swapAnimationDuration: const Duration(milliseconds: 600),
+                  swapAnimationCurve: Curves.fastOutSlowIn,
+                ),
+              ),
+            ),
+          )
+          ),
 
           Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
             TextButton(onPressed: () => onCancel(context), child: const Text("Cancel", style: TextStyle(fontSize: 30, color: Colors.blue))),
