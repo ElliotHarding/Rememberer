@@ -137,9 +137,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
   Widget getDateIndexValues(double value, TitleMeta meta)
   {
-    var difference = value.toInt() - DateTime.now().millisecondsSinceEpoch;
-
-    var hours = difference / 3600000;
+    var hours = value.toInt() / 3600000;
 
     String timeStr;
     if(hours < 48)
