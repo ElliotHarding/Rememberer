@@ -20,44 +20,49 @@ class PageTest extends StatelessWidget
 
     m_answerTextController.text = "";
     return Scaffold(
-      body: Column(children: <Widget>[
+      body: ListView(shrinkWrap: true, children: <Widget>[
 
-        const Spacer(),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.height * 0.1, child:
-          Text(m_memory.m_question, style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center)
-        ),
+        Center(child:
+          SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.height * 0.1, child:
+            Text(m_memory.m_question, style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center)
+        )),
 
-        const Spacer(),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
-        Visibility(visible: !m_memory.m_bMultiChoice, child:
-          SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: 50, child:
-            const Text("Answer", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
-          )
-        ),
-
-        Visibility(visible: !m_memory.m_bMultiChoice, child:
-          IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
-            TextField(
-              decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a answer'),
-              style: const TextStyle(fontSize: 30, color: Colors.black),
-              controller: m_answerTextController,
-              maxLines: null
+        Center(child:
+          Visibility(visible: !m_memory.m_bMultiChoice, child:
+            SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: 50, child:
+              const Text("Answer", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
             )
-        ))),
+        )),
 
+        Center(child:
+          Visibility(visible: !m_memory.m_bMultiChoice, child:
+            IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
+              TextField(
+                decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a answer'),
+                style: const TextStyle(fontSize: 30, color: Colors.black),
+                controller: m_answerTextController,
+                maxLines: null
+              )
+        )))),
+
+        Center(child:
          Visibility(visible: !m_memory.m_bMultiChoice, child:
           TextButton(onPressed: () async {
               Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, m_answerTextController.text == m_memory.m_answer)));
             }, child: const Text("Guess", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center)
           )
-        ),
-
-        Visibility(visible: m_memory.m_bMultiChoice, child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
-          ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: getMultiChoiceAnswers(context))
         )),
 
-        const Spacer(),
+        Center(child:
+          Visibility(visible: m_memory.m_bMultiChoice, child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
+            ListView(shrinkWrap: true, physics: const NeverScrollableScrollPhysics(), scrollDirection: Axis.vertical, children: getMultiChoiceAnswers(context))
+        ))),
+
+        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
           const Spacer(),
@@ -75,7 +80,7 @@ class PageTest extends StatelessWidget
           const Spacer()
         ]),
 
-        const Spacer()
+        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
       ]
       ),
     );
