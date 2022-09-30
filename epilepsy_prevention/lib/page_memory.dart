@@ -81,7 +81,7 @@ class PageMemoryState extends State<PageMemory>
             const Spacer(),
 
             Visibility(visible: widget.m_memory.m_bMultiChoice, child:
-            TextButton(onPressed: addFalseAnswer, child: const Text("+", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center))
+              TextButton(onPressed: addFalseAnswer, child: const Text("+", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center))
             )
           ])),
 

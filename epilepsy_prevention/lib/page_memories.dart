@@ -24,35 +24,34 @@ class PageMemoriesState extends State<PageMemories>
     m_memoryWidgets = getMemoryWidgets(context);
 
     return WillPopScope(onWillPop: () async { Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome())); return true;}, child: Scaffold(body:
-      SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child:
-        Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+      ListView(shrinkWrap: true, children: <Widget>[
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.height * 0.15, child:
-            Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-              const Spacer(),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
-              TextButton(onPressed: () async {
-                await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory())));
-                setState(() {
-                  m_memoryWidgets = getMemoryWidgets(context);
-                });
-                },
-                  child: const Text("Add New Memory", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
-              ),
-
-              const Spacer()
-            ],)
+        Row(mainAxisAlignment: MainAxisAlignment.end, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+          TextButton(onPressed: () async {
+            await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory())));
+            setState(() {
+              m_memoryWidgets = getMemoryWidgets(context);
+            });
+          }, child:
+          const Text("Add New Memory", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center)
           ),
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.height * 0.1, child:
-            const Text("Memories", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
-          ),
+          SizedBox(width: MediaQuery.of(context).size.width * 0.02)
+        ]),
 
-          SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.75, child: ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: m_memoryWidgets)),
-          ]
-        )
+        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+
+        Center(child:
+          SizedBox(width: MediaQuery.of(context).size.width * 0.8, child:
+            const Text("Memories", style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: Colors.blue), textAlign: TextAlign.left)
+        )),
+
+        ListView(shrinkWrap: true, physics: const NeverScrollableScrollPhysics(), scrollDirection: Axis.vertical, children: m_memoryWidgets),
+      ])
       )
-    ));
+    );
    }
 
   List<Widget> getMemoryWidgets(BuildContext context)
