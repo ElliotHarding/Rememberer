@@ -39,20 +39,12 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: const Text("Reminder frequency", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
-            DropdownButton(items: const [
+            DropdownButton(value: widget.m_memory.m_testFrequecy, onChanged: (String? selectedValue) => onFrequencyDropDownChanged(selectedValue), items: const [
                 DropdownMenuItem(value: "Never", child: Text("Never", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
                 DropdownMenuItem(value: "Rare", child: Text("Rare", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
                 DropdownMenuItem(value: "Occasionally", child: Text("Occasionally", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
                 DropdownMenuItem(value: "Frequently", child: Text("Frequently", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center))
               ],
-              value: widget.m_memory.m_testFrequecy,
-              onChanged: (String? selectedValue) {
-                setState(() {
-                  if (selectedValue != null) {
-                    widget.m_memory.m_testFrequecy = selectedValue;
-                  }
-                });
-              }
           )),
 
           const Spacer(),
@@ -60,27 +52,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Text("Max Notifications: " + widget.m_maxNotifications.toInt().toString(), style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child:
-            Slider(
-              value: widget.m_maxNotifications,
-              min: 0,
-              max: 25,
-              onChanged: (newValue) {
-                setState(() {
-                  newValue = newValue.toInt().toDouble();
-
-                  if(newValue > 30)
-                  {
-                    newValue = 30;
-                  }
-
-                  if(widget.m_currentIteration > newValue)
-                  {
-                    widget.m_currentIteration = newValue;
-                  }
-
-                  widget.m_maxNotifications = newValue;
-                });
-              },
+            Slider(value: widget.m_maxNotifications, min: 0, max: 25, onChanged: (newValue) => onMaxNotificationSliderChanged(newValue)
           )),
 
           const Spacer(),
@@ -88,15 +60,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Text("Current Notification: " + widget.m_currentIteration.toInt().toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child:
-            Slider(
-              value: widget.m_currentIteration,
-              min: 0,
-              max: widget.m_maxNotifications,
-              onChanged: (newValue) {
-                setState(() {
-                  widget.m_currentIteration = newValue;
-                });
-              },
+            Slider(value: widget.m_currentIteration, min: 0, max: widget.m_maxNotifications, onChanged: (newValue) => onCurrentIterationSliderChanged(newValue)
           )),
 
           const Spacer(),
@@ -110,6 +74,42 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
           const Spacer()
         ])
     ));
+  }
+
+  void onCurrentIterationSliderChanged(double newValue)
+  {
+    setState(() {
+      widget.m_currentIteration = newValue;
+    });
+  }
+
+  void onMaxNotificationSliderChanged(double newValue)
+  {
+    setState(()
+    {
+      newValue = newValue.toInt().toDouble();
+
+      if(newValue > 30)
+      {
+        newValue = 30;
+      }
+
+      if(widget.m_currentIteration > newValue)
+      {
+        widget.m_currentIteration = newValue;
+      }
+
+      widget.m_maxNotifications = newValue;
+    });
+  }
+
+  void onFrequencyDropDownChanged(String? selectedValue)
+  {
+    setState(() {
+      if (selectedValue != null) {
+        widget.m_memory.m_testFrequecy = selectedValue;
+      }
+    });
   }
 
   void onCancel(BuildContext context)
