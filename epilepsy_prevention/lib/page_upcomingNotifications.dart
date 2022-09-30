@@ -62,31 +62,19 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
     List<Widget> widgets = <Widget>[];
     for(MemoryNotification memNotification in notifications)
     {
-      widgets.add(Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+      widgets.add(Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
+        SizedBox(width: MediaQuery.of(context).size.width * 0.4, height: MediaQuery.of(context).size.height * 0.1, child: TextButton(onPressed: () => onQuestionPressed(memNotification.m_memory, context), child:
+          Text(memNotification.m_memory.m_question, style: const TextStyle(fontSize: 20.0, color: Colors.blue)))
+        ),
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.4, height: MediaQuery.of(context).size.height * 0.1, child: TextButton(onPressed: () async {
-            await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(memNotification.m_memory)));
-            setState(() {
-              m_notificationsWidget = getNotificationWidgets(context);
-            });
-          }, child: Text(memNotification.m_memory.m_question, style: const TextStyle(fontSize: 20.0, color: Colors.blue)))),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.4, height: MediaQuery.of(context).size.height * 0.1, child: TextButton(onPressed: () => onQuestionPressed(memNotification.m_memory, context), child:
+          Text(epochMsToDate(memNotification.m_notificationTime), style: const TextStyle(fontSize: 20.0, color: Colors.blue)))
+        ),
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.4, height: MediaQuery.of(context).size.height * 0.1, child: TextButton(onPressed: () async {
-            await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(memNotification.m_memory)));
-            setState(() {
-              m_notificationsWidget = getNotificationWidgets(context);
-            });
-          }, child: Text(epochMsToDate(memNotification.m_notificationTime), style: const TextStyle(fontSize: 20.0, color: Colors.blue)))),
-
-          SizedBox(width: MediaQuery.of(context).size.width * 0.2, height: MediaQuery.of(context).size.height * 0.1, child: TextButton(onPressed: () {
-            deleteNotification(memNotification);
-            setState(() {
-              m_notificationsWidget = getNotificationWidgets(context);
-            });
-          }, child: const Text("X")))
-        ],
-      ));
+        SizedBox(width: MediaQuery.of(context).size.width * 0.2, height: MediaQuery.of(context).size.height * 0.1, child: TextButton(onPressed: () => onDeleteNotificationPressed(memNotification, context), child:
+          const Text("X"))
+        )
+      ]));
     }
 
     return widgets;
@@ -104,6 +92,22 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
   {
     var date = DateTime.fromMillisecondsSinceEpoch(epochMs);
     return date.toString();
+  }
+
+  void onQuestionPressed(Memory memory, BuildContext context) async
+  {
+    await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(memory)));
+    setState(() {
+      m_notificationsWidget = getNotificationWidgets(context);
+    });
+  }
+
+  void onDeleteNotificationPressed(MemoryNotification memNotification, BuildContext context)
+  {
+    deleteNotification(memNotification);
+    setState(() {
+      m_notificationsWidget = getNotificationWidgets(context);
+    });
   }
 }
 
