@@ -50,7 +50,10 @@ class PageSettingsState extends State<PageSettings>
 
         for(Memory memory in box.values)
         {
-          Notifications().scheduleNotifications(memory.key, memory.m_question, memory.m_notifyTimes);
+          if(memory.m_bNotificationsEnabled)
+          {
+            Notifications().scheduleNotifications(memory.key, memory.m_question, memory.m_notifyTimes);
+          }
         }
       }
       else

@@ -88,6 +88,7 @@ class PageMemoryState extends State<PageMemory>
 
         Center(child:SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Row(children : [
           const Text("Reminders: ", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left),
+          Checkbox(value: widget.m_memory.m_bNotificationsEnabled, onChanged: (bool? value) => onEnableNotificationsChanged(value)),
           TextButton(onPressed: () => onPressReminders(context), child:
             const Text("⚙", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
           )
@@ -164,7 +165,7 @@ class PageMemoryState extends State<PageMemory>
         key = db.updateMemory(widget.m_memory);
       }
 
-      if(db.getNotificationsEnabledSetting())
+      if(db.getNotificationsEnabledSetting() && widget.m_memory.m_bNotificationsEnabled)
       {
         await Notifications().scheduleNotifications(key, widget.m_memory.m_question, widget.m_memory.m_notifyTimes);
       }
@@ -201,6 +202,18 @@ class PageMemoryState extends State<PageMemory>
       setState(()
       {
         widget.m_memory.m_bMultiChoice = value;
+      });
+    }
+  }
+
+  void onEnableNotificationsChanged(bool? value)
+  {
+    if(value != null)
+    {
+      setState(()
+      {
+        widget.m_memory.m_bNotificationsEnabled = value;
+        m_bChangeNotifyTimes = true;
       });
     }
   }

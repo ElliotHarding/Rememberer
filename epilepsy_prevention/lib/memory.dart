@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 @HiveType(typeId: 0)
 class Memory extends HiveObject
 {
-  Memory({String question = "", String answer = "", bool multiChoice = false, List<String> falseAnswers = const [], String testFrequency = "Never", List<int> notifyTimes = const []})
+  Memory({String question = "", String answer = "", bool multiChoice = false, List<String> falseAnswers = const [], String testFrequency = "Never", List<int> notifyTimes = const [], bool enabledNotifications = true})
   {
     m_question = question;
     m_answer = answer;
@@ -12,6 +12,7 @@ class Memory extends HiveObject
     m_falseAnswers = falseAnswers;
     m_testFrequecy = testFrequency;
     m_notifyTimes = notifyTimes;
+    m_bNotificationsEnabled = enabledNotifications;
   }
 
   @HiveField(0)
@@ -31,6 +32,9 @@ class Memory extends HiveObject
 
   @HiveField(5)
   List<int> m_notifyTimes = <int>[];
+
+  @HiveField(6)
+  bool m_bNotificationsEnabled = true;
 
   String validate()
   {
@@ -90,7 +94,8 @@ class MemoryAdapter extends TypeAdapter<Memory>
       List<String> falseAnswers = reader.readStringList();
       String testFrequency = reader.readString();
       List<int> notifyTimes = reader.readIntList();
-      return Memory(question: question, answer: answer, multiChoice: multiChoice, falseAnswers: falseAnswers, testFrequency: testFrequency, notifyTimes: notifyTimes);
+      bool enabledNotifications = reader.readBool();
+      return Memory(question: question, answer: answer, multiChoice: multiChoice, falseAnswers: falseAnswers, testFrequency: testFrequency, notifyTimes: notifyTimes, enabledNotifications: enabledNotifications);
     }
     catch (e)
     {
@@ -107,6 +112,7 @@ class MemoryAdapter extends TypeAdapter<Memory>
     writer.writeStringList(obj.m_falseAnswers);
     writer.writeString(obj.m_testFrequecy);
     writer.writeIntList(obj.m_notifyTimes);
+    writer.writeBool(obj.m_bNotificationsEnabled);
   }
 }
 
