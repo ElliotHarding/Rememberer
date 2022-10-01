@@ -152,23 +152,10 @@ class PageMemoryState extends State<PageMemory>
     }
 
     //Add or update memory to database and schedule its notifcations
-    var box = db.getMemoryBox();
-    if (box != null)
+    var key = await db.addOrUpdateMemory(widget.m_memory);
+    if(db.getNotificationsEnabledSetting() && widget.m_memory.m_bNotificationsEnabled)
     {
-      var key;
-      if(db.getMemoryWithId(widget.m_memory.key) == null)
-      {
-        key = await box.add(widget.m_memory);
-      }
-      else
-      {
-        key = db.updateMemory(widget.m_memory);
-      }
-
-      if(db.getNotificationsEnabledSetting() && widget.m_memory.m_bNotificationsEnabled)
-      {
-        await Notifications().scheduleNotifications(key, widget.m_memory.m_question, widget.m_memory.m_notifyTimes);
-      }
+      await Notifications().scheduleNotifications(key, widget.m_memory.m_question, widget.m_memory.m_notifyTimes);
     }
 
     Navigator.of(context).pop();

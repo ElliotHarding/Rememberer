@@ -92,7 +92,7 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
     await Notifications().removeNotification(memoryNotification.m_memory.key.toString() + "-" + memoryNotification.m_notificationTime.toString());
 
     memoryNotification.m_memory.m_notifyTimes.remove(memoryNotification.m_notificationTime);
-    Database().updateMemory(memoryNotification.m_memory);
+    Database().addOrUpdateMemory(memoryNotification.m_memory);
   }
 
   String epochMsToDate(int epochMs)

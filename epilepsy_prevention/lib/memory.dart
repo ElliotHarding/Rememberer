@@ -171,11 +171,19 @@ class Database
     return _m_memoryBox;
   }
 
-  int updateMemory(Memory memory)
+  Future<int> addOrUpdateMemory(Memory memory) async
   {
     if(_m_memoryBox != null)
     {
-      _m_memoryBox?.put(memory.key, memory);
+      if(getMemoryWithId(memory.key) != null)
+      {
+        _m_memoryBox?.put(memory.key, memory);
+        return memory.key;
+      }
+      else
+      {
+        return (await _m_memoryBox?.add(memory)) ?? memory.key;
+      }
     }
     return memory.key;
   }
@@ -229,5 +237,10 @@ class Database
       }
     }
     return null;
+  }
+
+  void generateTestData()
+  {
+
   }
 }

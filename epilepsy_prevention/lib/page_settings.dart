@@ -40,6 +40,12 @@ class PageSettingsState extends State<PageSettings>
           const Text("Delete all notifications", style: TextStyle(fontSize: 30.0, color: Colors.blue))
         ),
 
+        const Spacer(),
+
+        TextButton(onPressed: () => askGenTestData(), child:
+          const Text("Generate test data", style: TextStyle(fontSize: 30.0, color: Colors.blue))
+        ),
+
         const Spacer()
       ],)
     );
@@ -79,6 +85,11 @@ class PageSettingsState extends State<PageSettings>
     }
   }
 
+  void askGenTestData()
+  {
+    showDialog(context: context, builder: (context) => promptDialog("Generate test data?", "Are you sure you want to generate test data?", "Generate", "Cancel", onGenerateTestData, onAbortPromptDialog));
+  }
+
   void askDeleteAllNotifications()
   {
     showDialog(context: context, builder: (context) => promptDialog("Delete all notifications?", "Are you sure you want to delete all notifications?", "Delete", "Cancel", onDeleteAllNotifications, onAbortPromptDialog));
@@ -91,13 +102,13 @@ class PageSettingsState extends State<PageSettings>
 
   AlertDialog promptDialog(String title, String content, String confirmText, String denyText, var confirmAction, var denyAction)
   {
-    return AlertDialog(title: Text(title), content: Text(content), actions: <Widget>[
+    return AlertDialog(title: Text(title, style: const TextStyle(fontSize: 30.0, color: Colors.blue)), content: Text(content, style: const TextStyle(fontSize: 20.0, color: Colors.blue)), actions: <Widget>[
       TextButton(onPressed: () => denyAction(), child:
-        Text(denyText, style: const TextStyle(fontSize: 30.0, color: Colors.blue))
+        Text(denyText, style: const TextStyle(fontSize: 20.0, color: Colors.blue))
       ),
 
       TextButton(onPressed: () => confirmAction(), child:
-        Text(confirmText, style: const TextStyle(fontSize: 30.0, color: Colors.blue))
+        Text(confirmText, style: const TextStyle(fontSize: 20.0, color: Colors.blue))
       ),
     ],);
   }
@@ -118,6 +129,12 @@ class PageSettingsState extends State<PageSettings>
   {
     Database().deleteAllNotifyTimes();
 
+    Navigator.of(context).pop();
+  }
+
+  void onGenerateTestData()
+  {
+    Database().generateTestData();
     Navigator.of(context).pop();
   }
 }
