@@ -96,7 +96,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
               )),
 
               Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child:
-                Slider(value: widget.m_graphViewIterationsCount.toDouble(), min: 1, max: widget.m_maxNotifications.toDouble(), onChanged: (newValue) => onGraphViewIterationsSliderChanged(newValue.toInt())
+                Slider(value: widget.m_graphViewIterationsCount.toDouble(), min: 1, max: widget.m_memory.m_notifyTimes.length.toDouble(), onChanged: (newValue) => onGraphViewIterationsSliderChanged(newValue.toInt())
               ))),
 
               const SizedBox(height: 10),
@@ -218,20 +218,22 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   {
     if (widget.m_memory.m_testFrequecy == "Rare")
     {
-      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration.toInt(), widget.m_maxNotifications, 4, 1800000);
+      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration, widget.m_maxNotifications, 4, 1800000);
     }
     else if (widget.m_memory.m_testFrequecy == "Occasionally")
     {
-      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration.toInt(), widget.m_maxNotifications, 3, 1200000);
+      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration, widget.m_maxNotifications, 3, 1200000);
     }
     else if (widget.m_memory.m_testFrequecy == "Frequently")
     {
-      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration.toInt(), widget.m_maxNotifications, 2, 900000);
+      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration, widget.m_maxNotifications, 2, 900000);
     }
     else
     {
       widget.m_memory.m_notifyTimes = [];
     }
+
+    widget.m_graphViewIterationsCount = widget.m_memory.m_notifyTimes.length;
 
     updateGraphValues(widget.m_memory.m_notifyTimes);
   }
@@ -241,6 +243,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     setState(()
     {
       widget.m_currentIteration = newValue;
+      updateNotifyTimes();
     });
   }
 
@@ -263,10 +266,9 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
       }
 
       widget.m_maxNotifications = newValue;
-      widget.m_graphViewIterationsCount = newValue;
-    });
 
-    updateNotifyTimes();
+      updateNotifyTimes();
+    });
   }
 
   void onFrequencyDropDownChanged(String? selectedValue)
