@@ -23,24 +23,29 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
 
     m_notificationsWidget = getNotificationWidgets();
 
-    return Scaffold(
-        body: Column(children: [
+    return Scaffold(body:
+      ListView(shrinkWrap: true, children: <Widget>[
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.height * 0.15, child:
-            const Center(child:
-              Text("Notifications", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.blue), textAlign: TextAlign.left),
-            )
-          ),
+        const SizedBox(height: 30),
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: MediaQuery.of(context).size.height * 0.1, child: Row(children: [
-            const Text("Enabled only: ", style: TextStyle(fontSize: 20, color: Colors.blue), textAlign: TextAlign.left),
-            Checkbox(value: m_bEnabledOnly, onChanged: (bool? value) => onEnabledOnlyCheckboxChanged(value)),
-          ])),
+        const Center(child: SizedBox(height: 50, child:
+          Text("Notifications", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.blue), textAlign: TextAlign.center),
+        )),
 
-          SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.75, child:
-            ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: m_notificationsWidget)
-          ),
-        ],)
+        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Row(children: [
+          const Text("Enabled only: ", style: TextStyle(fontSize: 20, color: Colors.blue), textAlign: TextAlign.left),
+          Checkbox(value: m_bEnabledOnly, onChanged: (bool? value) => onEnabledOnlyCheckboxChanged(value)),
+        ]))),
+
+        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Row(children: [
+          const Text("Enabled only: ", style: TextStyle(fontSize: 20, color: Colors.blue), textAlign: TextAlign.left),
+          Checkbox(value: m_bEnabledOnly, onChanged: (bool? value) => onEnabledOnlyCheckboxChanged(value)),
+        ]))),
+
+        SizedBox(width: MediaQuery.of(context).size.width, child:
+          ListView(shrinkWrap: true, physics: const NeverScrollableScrollPhysics(), scrollDirection: Axis.vertical, children: m_notificationsWidget)
+        ),
+      ],)
     );
   }
 
