@@ -106,7 +106,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
                   ScatterChartData(
                     scatterSpots: widget.m_graphDataPoints,
                     minX: 0,
-                    maxX: 30,
+                    maxX: widget.m_graphViewIterationsCount.toDouble(),
                     minY: widget.m_graphMinTime.toDouble(),
                     maxY: widget.m_graphMaxTime.toDouble(),
                     borderData: FlBorderData(
@@ -267,12 +267,8 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         widget.m_currentIteration = newValue;
       }
 
-      if(widget.m_graphViewIterationsCount > newValue)
-      {
-        widget.m_graphViewIterationsCount = newValue;
-      }
-
       widget.m_maxNotifications = newValue;
+      widget.m_graphViewIterationsCount = newValue;
     });
 
     updateNotifyTimes();
