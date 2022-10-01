@@ -81,6 +81,10 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         ]),
         )),
 
+        Visibility(visible: widget.m_memory.m_testFrequecy == "Custom", child: Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 190, child:
+          ListView.builder(itemCount: widget.m_memory.m_notifyTimes.length, physics: const NeverScrollableScrollPhysics(), itemBuilder: (context, i) => genCustomNotificationWidget(context, i))
+        ))),
+
         const SizedBox(height: 30),
 
         Visibility(visible: widget.m_memory.m_testFrequecy != "Never", child: SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.7 + 125, child:
@@ -281,10 +285,26 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     Navigator.pop(context, widget.m_memory);
   }
 
+  Widget genCustomNotificationWidget(BuildContext context, int iCustomNotification)
+  {
+    return SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
+      Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+        SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
+          const Text("Test")
+        ),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
+          TextButton(onPressed: () { setState(() {
+            widget.m_memory.m_notifyTimes.removeAt(iCustomNotification);
+          });}, child: const Text("X", style: TextStyle(fontSize: 30, color: Colors.black))),
+        )
+      ])
+    );
+  }
+
   List<int> genNotifyTimes(int iStart, int iMaxNotifications, double incFactor, int incTime)
   {
     List<int> values = [];
-    values.add(DateTime.now().millisecondsSinceEpoch + 30000);
+    //values.add(DateTime.now().millisecondsSinceEpoch + 30000);
     for(int i = iStart; i < iMaxNotifications; i++)
     {
       values.add(DateTime.now().millisecondsSinceEpoch + incTime * pow(incFactor, i).toInt());
@@ -296,7 +316,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   {
     if(notifyTimes.isEmpty)
     {
-        return 1;
+        return 0;
     }
 
     notifyTimes.sort((a, b) => a.compareTo(b));
@@ -306,10 +326,10 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     {
       if(currentTime < notifyTimes[i])
       {
-        return i + 1;
+        return i;
       }
     }
 
-    return notifyTimes.length;
+    return notifyTimes.length-1;
   }
 }
