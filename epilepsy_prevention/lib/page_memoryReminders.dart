@@ -314,12 +314,12 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
       Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
         SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
           TextButton(onPressed: () => onSelectCustomNotification(context, iCustomNotification), child:
-            Text(epochMsToDate(widget.m_memory.m_notifyTimes[iCustomNotification]), style: const TextStyle(fontSize: 30, color: Colors.black))
+            Text(epochMsToDate(widget.m_memory.m_notifyTimes[iCustomNotification]), style: const TextStyle(fontSize: 30, color: Colors.grey))
           ),
         ),
         SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
           TextButton(onPressed: () => onDeleteCustomNotification(iCustomNotification), child:
-            const Text("X", style: TextStyle(fontSize: 30, color: Colors.black))
+            const Text("X", style: TextStyle(fontSize: 30, color: Colors.grey))
           ),
         )
       ])
