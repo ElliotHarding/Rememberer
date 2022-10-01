@@ -222,10 +222,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
       widget.m_memory.m_notifyTimes = [];
     }
 
-    if(widget.m_graphViewIterationsCount > widget.m_memory.m_notifyTimes.length)
-    {
-      widget.m_graphViewIterationsCount = widget.m_memory.m_notifyTimes.length;
-    }
+    widget.m_graphViewIterationsCount = widget.m_memory.m_notifyTimes.length;
 
     updateGraphValues(widget.m_memory.m_notifyTimes);
   }
