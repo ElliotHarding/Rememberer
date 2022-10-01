@@ -313,28 +313,42 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     return IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
       Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
         SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
-          TextButton(onPressed: () async {
-            DateTime? newDate = await showDatePicker(context: context, initialDate: DateTime.fromMillisecondsSinceEpoch(widget.m_memory.m_notifyTimes[iCustomNotification]), firstDate: DateTime.now(), lastDate: DateTime.fromMillisecondsSinceEpoch(8640000000000000));
-            TimeOfDay? newTime = await showTimePicker(context: context, initialTime: TimeOfDay.now());
-
-            if(newDate != null && newTime != null)
-            {
-              var dateTime = DateTime(newDate.year, newDate.month, newDate.day, newTime.hour, newTime.minute);
-              setState(()
-              {
-                widget.m_memory.m_notifyTimes[iCustomNotification] = dateTime.millisecondsSinceEpoch;
-                updateNotifyTimes();
-              }
-            );}}, child: Text(epochMsToDate(widget.m_memory.m_notifyTimes[iCustomNotification]), style: const TextStyle(fontSize: 30, color: Colors.black))),
+          TextButton(onPressed: () => onSelectCustomNotification(context, iCustomNotification), child:
+            Text(epochMsToDate(widget.m_memory.m_notifyTimes[iCustomNotification]), style: const TextStyle(fontSize: 30, color: Colors.black))
+          ),
         ),
         SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
-          TextButton(onPressed: () { setState(() {
-            widget.m_memory.m_notifyTimes.removeAt(iCustomNotification);
-            updateNotifyTimes();
-          });}, child: const Text("X", style: TextStyle(fontSize: 30, color: Colors.black))),
+          TextButton(onPressed: () => onDeleteCustomNotification(iCustomNotification), child:
+            const Text("X", style: TextStyle(fontSize: 30, color: Colors.black))
+          ),
         )
       ])
     ));
+  }
+
+  void onSelectCustomNotification(BuildContext context, int iCustomNotification) async
+  {
+    DateTime? newDate = await showDatePicker(context: context, initialDate: DateTime.fromMillisecondsSinceEpoch(widget.m_memory.m_notifyTimes[iCustomNotification]), firstDate: DateTime.now(), lastDate: DateTime.fromMillisecondsSinceEpoch(8640000000000000));
+    TimeOfDay? newTime = await showTimePicker(context: context, initialTime: TimeOfDay.now());
+
+    if(newDate != null && newTime != null)
+    {
+      var dateTime = DateTime(newDate.year, newDate.month, newDate.day, newTime.hour, newTime.minute);
+      setState(()
+      {
+        widget.m_memory.m_notifyTimes[iCustomNotification] = dateTime.millisecondsSinceEpoch;
+        updateNotifyTimes();
+      });
+    }
+  }
+
+  void onDeleteCustomNotification(int iCustomNotification)
+  {
+    setState(()
+    {
+      widget.m_memory.m_notifyTimes.removeAt(iCustomNotification);
+      updateNotifyTimes();
+    });
   }
 
   String epochMsToDate(int epochMs)
