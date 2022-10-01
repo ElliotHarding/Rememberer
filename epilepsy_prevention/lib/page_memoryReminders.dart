@@ -221,6 +221,10 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     {
       widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_notificationStartGoal, widget.m_notificationCountGoal, 2, 900000);
     }
+    else if(widget.m_memory.m_testFrequecy == "Custom")
+    {
+        //Keep widget.m_memory.m_notifyTimes
+    }
     else
     {
       widget.m_memory.m_notifyTimes = [];
@@ -295,6 +299,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
           TextButton(onPressed: () { setState(() {
             widget.m_memory.m_notifyTimes.removeAt(iCustomNotification);
+            updateNotifyTimes();
           });}, child: const Text("X", style: TextStyle(fontSize: 30, color: Colors.black))),
         )
       ])
