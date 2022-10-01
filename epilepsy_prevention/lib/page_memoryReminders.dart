@@ -81,11 +81,17 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         ]),
         )),
 
-        Center(child: Column(children: [
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Visibility(visible: widget.m_memory.m_testFrequecy == "Custom", child:
+        Center(child: Visibility(visible: widget.m_memory.m_testFrequecy == "Custom", child: Column(children: [
+
+          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Row(children: [
+            const Text("Notifications: ", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left),
+            TextButton(onPressed: () => onAddCustomNotification(), child: const Text("+", style: TextStyle(fontSize: 30, color: Colors.blue))),
+          ])),
+
+          SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
             ListView.builder(itemCount: widget.m_memory.m_notifyTimes.length, physics: const NeverScrollableScrollPhysics(), shrinkWrap: true, scrollDirection: Axis.vertical,  itemBuilder: (context, i) => genCustomNotificationWidget(context, i))
-          ))
-        ])),
+          )
+        ]))),
 
         const SizedBox(height: 30),
 
@@ -277,6 +283,15 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         widget.m_memory.m_testFrequecy = selectedValue;
       }
 
+      updateNotifyTimes();
+    });
+  }
+
+  void onAddCustomNotification()
+  {
+    setState(()
+    {
+      widget.m_memory.m_notifyTimes.add(DateTime.now().millisecondsSinceEpoch);
       updateNotifyTimes();
     });
   }
