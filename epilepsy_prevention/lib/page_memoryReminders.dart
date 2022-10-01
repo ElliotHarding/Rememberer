@@ -12,13 +12,13 @@ class PageMemoryReminders extends StatefulWidget
   Memory m_memory;
 
   //Notification gen vars
-  int m_notificationStartGoal = 1;
-  int m_notificationCountGoal = 1;
+  int m_notificationStartGoal = 0;
+  int m_notificationCountGoal = 0;
 
   //Graph stuff
   int m_graphMaxTime = 0;
   int m_graphMinTime = 0;
-  int m_graphViewIterationsCount = 1;
+  int m_graphViewIterationsCount = 0;
   List<ScatterSpot> m_graphDataPoints = [];
 
   @override
@@ -64,19 +64,19 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
         const SizedBox(height: 30),
 
-        Visibility(visible: widget.m_memory.m_testFrequecy != "Never" && widget.m_memory.m_testFrequecy != "Custom", child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 150, child: ListView(physics: const NeverScrollableScrollPhysics(), children: <Widget>[
-          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child: Text("Iteration goal: " + widget.m_notificationCountGoal.toString(), style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
+        Visibility(visible: widget.m_memory.m_testFrequecy != "Never" && widget.m_memory.m_testFrequecy != "Custom", child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 190, child: ListView(physics: const NeverScrollableScrollPhysics(), children: <Widget>[
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Text("Iteration goal: " + widget.m_notificationCountGoal.toString(), style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
 
           Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
-            Slider(value: widget.m_notificationCountGoal == 0 ? 1 : widget.m_notificationCountGoal.toDouble(), min: 1, max: 25, onChanged: (newValue) => onNotificationCountGoalSliderChanged(newValue.toInt())
+            Slider(value: widget.m_notificationCountGoal.toDouble(), min: 0, max: 25, onChanged: (newValue) => onNotificationCountGoalSliderChanged(newValue.toInt())
           ))),
 
           const SizedBox(height: 30),
 
-          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child: Text("Start iteration: " + widget.m_notificationStartGoal.toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Text("Start iteration: " + widget.m_notificationStartGoal.toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
 
           Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
-            Slider(value: widget.m_notificationStartGoal.toDouble(), min: 1, max: widget.m_notificationCountGoal == 0 ? 1 : widget.m_notificationCountGoal.toDouble(), onChanged: (newValue) => onCurrentIterationSliderChanged(newValue.toInt())
+            Slider(value: widget.m_notificationStartGoal.toDouble(), min: 0, max: widget.m_notificationCountGoal.toDouble(), onChanged: (newValue) => onCurrentIterationSliderChanged(newValue.toInt())
           ))),
         ]),
         )),
@@ -91,7 +91,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
               )),
 
               Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
-                Slider(value: widget.m_graphViewIterationsCount == 0 ? 1 : widget.m_graphViewIterationsCount.toDouble(), min: 1, max: widget.m_memory.m_notifyTimes.isEmpty ? 1 : widget.m_memory.m_notifyTimes.length.toDouble(), onChanged: (newValue) => onGraphViewIterationsSliderChanged(newValue.toInt())
+                Slider(value: widget.m_graphViewIterationsCount.toDouble(), min: 0, max: widget.m_memory.m_notifyTimes.length.toDouble(), onChanged: (newValue) => onGraphViewIterationsSliderChanged(newValue.toInt())
               ))),
 
               const SizedBox(height: 10),
@@ -179,7 +179,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   //Must be called in setState!
   void updateGraphValues(List<int> notifyTimes)
   {
-    if(notifyTimes.isEmpty)
+    if(notifyTimes.isEmpty || widget.m_graphViewIterationsCount == 0)
     {
       widget.m_graphMaxTime = 0;
       widget.m_graphMinTime = 0;
@@ -222,7 +222,11 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
       widget.m_memory.m_notifyTimes = [];
     }
 
-    widget.m_graphViewIterationsCount = widget.m_memory.m_notifyTimes.length;
+    if(widget.m_graphViewIterationsCount > widget.m_memory.m_notifyTimes.length)
+    {
+      widget.m_graphViewIterationsCount = widget.m_memory.m_notifyTimes.length;
+    }
+
     updateGraphValues(widget.m_memory.m_notifyTimes);
   }
 
