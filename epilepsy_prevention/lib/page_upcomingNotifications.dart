@@ -14,7 +14,8 @@ class PageUpcomingNotifications extends StatefulWidget
 class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
 {
   List<Widget> m_notificationsWidget = [];
-  bool m_bEnabledOnly = false;
+  bool m_bEnabledOnly = true;
+  bool m_bDueOnly = true;
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +39,8 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
         ]))),
 
         Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Row(children: [
-          const Text("Enabled only: ", style: TextStyle(fontSize: 20, color: Colors.blue), textAlign: TextAlign.left),
-          Checkbox(value: m_bEnabledOnly, onChanged: (bool? value) => onEnabledOnlyCheckboxChanged(value)),
+          const Text("Due only: ", style: TextStyle(fontSize: 20, color: Colors.blue), textAlign: TextAlign.left),
+          Checkbox(value: m_bDueOnly, onChanged: (bool? value) => onDueOnlyCheckboxChanged(value)),
         ]))),
 
         SizedBox(width: MediaQuery.of(context).size.width, child:
@@ -83,11 +84,11 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
     {
       for(Memory memory in box.values)
       {
-        if((m_bEnabledOnly && memory.m_bNotificationsEnabled) || !m_bEnabledOnly)
+        if(!m_bEnabledOnly || memory.m_bNotificationsEnabled)
         {
           for (int notifyTime in memory.m_notifyTimes)
           {
-            if(notifyTime > DateTime.now().millisecondsSinceEpoch)
+            if(!m_bDueOnly || notifyTime > DateTime.now().millisecondsSinceEpoch)
             {
               notifications.add(MemoryNotification(notifyTime, memory));
             }
@@ -106,6 +107,15 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
     setState(()
     {
       m_bEnabledOnly = enabled == true;
+      m_notificationsWidget = getNotificationWidgets();
+    });
+  }
+
+  void onDueOnlyCheckboxChanged(bool? enabled)
+  {
+    setState(()
+    {
+      m_bDueOnly = enabled == true;
       m_notificationsWidget = getNotificationWidgets();
     });
   }
