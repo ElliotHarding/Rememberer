@@ -71,6 +71,8 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
           const Text("X"))
         )
       ]));
+
+      widgets.add(const SizedBox(height: 10));
     }
 
     return widgets;
