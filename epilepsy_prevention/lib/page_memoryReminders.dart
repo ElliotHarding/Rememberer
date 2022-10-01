@@ -107,8 +107,8 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
                     maxX: widget.m_graphViewIterationsCount.toDouble(),
                     minY: widget.m_graphMinTime.toDouble(),
                     maxY: widget.m_graphMaxTime.toDouble(),
-                    borderData: FlBorderData(
-                      show: true,
+                    borderData: FlBorderData(border:
+                      const Border(left: BorderSide(color: Colors.black, width: 1, style: BorderStyle.solid, strokeAlign: StrokeAlign.inside), bottom: BorderSide(color: Colors.black, width: 1, style: BorderStyle.solid, strokeAlign: StrokeAlign.inside))
                     ),
                     gridData: FlGridData(
                       show: false,
