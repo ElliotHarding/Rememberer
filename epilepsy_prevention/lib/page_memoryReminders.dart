@@ -313,7 +313,16 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     return IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
       Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
         SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
-          const Text("Test")
+          TextButton(onPressed: () async {
+            DateTime? newDate = await showDatePicker(context: context, initialDate: DateTime.fromMillisecondsSinceEpoch(widget.m_memory.m_notifyTimes[iCustomNotification]), firstDate: DateTime.now(), lastDate: DateTime.fromMillisecondsSinceEpoch(8640000000000000));
+            setState(()
+            {
+            if(newDate != null)
+            {
+              widget.m_memory.m_notifyTimes[iCustomNotification] = newDate.millisecondsSinceEpoch;
+            }
+            updateNotifyTimes();
+          });}, child: Text(epochMsToDate(widget.m_memory.m_notifyTimes[iCustomNotification]), style: const TextStyle(fontSize: 30, color: Colors.black))),
         ),
         SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
           TextButton(onPressed: () { setState(() {
@@ -323,6 +332,12 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         )
       ])
     ));
+  }
+
+  String epochMsToDate(int epochMs)
+  {
+    var date = DateTime.fromMillisecondsSinceEpoch(epochMs);
+    return date.toString();
   }
 
   List<int> genNotifyTimes(int iStart, int iMaxNotifications, double incFactor, int incTime)
