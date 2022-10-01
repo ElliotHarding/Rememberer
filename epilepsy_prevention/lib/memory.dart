@@ -138,8 +138,6 @@ class Database
 
     _m_memoryBox = await Hive.openBox("Memories.db");
     _m_settingsBox = await Hive.openBox("settings.db");
-
-    //removeCompletedNotifyTimes();
   }
 
   int getAndIncrementChannelNumber()

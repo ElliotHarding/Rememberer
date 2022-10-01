@@ -14,31 +14,37 @@ class PageUpcomingNotifications extends StatefulWidget
 class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
 {
   List<Widget> m_notificationsWidget = [];
+  bool m_bEnabledOnly = false;
 
   @override
   Widget build(BuildContext context) {
 
     Notifications.setupNotificationActionListener(context);
 
-    m_notificationsWidget = getNotificationWidgets(context);
+    m_notificationsWidget = getNotificationWidgets();
 
     return Scaffold(
         body: Column(children: [
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.height * 0.2, child:
+          SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.height * 0.15, child:
             const Center(child:
               Text("Notifications", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.blue), textAlign: TextAlign.left),
             )
           ),
 
-          SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.8, child:
+          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: MediaQuery.of(context).size.height * 0.1, child: Row(children: [
+            const Text("Enabled only: ", style: TextStyle(fontSize: 20, color: Colors.blue), textAlign: TextAlign.left),
+            Checkbox(value: m_bEnabledOnly, onChanged: (bool? value) => onEnabledOnlyCheckboxChanged(value)),
+          ])),
+
+          SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.75, child:
             ListView(shrinkWrap: true, scrollDirection: Axis.vertical, children: m_notificationsWidget)
           ),
         ],)
     );
   }
 
-  List<Widget> getNotificationWidgets(BuildContext context)
+  List<Widget> getNotificationWidgets()
   {
     List<MemoryNotification> notifications = getUppcommingNotifications();
 
@@ -46,15 +52,15 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
     for(MemoryNotification memNotification in notifications)
     {
       widgets.add(Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
-        SizedBox(width: MediaQuery.of(context).size.width * 0.4, height: MediaQuery.of(context).size.height * 0.1, child: TextButton(onPressed: () => onQuestionPressed(memNotification.m_memory, context), child:
+        SizedBox(width: MediaQuery.of(context).size.width * 0.4, height: MediaQuery.of(context).size.height * 0.1, child: TextButton(onPressed: () => onQuestionPressed(memNotification.m_memory), child:
           Text(memNotification.m_memory.m_question, style: const TextStyle(fontSize: 20.0, color: Colors.blue)))
         ),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.4, height: MediaQuery.of(context).size.height * 0.1, child: TextButton(onPressed: () => onQuestionPressed(memNotification.m_memory, context), child:
+        SizedBox(width: MediaQuery.of(context).size.width * 0.4, height: MediaQuery.of(context).size.height * 0.1, child: TextButton(onPressed: () => onQuestionPressed(memNotification.m_memory), child:
           Text(epochMsToDate(memNotification.m_notificationTime), style: const TextStyle(fontSize: 20.0, color: Colors.blue)))
         ),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.2, height: MediaQuery.of(context).size.height * 0.1, child: TextButton(onPressed: () => onDeleteNotificationPressed(memNotification, context), child:
+        SizedBox(width: MediaQuery.of(context).size.width * 0.2, height: MediaQuery.of(context).size.height * 0.1, child: TextButton(onPressed: () => onDeleteNotificationPressed(memNotification), child:
           const Text("X"))
         )
       ]));
@@ -72,11 +78,14 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
     {
       for(Memory memory in box.values)
       {
-        for (int notifyTime in memory.m_notifyTimes)
+        if((m_bEnabledOnly && memory.m_bNotificationsEnabled) || !m_bEnabledOnly)
         {
-          if(notifyTime > DateTime.now().millisecondsSinceEpoch)
+          for (int notifyTime in memory.m_notifyTimes)
           {
-            notifications.add(MemoryNotification(notifyTime, memory));
+            if(notifyTime > DateTime.now().millisecondsSinceEpoch)
+            {
+              notifications.add(MemoryNotification(notifyTime, memory));
+            }
           }
         }
       }
@@ -85,6 +94,15 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
     notifications.sort((a, b) => a.m_notificationTime.compareTo(b.m_notificationTime));
 
     return notifications;
+  }
+
+  void onEnabledOnlyCheckboxChanged(bool? enabled)
+  {
+    setState(()
+    {
+      m_bEnabledOnly = enabled == true;
+      m_notificationsWidget = getNotificationWidgets();
+    });
   }
 
   void deleteNotification(MemoryNotification memoryNotification) async
@@ -101,19 +119,19 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
     return date.toString();
   }
 
-  void onQuestionPressed(Memory memory, BuildContext context) async
+  void onQuestionPressed(Memory memory) async
   {
     await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(memory)));
     setState(() {
-      m_notificationsWidget = getNotificationWidgets(context);
+      m_notificationsWidget = getNotificationWidgets();
     });
   }
 
-  void onDeleteNotificationPressed(MemoryNotification memNotification, BuildContext context)
+  void onDeleteNotificationPressed(MemoryNotification memNotification)
   {
     deleteNotification(memNotification);
     setState(() {
-      m_notificationsWidget = getNotificationWidgets(context);
+      m_notificationsWidget = getNotificationWidgets();
     });
   }
 }
