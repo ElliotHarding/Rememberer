@@ -46,9 +46,9 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     Notifications.setupNotificationActionListener(context);
 
     return WillPopScope(onWillPop: () async {onUpdate(context); return true;}, child:
-      Scaffold(body: ListView(shrinkWrap: true, children: <Widget>[
+      Scaffold(body: SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child: ListView(shrinkWrap: true, children: <Widget>[
 
-        SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+        const SizedBox(height: 30),
 
         Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: const Text("Reminder frequency", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
 
@@ -81,9 +81,11 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         ]),
         )),
 
-        Visibility(visible: widget.m_memory.m_testFrequecy == "Custom", child: Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 190, child:
-          ListView.builder(itemCount: widget.m_memory.m_notifyTimes.length, physics: const NeverScrollableScrollPhysics(), itemBuilder: (context, i) => genCustomNotificationWidget(context, i))
-        ))),
+        Center(child: Column(children: [
+          SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Visibility(visible: widget.m_memory.m_testFrequecy == "Custom", child:
+            ListView.builder(itemCount: widget.m_memory.m_notifyTimes.length, physics: const NeverScrollableScrollPhysics(), shrinkWrap: true, scrollDirection: Axis.vertical,  itemBuilder: (context, i) => genCustomNotificationWidget(context, i))
+          ))
+        ])),
 
         const SizedBox(height: 30),
 
@@ -142,7 +144,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
         SizedBox(height: MediaQuery.of(context).size.height * 0.01),
        ])
-    ));
+    )));
   }
 
   Widget getDateIndexValues(double value, TitleMeta meta)
@@ -291,7 +293,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
   Widget genCustomNotificationWidget(BuildContext context, int iCustomNotification)
   {
-    return SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
+    return IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
       Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
         SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
           const Text("Test")
@@ -303,7 +305,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
           });}, child: const Text("X", style: TextStyle(fontSize: 30, color: Colors.black))),
         )
       ])
-    );
+    ));
   }
 
   List<int> genNotifyTimes(int iStart, int iMaxNotifications, double incFactor, int incTime)
