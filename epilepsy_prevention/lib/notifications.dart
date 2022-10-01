@@ -1,16 +1,14 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/subjects.dart';
+import 'dart:math';
+import 'package:epilepsy_prevention/memory.dart';
+import 'package:flutter/material.dart';
+import 'package:epilepsy_prevention/page_test.dart';
 
 //Timezone imports
 import 'package:timezone/data/latest_all.dart' as timeZone;
 import 'package:timezone/timezone.dart' as timeZone;
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
-
-import 'package:epilepsy_prevention/memory.dart';
-
-import 'package:flutter/material.dart';
-
-import 'package:epilepsy_prevention/page_test.dart';
 
 class Notifications
 {
@@ -151,4 +149,15 @@ class Notifications
         AndroidFlutterLocalNotificationsPlugin>()
         ?.deleteNotificationChannel(channelId);
   }
+
+  List<int> genNotifyTimes(int iStart, int iMaxNotifications, double incFactor, int incTime)
+  {
+    List<int> values = [];
+    for(int i = iStart; i < iMaxNotifications; i++)
+    {
+      values.add(DateTime.now().millisecondsSinceEpoch + incTime * pow(incFactor, i).toInt());
+    }
+    return values;
+  }
+
 }

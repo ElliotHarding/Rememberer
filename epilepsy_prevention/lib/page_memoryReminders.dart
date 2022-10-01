@@ -219,15 +219,15 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   {
     if (widget.m_memory.m_testFrequecy == "Rare")
     {
-      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_notificationStartGoal, widget.m_notificationCountGoal, 4, 1800000);
+      widget.m_memory.m_notifyTimes = Notifications().genNotifyTimes(widget.m_notificationStartGoal, widget.m_notificationCountGoal, 4, 1800000);
     }
     else if (widget.m_memory.m_testFrequecy == "Occasionally")
     {
-      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_notificationStartGoal, widget.m_notificationCountGoal, 3, 1200000);
+      widget.m_memory.m_notifyTimes = Notifications().genNotifyTimes(widget.m_notificationStartGoal, widget.m_notificationCountGoal, 3, 1200000);
     }
     else if (widget.m_memory.m_testFrequecy == "Frequently")
     {
-      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_notificationStartGoal, widget.m_notificationCountGoal, 2, 900000);
+      widget.m_memory.m_notifyTimes = Notifications().genNotifyTimes(widget.m_notificationStartGoal, widget.m_notificationCountGoal, 2, 900000);
     }
     else if(widget.m_memory.m_testFrequecy == "Custom")
     {
@@ -355,17 +355,6 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   {
     var date = DateTime.fromMillisecondsSinceEpoch(epochMs);
     return date.toString();
-  }
-
-  List<int> genNotifyTimes(int iStart, int iMaxNotifications, double incFactor, int incTime)
-  {
-    List<int> values = [];
-    //values.add(DateTime.now().millisecondsSinceEpoch + 30000);
-    for(int i = iStart; i < iMaxNotifications; i++)
-    {
-      values.add(DateTime.now().millisecondsSinceEpoch + incTime * pow(incFactor, i).toInt());
-    }
-    return values;
   }
 
   int getCurrentIteration(List<int> notifyTimes)
