@@ -43,10 +43,8 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         widget.m_maxNotifications = widget.m_memory.m_notifyTimes.length;
       }
 
-      widget.m_currentIteration = getCurrentIteration();
-      widget.m_graphViewIterationsCount = widget.m_maxNotifications;
-
-      updateGraphValues(widget.m_memory.m_notifyTimes);
+      widget.m_currentIteration = getCurrentIteration(widget.m_memory);
+      updateNotifyTimes();
     });
   }
 
@@ -303,14 +301,14 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     return values;
   }
 
-  int getCurrentIteration()
+  int getCurrentIteration(Memory memory)
   {
-    if(widget.m_memory.m_notifyTimes.isEmpty)
+    if(memory.m_notifyTimes.isEmpty)
     {
         return 1;
     }
 
-    List<int> notifyTimesSorted = widget.m_memory.m_notifyTimes;
+    List<int> notifyTimesSorted = memory.m_notifyTimes;
     notifyTimesSorted.sort((a, b) => a.compareTo(b));
 
     final int currentTime = DateTime.now().millisecondsSinceEpoch;
