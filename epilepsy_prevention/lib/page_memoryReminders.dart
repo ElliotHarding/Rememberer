@@ -231,7 +231,9 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     }
     else if(widget.m_memory.m_testFrequecy == "Custom")
     {
-        //Keep widget.m_memory.m_notifyTimes
+      //Keep widget.m_memory.m_notifyTimes
+      widget.m_notificationCountGoal = widget.m_memory.m_notifyTimes.length;
+      widget.m_notificationStartGoal = getCurrentIteration(widget.m_memory.m_notifyTimes);
     }
     else
     {
