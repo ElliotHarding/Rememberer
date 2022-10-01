@@ -176,14 +176,12 @@ class PageMemoryState extends State<PageMemory>
 
   void onDelete(BuildContext context)
   {
-    var box = Database().getMemoryBox();
-    if (box != null && widget.m_memory.key != null)
+    if (widget.m_memory.key != null)
     {
       //Clear notifications
       Notifications().removeNotifications(widget.m_memory.key, widget.m_memory.m_notifyTimes);
 
-      //Delete
-      box.delete(widget.m_memory.key);
+      Database().deleteMemory(widget.m_memory.key);
     }
 
     Navigator.of(context).pop();

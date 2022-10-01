@@ -1,5 +1,6 @@
 import 'package:path_provider/path_provider.dart';
 import 'package:hive/hive.dart';
+import 'package:epilepsy_prevention/notifications.dart';
 
 @HiveType(typeId: 0)
 class Memory extends HiveObject
@@ -177,6 +178,41 @@ class Database
       _m_memoryBox?.put(memory.key, memory);
     }
     return memory.key;
+  }
+
+  void deleteMemory(dynamic memoryKey)
+  {
+    if(_m_memoryBox != null)
+    {
+        _m_memoryBox?.delete(memoryKey);
+    }
+  }
+
+  void deleteAllMemories()
+  {
+    var memoryBox = Database().getMemoryBox();
+    if(memoryBox != null)
+    {
+      for(Memory memory in memoryBox.values)
+      {
+        Notifications().removeNotifications(memory.key, memory.m_notifyTimes);
+        memoryBox.delete(memory.key);
+      }
+    }
+  }
+
+  void deleteAllNotifyTimes()
+  {
+    var memoryBox = Database().getMemoryBox();
+    if(memoryBox != null)
+    {
+      for(Memory memory in memoryBox.values)
+      {
+        Notifications().removeNotifications(memory.key, memory.m_notifyTimes);
+        memory.m_notifyTimes = [];
+        memoryBox.put(memory.key, memory);
+      }
+    }
   }
 
   Memory? getMemoryWithId(dynamic key)
