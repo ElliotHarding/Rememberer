@@ -257,11 +257,6 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   {
     setState(()
     {
-      if(newValue > 30)
-      {
-        newValue = 30;
-      }
-
       if(widget.m_currentIteration > newValue)
       {
         widget.m_currentIteration = newValue;
