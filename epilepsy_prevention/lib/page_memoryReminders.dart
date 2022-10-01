@@ -128,12 +128,6 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
                   swapAnimationCurve: Curves.fastOutSlowIn,
                 ),
               ),
-
-              const SizedBox(height: 10),
-
-              SizedBox(width: MediaQuery.of(context).size.width, height: 20, child:
-                const Text("Test number", style: TextStyle(fontSize: 20, color: Colors.blue), textAlign: TextAlign.center)
-              ),
             ],),
         ),
 
