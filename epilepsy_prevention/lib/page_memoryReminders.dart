@@ -64,36 +64,40 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
               DropdownMenuItem(value: "Never", child: Text("Never", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
               DropdownMenuItem(value: "Rare", child: Text("Rare", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
               DropdownMenuItem(value: "Occasionally", child: Text("Occasionally", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
-              DropdownMenuItem(value: "Frequently", child: Text("Frequently", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center))
+              DropdownMenuItem(value: "Frequently", child: Text("Frequently", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
+              DropdownMenuItem(value: "Custom", child: Text("Custom", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center))
             ],
         ))),
 
-        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+        const SizedBox(height: 30),
 
-        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Text("Max Notifications: " + widget.m_maxNotifications.toInt().toString(), style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
+        Visibility(visible: widget.m_memory.m_testFrequecy != "Never" && widget.m_memory.m_testFrequecy != "Custom", child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 150, child: ListView(physics: const NeverScrollableScrollPhysics(), children: <Widget>[
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child: Text("Max Notifications: " + widget.m_maxNotifications.toInt().toString(), style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
 
-        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
-          Slider(value: widget.m_maxNotifications.toDouble(), min: 1, max: 25, onChanged: (newValue) => onMaxNotificationSliderChanged(newValue.toInt())
-        ))),
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
+            Slider(value: widget.m_maxNotifications.toDouble(), min: 1, max: 25, onChanged: (newValue) => onMaxNotificationSliderChanged(newValue.toInt())
+          ))),
 
-        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+          const SizedBox(height: 30),
 
-        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Text("Current Notification: " + widget.m_currentIteration.toInt().toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child: Text("Current Notification: " + widget.m_currentIteration.toInt().toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
 
-        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
-          Slider(value: widget.m_currentIteration.toDouble(), min: 1, max: widget.m_maxNotifications.toDouble(), onChanged: (newValue) => onCurrentIterationSliderChanged(newValue.toInt())
-        ))),
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
+            Slider(value: widget.m_currentIteration.toDouble(), min: 1, max: widget.m_maxNotifications.toDouble(), onChanged: (newValue) => onCurrentIterationSliderChanged(newValue.toInt())
+          ))),
+        ]),
+        )),
 
-        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+        const SizedBox(height: 30),
 
-        SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.7 + 125, child:
+        Visibility(visible: widget.m_memory.m_testFrequecy != "Never", child: SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.7 + 125, child:
             Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
 
               Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child:
                 const Text("Graph Timescale:", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
               )),
 
-              Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child:
+              Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
                 Slider(value: widget.m_graphViewIterationsCount.toDouble(), min: 1, max: widget.m_memory.m_notifyTimes.isEmpty ? 1 : widget.m_memory.m_notifyTimes.length.toDouble(), onChanged: (newValue) => onGraphViewIterationsSliderChanged(newValue.toInt())
               ))),
 
@@ -121,7 +125,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
                         topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false))
                     ),
                     scatterTouchData: ScatterTouchData(
-                      enabled: true,
+                      enabled: false,
                     ),
                   ),
                   swapAnimationDuration: const Duration(milliseconds: 600),
@@ -129,7 +133,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
                 ),
               ),
             ],),
-        ),
+        )),
 
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
