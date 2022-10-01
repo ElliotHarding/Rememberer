@@ -319,7 +319,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         ),
         SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
           TextButton(onPressed: () => onDeleteCustomNotification(iCustomNotification), child:
-            const Text("X", style: TextStyle(fontSize: 30, color: Colors.grey))
+            const Text("X", style: TextStyle(fontSize: 20, color: Colors.grey))
           ),
         )
       ])
@@ -354,7 +354,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   String epochMsToDate(int epochMs)
   {
     var date = DateTime.fromMillisecondsSinceEpoch(epochMs);
-    return date.toString();
+    return date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString() + " " + date.hour.toString() + ":" + date.minute.toString();
   }
 
   int getCurrentIteration(List<int> notifyTimes)
