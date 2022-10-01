@@ -13,7 +13,7 @@ class PageMemoryReminders extends StatefulWidget
 
   //Notification gen vars
   int m_currentIteration = 1;
-  int m_maxNotifications = 1;
+  int m_notificationCountGoal = 1;
 
   //Graph stuff
   int m_graphMaxTime = 0;
@@ -34,16 +34,9 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     {
       widget.m_memoryBefore = widget.m_memory;
 
-      if(widget.m_memory.m_notifyTimes.isEmpty)
-      {
-        widget.m_maxNotifications = 1;
-      }
-      else
-      {
-        widget.m_maxNotifications = widget.m_memory.m_notifyTimes.length;
-      }
+      widget.m_notificationCountGoal = widget.m_memory.m_notifyTimes.length;
 
-      widget.m_currentIteration = getCurrentIteration(widget.m_memory);
+      widget.m_currentIteration = getCurrentIteration(widget.m_memory.m_notifyTimes);
       updateNotifyTimes();
     });
   }
@@ -72,10 +65,10 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         const SizedBox(height: 30),
 
         Visibility(visible: widget.m_memory.m_testFrequecy != "Never" && widget.m_memory.m_testFrequecy != "Custom", child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 150, child: ListView(physics: const NeverScrollableScrollPhysics(), children: <Widget>[
-          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child: Text("Max Notifications: " + widget.m_maxNotifications.toInt().toString(), style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child: Text("Iteration goal: " + widget.m_notificationCountGoal.toInt().toString(), style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
 
           Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
-            Slider(value: widget.m_maxNotifications.toDouble(), min: 1, max: 25, onChanged: (newValue) => onMaxNotificationSliderChanged(newValue.toInt())
+            Slider(value: widget.m_notificationCountGoal == 0 ? 1 : widget.m_notificationCountGoal.toDouble(), min: 1, max: 25, onChanged: (newValue) => onNotificationCountGoalSliderChanged(newValue.toInt())
           ))),
 
           const SizedBox(height: 30),
@@ -83,7 +76,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
           Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child: Text("Current Notification: " + widget.m_currentIteration.toInt().toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
 
           Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
-            Slider(value: widget.m_currentIteration.toDouble(), min: 1, max: widget.m_maxNotifications.toDouble(), onChanged: (newValue) => onCurrentIterationSliderChanged(newValue.toInt())
+            Slider(value: widget.m_currentIteration.toDouble(), min: 1, max: widget.m_notificationCountGoal == 0 ? 1 : widget.m_notificationCountGoal.toDouble(), onChanged: (newValue) => onCurrentIterationSliderChanged(newValue.toInt())
           ))),
         ]),
         )),
@@ -98,7 +91,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
               )),
 
               Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
-                Slider(value: widget.m_graphViewIterationsCount.toDouble(), min: 1, max: widget.m_memory.m_notifyTimes.isEmpty ? 1 : widget.m_memory.m_notifyTimes.length.toDouble(), onChanged: (newValue) => onGraphViewIterationsSliderChanged(newValue.toInt())
+                Slider(value: widget.m_graphViewIterationsCount == 0 ? 1 : widget.m_graphViewIterationsCount.toDouble(), min: 1, max: widget.m_memory.m_notifyTimes.isEmpty ? 1 : widget.m_memory.m_notifyTimes.length.toDouble(), onChanged: (newValue) => onGraphViewIterationsSliderChanged(newValue.toInt())
               ))),
 
               const SizedBox(height: 10),
@@ -214,23 +207,19 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   {
     if (widget.m_memory.m_testFrequecy == "Rare")
     {
-      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration, widget.m_maxNotifications, 4, 1800000);
+      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration, widget.m_notificationCountGoal, 4, 1800000);
     }
     else if (widget.m_memory.m_testFrequecy == "Occasionally")
     {
-      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration, widget.m_maxNotifications, 3, 1200000);
+      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration, widget.m_notificationCountGoal, 3, 1200000);
     }
     else if (widget.m_memory.m_testFrequecy == "Frequently")
     {
-      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration, widget.m_maxNotifications, 2, 900000);
+      widget.m_memory.m_notifyTimes = genNotifyTimes(widget.m_currentIteration, widget.m_notificationCountGoal, 2, 900000);
     }
     else
     {
       widget.m_memory.m_notifyTimes = [];
-      widget.m_graphViewIterationsCount = 1;
-
-      updateGraphValues(widget.m_memory.m_notifyTimes);
-      return;
     }
 
     widget.m_graphViewIterationsCount = widget.m_memory.m_notifyTimes.length;
@@ -255,7 +244,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     });
   }
 
-  void onMaxNotificationSliderChanged(int newValue)
+  void onNotificationCountGoalSliderChanged(int newValue)
   {
     setState(()
     {
@@ -264,7 +253,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         widget.m_currentIteration = newValue;
       }
 
-      widget.m_maxNotifications = newValue;
+      widget.m_notificationCountGoal = newValue;
 
       updateNotifyTimes();
     });
@@ -302,25 +291,24 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     return values;
   }
 
-  int getCurrentIteration(Memory memory)
+  int getCurrentIteration(List<int> notifyTimes)
   {
-    if(memory.m_notifyTimes.isEmpty)
+    if(notifyTimes.isEmpty)
     {
         return 1;
     }
 
-    List<int> notifyTimesSorted = memory.m_notifyTimes;
-    notifyTimesSorted.sort((a, b) => a.compareTo(b));
+    notifyTimes.sort((a, b) => a.compareTo(b));
 
     final int currentTime = DateTime.now().millisecondsSinceEpoch;
-    for(int i = 0; i < notifyTimesSorted.length; i++)
+    for(int i = 0; i < notifyTimes.length; i++)
     {
-      if(currentTime < notifyTimesSorted[i])
+      if(currentTime < notifyTimes[i])
       {
         return i + 1;
       }
     }
 
-    return notifyTimesSorted.length;
+    return notifyTimes.length;
   }
 }
