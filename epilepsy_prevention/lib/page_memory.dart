@@ -89,7 +89,7 @@ class PageMemoryState extends State<PageMemory>
         Center(child:SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Row(children : [
           const Text("Reminders: ", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left),
           TextButton(onPressed: () => onPressReminders(context), child:
-            const Text("⚙", style: TextStyle(fontSize: 30, color: Colors.black), textAlign: TextAlign.left)
+            const Text("⚙", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
           )
         ]))),
 

@@ -140,7 +140,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
             ],),
         )),
 
-        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+        const SizedBox(height: 10),
 
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
           TextButton(onPressed: () => onCancel(context), child: const Text("Cancel", style: TextStyle(fontSize: 30, color: Colors.blue))),
@@ -148,7 +148,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
           TextButton(onPressed: () => onUpdate(context), child: const Text("Update", style: TextStyle(fontSize: 30, color: Colors.blue)))
         ]),
 
-        SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+        const SizedBox(height: 10),
        ])
     )));
   }
@@ -310,11 +310,11 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
   Widget genCustomNotificationWidget(BuildContext context, int iCustomNotification)
   {
-    return IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
+    return SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
       Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
         SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
           TextButton(onPressed: () => onSelectCustomNotification(context, iCustomNotification), child:
-            Text(epochMsToDate(widget.m_memory.m_notifyTimes[iCustomNotification]), style: const TextStyle(fontSize: 30, color: Colors.grey))
+            Text(epochMsToDate(widget.m_memory.m_notifyTimes[iCustomNotification]), style: const TextStyle(fontSize: 20, color: Colors.grey))
           ),
         ),
         SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
@@ -323,7 +323,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
           ),
         )
       ])
-    ));
+    );
   }
 
   void onSelectCustomNotification(BuildContext context, int iCustomNotification) async
