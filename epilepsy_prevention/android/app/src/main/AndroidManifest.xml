@@ -2,7 +2,7 @@
     package="com.ehco.epilepsy_prevention">
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
    <application
-        android:label="epilepsy_prevention"
+        android:label="rememberer"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
