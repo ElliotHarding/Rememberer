@@ -64,7 +64,7 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
         ),
 
         SizedBox(width: MediaQuery.of(context).size.width * 0.4, child: TextButton(onPressed: () => onQuestionPressed(memNotification.m_memory), child:
-          Text(epochMsToDate(memNotification.m_notificationTime), style: const TextStyle(fontSize: 20.0, color: Colors.blue)))
+          Text(Notifications().epochMsToDate(memNotification.m_notificationTime), style: const TextStyle(fontSize: 20.0, color: Colors.blue)))
         ),
 
         SizedBox(width: MediaQuery.of(context).size.width * 0.1, child: TextButton(onPressed: () => onDeleteNotificationPressed(memNotification), child:
@@ -129,22 +129,6 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
 
     memoryNotification.m_memory.m_notifications.remove(memoryNotification.m_notificationTime);
     Database().addOrUpdateMemory(memoryNotification.m_memory);
-  }
-
-  String epochMsToDate(int epochMs)
-  {
-    var date = DateTime.fromMillisecondsSinceEpoch(epochMs);
-    var hour = date.hour.toString();
-    if(hour.length == 1)
-    {
-        hour = "0" + hour;
-    }
-    var minute = date.minute.toString();
-    if(minute.length == 1)
-    {
-        minute = "0" + minute;
-    }
-    return date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString() + " " + hour + ":" + minute;
   }
 
   void onQuestionPressed(Memory memory) async

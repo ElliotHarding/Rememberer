@@ -160,4 +160,20 @@ class Notifications
     return values;
   }
 
+  String epochMsToDate(int epochMs)
+  {
+    var date = DateTime.fromMillisecondsSinceEpoch(epochMs);
+    var hour = date.hour.toString();
+    if(hour.length == 1)
+    {
+      hour = "0" + hour;
+    }
+    var minute = date.minute.toString();
+    if(minute.length == 1)
+    {
+      minute = "0" + minute;
+    }
+    return date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString() + " " + hour + ":" + minute;
+  }
+
 }

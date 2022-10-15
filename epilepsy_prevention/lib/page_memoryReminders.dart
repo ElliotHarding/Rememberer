@@ -314,7 +314,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
       Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
         SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
           TextButton(onPressed: () => onSelectCustomNotification(context, iCustomNotification), child:
-            Text(epochMsToDate(widget.m_memory.m_notifications[iCustomNotification].m_notifyTime), style: const TextStyle(fontSize: 20, color: Colors.grey))
+            Text(Notifications().epochMsToDate(widget.m_memory.m_notifications[iCustomNotification].m_notifyTime), style: const TextStyle(fontSize: 20, color: Colors.grey))
           ),
         ),
         SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
@@ -350,22 +350,6 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
       widget.m_memory.m_notifications.removeAt(iCustomNotification);
       updateNotifyTimes();
     });
-  }
-
-  String epochMsToDate(int epochMs)
-  {
-    var date = DateTime.fromMillisecondsSinceEpoch(epochMs);
-    var hour = date.hour.toString();
-    if(hour.length == 1)
-    {
-      hour = "0" + hour;
-    }
-    var minute = date.minute.toString();
-    if(minute.length == 1)
-    {
-      minute = "0" + minute;
-    }
-    return date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString() + " " + hour + ":" + minute;
   }
 
   int getCurrentIteration(List<int> notifyTimes)
