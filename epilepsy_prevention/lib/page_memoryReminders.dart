@@ -96,7 +96,9 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
           )
         ]))),
 
-        Visibility(visible: widget.m_memory.m_testFrequecy == "Configure", child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 190, child: ListView(physics: const NeverScrollableScrollPhysics(), children: <Widget>[
+        Visibility(visible: widget.m_memory.m_testFrequecy == "Configure", child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 220, child: ListView(physics: const NeverScrollableScrollPhysics(), children: <Widget>[
+          const SizedBox(height: 30),
+
           Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Text("Time frequency: " + widget.m_configureTimeFrequency.toString(), style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
 
           Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
