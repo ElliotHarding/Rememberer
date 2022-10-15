@@ -1,7 +1,7 @@
 import 'package:epilepsy_prevention/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
-import 'package:epilepsy_prevention/page_memory.dart';
+import 'package:epilepsy_prevention/page_test.dart';
 
 class PageOverdueTests extends StatefulWidget
 {
@@ -78,13 +78,25 @@ class PageOverdueTestsState extends State<PageOverdueTests>
     ]);
   }
 
-  void onTestPressed(Memory memory, int notifyTime)
+  void onTestPressed(Memory memory, int notifyTime /*todo use notifyTime*/)
   {
-
+    Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(memory)));
   }
 
   void onDeleteTestPressed(Memory memory, int notifyTime)
   {
+      for(int i = 0; i < memory.m_notifications.length; i++)
+      {
+          if(memory.m_notifications[i].m_notifyTime == notifyTime)
+          {
+            memory.m_notifications[i].m_bHasBeenTested = true;
+            break;
+          }
+      }
+      Database().addOrUpdateMemory(memory);
 
+      setState(() {
+        m_overdueTestWidgets = getOverdueTestWidgets();
+      });
   }
 }
