@@ -21,7 +21,7 @@ class PageMemoriesState extends State<PageMemories>
   {
     Notifications.setupNotificationActionListener(context);
 
-    m_memoryWidgets = getMemoryWidgets(context);
+    m_memoryWidgets = getMemoryWidgets();
 
     return WillPopScope(onWillPop: () async { Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome())); return true;}, child: Scaffold(body:
       ListView(shrinkWrap: true, children: <Widget>[
@@ -29,7 +29,7 @@ class PageMemoriesState extends State<PageMemories>
         SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
         Row(mainAxisAlignment: MainAxisAlignment.end, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-          TextButton(onPressed: () => gotoAddNewMemory(context), child:
+          TextButton(onPressed: () => gotoAddNewMemory(), child:
             const Text("Add New Memory", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center)
           ),
 
@@ -49,7 +49,7 @@ class PageMemoriesState extends State<PageMemories>
     );
    }
 
-  List<Widget> getMemoryWidgets(BuildContext context)
+  List<Widget> getMemoryWidgets()
   {
     List<Widget> widgets = <Widget>[];
 
@@ -61,13 +61,13 @@ class PageMemoriesState extends State<PageMemories>
         widgets.add(
           Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,children: [
             SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
-              TextButton(onPressed: () => onMemoryPressed(memory, context), child:
+              TextButton(onPressed: () => onMemoryPressed(memory), child:
                 Text(memory.m_question, style: const TextStyle(fontSize: 30.0, color: Colors.blue))
               )
             ),
 
             SizedBox(width: MediaQuery.of(context).size.width * 0.3, child:
-              TextButton(onPressed: () => onMemoryTestPressed(memory, context), child:
+              TextButton(onPressed: () => onMemoryTestPressed(memory), child:
                 const Text("Test", style: TextStyle(fontSize: 30.0, color: Colors.blue))
               )
             ),
@@ -80,23 +80,23 @@ class PageMemoriesState extends State<PageMemories>
     return widgets;
   }
 
-  void gotoAddNewMemory(BuildContext context) async
+  void gotoAddNewMemory() async
   {
     await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory())));
     setState(() {
-      m_memoryWidgets = getMemoryWidgets(context);
+      m_memoryWidgets = getMemoryWidgets();
     });
   }
 
-  void onMemoryPressed(Memory memory, BuildContext context) async
+  void onMemoryPressed(Memory memory) async
   {
     await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(memory)));
     setState(() {
-      m_memoryWidgets = getMemoryWidgets(context);
+      m_memoryWidgets = getMemoryWidgets();
     });
   }
 
-  void onMemoryTestPressed(Memory memory, BuildContext context)
+  void onMemoryTestPressed(Memory memory)
   {
     Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(memory, PageMemories())));
   }
