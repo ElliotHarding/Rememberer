@@ -156,7 +156,12 @@ class Notifications
     List<MemoryNotification> values = [];
     for(int i = iStart; i < iMaxNotifications; i++)
     {
-      values.add(MemoryNotification(DateTime.now().millisecondsSinceEpoch + incTime * pow(incFactor, i).toInt(), false));
+      int notifyDelay = incTime * pow(incFactor, i).toInt();
+      if(notifyDelay > 31556926000)
+      {
+          break;
+      }
+      values.add(MemoryNotification(DateTime.now().millisecondsSinceEpoch + notifyDelay, false));
     }
     return values;
   }
