@@ -27,7 +27,7 @@ class PageOverdueTestsState extends State<PageOverdueTests>
       const SizedBox(height: 30),
 
       const Center(child: SizedBox(height: 50, child:
-        Text("Notifications", style:
+        Text("Overdue tests", style:
           TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.blue), textAlign: TextAlign.center
         ),
       )),
