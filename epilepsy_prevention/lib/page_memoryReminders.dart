@@ -361,7 +361,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     return SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
       Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
         SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
-          TextButton(onPressed: () => onSelectCustomNotification(context, iCustomNotification), child:
+          TextButton(onPressed: () => onSelectCustomNotification(iCustomNotification), child:
             Text(Notifications().epochMsToDate(widget.m_memory.m_notifications[iCustomNotification].m_notifyTime), style: const TextStyle(fontSize: 20, color: Colors.grey))
           ),
         ),
@@ -374,7 +374,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     );
   }
 
-  void onSelectCustomNotification(BuildContext context, int iCustomNotification) async
+  void onSelectCustomNotification(int iCustomNotification) async
   {
     DateTime? newDate = await showDatePicker(context: context, initialDate: DateTime.fromMillisecondsSinceEpoch(widget.m_memory.m_notifications[iCustomNotification].m_notifyTime), firstDate: DateTime.now(), lastDate: DateTime.fromMillisecondsSinceEpoch(8640000000000000));
     TimeOfDay? newTime = await showTimePicker(context: context, initialTime: TimeOfDay.now());
