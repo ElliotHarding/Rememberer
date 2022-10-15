@@ -15,6 +15,8 @@ class PageTestResult extends StatelessWidget
   {
     Notifications.setupNotificationActionListener(context);
 
+    markTestAsCompleted(m_memory);
+
     return WillPopScope(onWillPop: () async {Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories())); return true;}, child: Scaffold(body:
       ListView(shrinkWrap: true, children: <Widget>[
 
@@ -52,5 +54,17 @@ class PageTestResult extends StatelessWidget
   void onHomePressed(BuildContext context)
   {
     Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome()));
+  }
+
+  void markTestAsCompleted(Memory memory)
+  {
+    for(int i = 0; i < memory.m_notifications.length; i++)
+    {
+      if(memory.m_notifications[i].m_notifyTime < DateTime.now().millisecondsSinceEpoch)
+      {
+        memory.m_notifications[i].m_bHasBeenTested = true;
+      }
+    }
+    Database().addOrUpdateMemory(memory);
   }
 }
