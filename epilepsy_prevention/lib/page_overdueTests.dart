@@ -65,11 +65,11 @@ class PageOverdueTestsState extends State<PageOverdueTests>
   Widget generateOverdueTestWidget(Memory memory, int notifyTime)
   {
     return Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
-      SizedBox(width: MediaQuery.of(context).size.width * 0.5, child: TextButton(onPressed: () => onTestPressed(memory, notifyTime), child:
+      SizedBox(width: MediaQuery.of(context).size.width * 0.5, child: TextButton(onPressed: () => onTestPressed(memory), child:
         Text(memory.m_question, style: const TextStyle(fontSize: 20.0, color: Colors.blue)))
       ),
 
-      SizedBox(width: MediaQuery.of(context).size.width * 0.4, child: TextButton(onPressed: () => onTestPressed(memory, notifyTime), child:
+      SizedBox(width: MediaQuery.of(context).size.width * 0.4, child: TextButton(onPressed: () => onTestPressed(memory), child:
         Text(Notifications().epochMsToDate(notifyTime), style: const TextStyle(fontSize: 20.0, color: Colors.blue)))
       ),
 
@@ -79,7 +79,7 @@ class PageOverdueTestsState extends State<PageOverdueTests>
     ]);
   }
 
-  void onTestPressed(Memory memory, int notifyTime /*todo use notifyTime*/)
+  void onTestPressed(Memory memory)
   {
     Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(memory, const PageOverdueTests())));
   }
