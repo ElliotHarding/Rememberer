@@ -45,7 +45,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   {
     Notifications.setupNotificationActionListener(context);
 
-    return WillPopScope(onWillPop: () async {onUpdate(context); return true;}, child:
+    return WillPopScope(onWillPop: () async {onUpdate(); return true;}, child:
       Scaffold(body: SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child: ListView(shrinkWrap: true, children: <Widget>[
 
         const SizedBox(height: 30),
@@ -143,9 +143,9 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         const SizedBox(height: 10),
 
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-          TextButton(onPressed: () => onCancel(context), child: const Text("Cancel", style: TextStyle(fontSize: 30, color: Colors.blue))),
+          TextButton(onPressed: () => onCancel(), child: const Text("Cancel", style: TextStyle(fontSize: 30, color: Colors.blue))),
 
-          TextButton(onPressed: () => onUpdate(context), child: const Text("Update", style: TextStyle(fontSize: 30, color: Colors.blue)))
+          TextButton(onPressed: () => onUpdate(), child: const Text("Update", style: TextStyle(fontSize: 30, color: Colors.blue)))
         ]),
 
         const SizedBox(height: 10),
@@ -298,12 +298,12 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     });
   }
 
-  void onCancel(BuildContext context)
+  void onCancel()
   {
     Navigator.pop(context, widget.m_memoryBefore);
   }
 
-  void onUpdate(BuildContext context)
+  void onUpdate()
   {
     Navigator.pop(context, widget.m_memory);
   }
