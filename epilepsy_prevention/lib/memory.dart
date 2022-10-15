@@ -12,23 +12,16 @@ class Memory extends HiveObject
     m_bMultiChoice = multiChoice;
     m_falseAnswers = falseAnswers;
     m_testFrequecy = testFrequency;
-    m_notifyTimes = notifyTimes;
     m_bNotificationsEnabled = enabledNotifications;
-    m_isNotificationTestedList = isNotificationTestedList;
 
     if(isNotificationTestedList.isEmpty && m_notifyTimes.isNotEmpty)
     {
-        for(int notifyTime in m_notifyTimes)
-        {
-            if(notifyTime < DateTime.now().millisecondsSinceEpoch)
-            {
-                m_isNotificationTestedList.add(true);
-            }
-            else
-            {
-              m_isNotificationTestedList.add(false);
-            }
-        }
+        setNewNotifyTimes(notifyTimes);
+    }
+    else
+    {
+      m_notifyTimes = notifyTimes;
+      m_isNotificationTestedList = isNotificationTestedList;
     }
   }
 
@@ -95,6 +88,24 @@ class Memory extends HiveObject
     }
 
     return "Success";
+  }
+
+  void setNewNotifyTimes(List<int> notifyTimes)
+  {
+    m_notifyTimes = notifyTimes;
+
+    m_isNotificationTestedList.clear();
+    for(int notifyTime in notifyTimes)
+    {
+      if(notifyTime < DateTime.now().millisecondsSinceEpoch)
+      {
+        m_isNotificationTestedList.add(true);
+      }
+      else
+      {
+        m_isNotificationTestedList.add(false);
+      }
+    }
   }
 }
 
