@@ -92,7 +92,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
           ])),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
-            ListView.builder(itemCount: widget.m_memory.m_notifications.length, physics: const NeverScrollableScrollPhysics(), shrinkWrap: true, scrollDirection: Axis.vertical,  itemBuilder: (context, i) => genCustomNotificationWidget(context, i))
+            ListView.builder(itemCount: widget.m_memory.m_notifications.length, physics: const NeverScrollableScrollPhysics(), shrinkWrap: true, scrollDirection: Axis.vertical,  itemBuilder: (context, i) => genCustomNotificationWidget(i))
           )
         ]))),
 
@@ -356,7 +356,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     Navigator.pop(context, widget.m_memory);
   }
 
-  Widget genCustomNotificationWidget(BuildContext context, int iCustomNotification)
+  Widget genCustomNotificationWidget(int iCustomNotification)
   {
     return SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
       Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
