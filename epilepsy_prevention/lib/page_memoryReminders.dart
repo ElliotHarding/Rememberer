@@ -99,15 +99,15 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         Visibility(visible: widget.m_memory.m_testFrequecy == "Configure", child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 220, child: ListView(physics: const NeverScrollableScrollPhysics(), children: <Widget>[
           const SizedBox(height: 30),
 
-          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Text("Time frequency: " + widget.m_configureTimeFrequency.toString(), style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Text("Time: " + widget.m_configureTimeFrequency.toString(), style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
 
           Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
-            Slider(value: widget.m_configureTimeFrequency.toDouble(), min: 10000, max: 999999, onChanged: (newValue) => onConfigureTimeFrequencyChanged(newValue.toInt())
+            Slider(value: widget.m_configureTimeFrequency.toDouble(), min: 10000, max: 9999999, onChanged: (newValue) => onConfigureTimeFrequencyChanged(newValue.toInt())
           ))),
 
           const SizedBox(height: 30),
 
-          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Text("Increment factor: " + widget.m_configureIncrement.toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Text("Increment: " + widget.m_configureIncrement.toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
 
           Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
             Slider(value: widget.m_configureIncrement.toDouble(), min: 1, max: 10, onChanged: (newValue) => onConfigureIncrementFactorChanged(newValue.toInt())
