@@ -5,7 +5,7 @@ import 'package:epilepsy_prevention/notifications.dart';
 @HiveType(typeId: 0)
 class Memory extends HiveObject
 {
-  Memory({String question = "", String answer = "", bool multiChoice = false, List<String> falseAnswers = const [], String testFrequency = "Never", List<int> notifyTimes = const [], bool enabledNotifications = true})
+  Memory({String question = "", String answer = "", bool multiChoice = false, List<String> falseAnswers = const [], String testFrequency = "Never", List<int> notifyTimes = const [], bool enabledNotifications = true, List<bool> isNotificationTestedList = const []})
   {
     m_question = question;
     m_answer = answer;
@@ -14,6 +14,22 @@ class Memory extends HiveObject
     m_testFrequecy = testFrequency;
     m_notifyTimes = notifyTimes;
     m_bNotificationsEnabled = enabledNotifications;
+    m_isNotificationTestedList = isNotificationTestedList;
+
+    if(isNotificationTestedList.isEmpty && m_notifyTimes.isNotEmpty)
+    {
+        for(int notifyTime in m_notifyTimes)
+        {
+            if(notifyTime < DateTime.now().millisecondsSinceEpoch)
+            {
+                m_isNotificationTestedList.add(true);
+            }
+            else
+            {
+              m_isNotificationTestedList.add(false);
+            }
+        }
+    }
   }
 
   @HiveField(0)
@@ -36,6 +52,9 @@ class Memory extends HiveObject
 
   @HiveField(6)
   bool m_bNotificationsEnabled = true;
+
+  @HiveField(7)
+  List<bool> m_isNotificationTestedList = <bool>[]; //Same indexes at m_notifyTimes
 
   String validate()
   {
@@ -96,7 +115,8 @@ class MemoryAdapter extends TypeAdapter<Memory>
       String testFrequency = reader.readString();
       List<int> notifyTimes = reader.readIntList();
       bool enabledNotifications = reader.readBool();
-      return Memory(question: question, answer: answer, multiChoice: multiChoice, falseAnswers: falseAnswers, testFrequency: testFrequency, notifyTimes: notifyTimes, enabledNotifications: enabledNotifications);
+      List<bool> isNotificationTestedList = reader.readBoolList();
+      return Memory(question: question, answer: answer, multiChoice: multiChoice, falseAnswers: falseAnswers, testFrequency: testFrequency, notifyTimes: notifyTimes, enabledNotifications: enabledNotifications, isNotificationTestedList: isNotificationTestedList);
     }
     catch (e)
     {
@@ -114,6 +134,7 @@ class MemoryAdapter extends TypeAdapter<Memory>
     writer.writeString(obj.m_testFrequecy);
     writer.writeIntList(obj.m_notifyTimes);
     writer.writeBool(obj.m_bNotificationsEnabled);
+    writer.writeBoolList(obj.m_isNotificationTestedList);
   }
 }
 
