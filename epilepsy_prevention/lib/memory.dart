@@ -2,10 +2,22 @@ import 'package:path_provider/path_provider.dart';
 import 'package:hive/hive.dart';
 import 'package:epilepsy_prevention/notifications.dart';
 
+class MemoryNotification
+{
+  MemoryNotification(int notifyTime, bool bHasBeenTested)
+  {
+    m_notifyTime = notifyTime;
+    m_bHasBeenTested = bHasBeenTested;//notifyTime < DateTime.now().millisecondsSinceEpoch;
+  }
+
+    int m_notifyTime = 0;
+    bool m_bHasBeenTested = false;
+}
+
 @HiveType(typeId: 0)
 class Memory extends HiveObject
 {
-  Memory({String question = "", String answer = "", bool multiChoice = false, List<String> falseAnswers = const [], String testFrequency = "Never", List<int> notifyTimes = const [], bool enabledNotifications = true, List<bool> isNotificationTestedList = const []})
+  Memory({String question = "", String answer = "", bool multiChoice = false, List<String> falseAnswers = const [], String testFrequency = "Never", List<MemoryNotification> notifyTimes = const [], bool enabledNotifications = true})
   {
     m_question = question;
     m_answer = answer;
@@ -13,16 +25,7 @@ class Memory extends HiveObject
     m_falseAnswers = falseAnswers;
     m_testFrequecy = testFrequency;
     m_bNotificationsEnabled = enabledNotifications;
-
-    if(isNotificationTestedList.isEmpty && m_notifyTimes.isNotEmpty)
-    {
-        setNewNotifyTimes(notifyTimes);
-    }
-    else
-    {
-      m_notifyTimes = notifyTimes;
-      m_isNotificationTestedList = isNotificationTestedList;
-    }
+    m_notifyTimes = notifyTimes;
   }
 
   @HiveField(0)
@@ -41,13 +44,10 @@ class Memory extends HiveObject
   String m_testFrequecy = "Never";
 
   @HiveField(5)
-  List<int> m_notifyTimes = <int>[];
+  List<MemoryNotification> m_notifyTimes = <MemoryNotification>[];
 
   @HiveField(6)
   bool m_bNotificationsEnabled = true;
-
-  @HiveField(7)
-  List<bool> m_isNotificationTestedList = <bool>[]; //Same indexes at m_notifyTimes
 
   String validate()
   {
@@ -92,19 +92,11 @@ class Memory extends HiveObject
 
   void setNewNotifyTimes(List<int> notifyTimes)
   {
-    m_notifyTimes = notifyTimes;
+    m_notifyTimes.clear();
 
-    m_isNotificationTestedList.clear();
     for(int notifyTime in notifyTimes)
     {
-      if(notifyTime < DateTime.now().millisecondsSinceEpoch)
-      {
-        m_isNotificationTestedList.add(true);
-      }
-      else
-      {
-        m_isNotificationTestedList.add(false);
-      }
+      m_notifyTimes.add(MemoryNotification(notifyTime, notifyTime < DateTime.now().millisecondsSinceEpoch));
     }
   }
 }
@@ -124,10 +116,20 @@ class MemoryAdapter extends TypeAdapter<Memory>
       bool multiChoice = reader.readBool();
       List<String> falseAnswers = reader.readStringList();
       String testFrequency = reader.readString();
-      List<int> notifyTimes = reader.readIntList();
       bool enabledNotifications = reader.readBool();
+
+      List<int> notifyTimes = reader.readIntList();
       List<bool> isNotificationTestedList = reader.readBoolList();
-      return Memory(question: question, answer: answer, multiChoice: multiChoice, falseAnswers: falseAnswers, testFrequency: testFrequency, notifyTimes: notifyTimes, enabledNotifications: enabledNotifications, isNotificationTestedList: isNotificationTestedList);
+      List<MemoryNotification> memoryNotifications = <MemoryNotification>[];
+      if(notifyTimes.length == isNotificationTestedList.length)
+      {
+        for(int i = 0; i < notifyTimes.length; i++)
+        {
+          memoryNotifications.add(MemoryNotification(notifyTimes[i], isNotificationTestedList[i]));
+        }
+      }
+
+      return Memory(question: question, answer: answer, multiChoice: multiChoice, falseAnswers: falseAnswers, testFrequency: testFrequency, notifyTimes: memoryNotifications, enabledNotifications: enabledNotifications);
     }
     catch (e)
     {
@@ -143,9 +145,17 @@ class MemoryAdapter extends TypeAdapter<Memory>
     writer.writeBool(obj.m_bMultiChoice);
     writer.writeStringList(obj.m_falseAnswers);
     writer.writeString(obj.m_testFrequecy);
-    writer.writeIntList(obj.m_notifyTimes);
     writer.writeBool(obj.m_bNotificationsEnabled);
-    writer.writeBoolList(obj.m_isNotificationTestedList);
+
+    List<int> notifyTimes = [];
+    List<bool> isNotificationTestedList = [];
+    for(MemoryNotification memoryNotification in obj.m_notifyTimes)
+    {
+      notifyTimes.add(memoryNotification.m_notifyTime);
+      isNotificationTestedList.add(memoryNotification.m_bHasBeenTested);
+    }
+    writer.writeIntList(notifyTimes);
+    writer.writeBoolList(isNotificationTestedList);
   }
 }
 
