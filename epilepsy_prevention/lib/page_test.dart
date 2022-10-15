@@ -8,7 +8,9 @@ import 'dart:math';
 
 class PageTest extends StatelessWidget
 {
-  PageTest(this.m_memory);
+  PageTest(this.m_memory, this.m_returnScreen);
+
+  StatefulWidget m_returnScreen;
 
   Memory m_memory;
 
@@ -52,8 +54,8 @@ class PageTest extends StatelessWidget
         Center(child:
          Visibility(visible: !m_memory.m_bMultiChoice, child:
           TextButton(onPressed: () async {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, m_answerTextController.text == m_memory.m_answer)));
-            }, child: const Text("Guess", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center)
+              await Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, m_answerTextController.text == m_memory.m_answer, m_returnScreen)));
+              }, child: const Text("Guess", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center)
           )
         )),
 
@@ -125,7 +127,7 @@ class PageTest extends StatelessWidget
         ),
 
         Checkbox(value: false, onChanged: (bool? value) {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, success)));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, success, m_returnScreen)));
         }),
       ]),
 

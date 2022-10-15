@@ -98,6 +98,6 @@ class PageMemoriesState extends State<PageMemories>
 
   void onMemoryTestPressed(Memory memory, BuildContext context)
   {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(memory)));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(memory, PageMemories())));
   }
 }

@@ -6,8 +6,9 @@ import 'package:epilepsy_prevention/notifications.dart';
 
 class PageTestResult extends StatelessWidget
 {
-  PageTestResult(this.m_memory, this.m_bSuccess);
+  PageTestResult(this.m_memory, this.m_bSuccess, this.m_returnWidget);
 
+  StatefulWidget m_returnWidget;
   Memory m_memory;
   bool m_bSuccess;
 
@@ -17,7 +18,7 @@ class PageTestResult extends StatelessWidget
 
     markTestAsCompleted(m_memory);
 
-    return WillPopScope(onWillPop: () async {Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories())); return true;}, child: Scaffold(body:
+    return WillPopScope(onWillPop: () async {Navigator.push(context, MaterialPageRoute(builder: (context) => m_returnWidget)); return true;}, child: Scaffold(body:
       ListView(shrinkWrap: true, children: <Widget>[
 
         Row(mainAxisAlignment: MainAxisAlignment.end, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[

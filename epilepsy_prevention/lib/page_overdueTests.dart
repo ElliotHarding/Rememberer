@@ -80,7 +80,7 @@ class PageOverdueTestsState extends State<PageOverdueTests>
 
   void onTestPressed(Memory memory, int notifyTime /*todo use notifyTime*/)
   {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(memory)));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(memory, const PageOverdueTests())));
   }
 
   void onDeleteTestPressed(Memory memory, int notifyTime)

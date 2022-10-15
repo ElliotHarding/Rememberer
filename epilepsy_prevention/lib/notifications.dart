@@ -1,3 +1,4 @@
+import 'package:epilepsy_prevention/page_home.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/subjects.dart';
 import 'dart:math';
@@ -69,7 +70,7 @@ class Notifications
             if(_m_currentContext != null)
             {
               Notifications._m_selectedNotificationSubject.add(null);
-              Navigator.push(_m_currentContext, MaterialPageRoute(builder: (context) => PageTest(mem)));
+              Navigator.push(_m_currentContext, MaterialPageRoute(builder: (context) => PageTest(mem, const PageHome())));
             }
           }
         }

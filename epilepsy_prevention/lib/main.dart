@@ -35,7 +35,7 @@ class App extends StatelessWidget
       if (mem != null) {
         return MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: PageTest(mem)
+            home: PageTest(mem, const PageHome())
         );
       }
     }
