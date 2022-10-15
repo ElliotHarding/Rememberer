@@ -242,14 +242,17 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     if (widget.m_memory.m_testFrequecy == "Rare")
     {
       widget.m_memory.m_notifications = Notifications().genNotifyTimes(widget.m_notificationStartGoal, widget.m_notificationCountGoal, 4, 1800000);
+      widget.m_notificationCountGoal = widget.m_memory.m_notifications.length + widget.m_notificationStartGoal;
     }
     else if (widget.m_memory.m_testFrequecy == "Occasionally")
     {
       widget.m_memory.m_notifications = Notifications().genNotifyTimes(widget.m_notificationStartGoal, widget.m_notificationCountGoal, 3, 1200000);
+      widget.m_notificationCountGoal = widget.m_memory.m_notifications.length + widget.m_notificationStartGoal;
     }
     else if (widget.m_memory.m_testFrequecy == "Frequently")
     {
       widget.m_memory.m_notifications = Notifications().genNotifyTimes(widget.m_notificationStartGoal, widget.m_notificationCountGoal, 2, 900000);
+      widget.m_notificationCountGoal = widget.m_memory.m_notifications.length + widget.m_notificationStartGoal;
     }
     else if(widget.m_memory.m_testFrequecy == "Custom")
     {
