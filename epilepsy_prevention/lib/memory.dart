@@ -17,7 +17,7 @@ class MemoryNotification
 @HiveType(typeId: 0)
 class Memory extends HiveObject
 {
-  Memory({String question = "", String answer = "", bool multiChoice = false, List<String> falseAnswers = const [], String testFrequency = "Never", List<MemoryNotification> notifyTimes = const [], bool enabledNotifications = true})
+  Memory({String question = "", String answer = "", bool multiChoice = false, List<String> falseAnswers = const [], String testFrequency = "Never", List<MemoryNotification> notifications = const [], bool enabledNotifications = true})
   {
     m_question = question;
     m_answer = answer;
@@ -25,7 +25,7 @@ class Memory extends HiveObject
     m_falseAnswers = falseAnswers;
     m_testFrequecy = testFrequency;
     m_bNotificationsEnabled = enabledNotifications;
-    m_notifyTimes = notifyTimes;
+    m_notifications = notifications;
   }
 
   @HiveField(0)
@@ -44,7 +44,7 @@ class Memory extends HiveObject
   String m_testFrequecy = "Never";
 
   @HiveField(5)
-  List<MemoryNotification> m_notifyTimes = <MemoryNotification>[];
+  List<MemoryNotification> m_notifications = <MemoryNotification>[];
 
   @HiveField(6)
   bool m_bNotificationsEnabled = true;
@@ -92,11 +92,11 @@ class Memory extends HiveObject
 
   void setNewNotifyTimes(List<int> notifyTimes)
   {
-    m_notifyTimes.clear();
+    m_notifications.clear();
 
     for(int notifyTime in notifyTimes)
     {
-      m_notifyTimes.add(MemoryNotification(notifyTime, notifyTime < DateTime.now().millisecondsSinceEpoch));
+      m_notifications.add(MemoryNotification(notifyTime, notifyTime < DateTime.now().millisecondsSinceEpoch));
     }
   }
 }
@@ -129,7 +129,7 @@ class MemoryAdapter extends TypeAdapter<Memory>
         }
       }
 
-      return Memory(question: question, answer: answer, multiChoice: multiChoice, falseAnswers: falseAnswers, testFrequency: testFrequency, notifyTimes: memoryNotifications, enabledNotifications: enabledNotifications);
+      return Memory(question: question, answer: answer, multiChoice: multiChoice, falseAnswers: falseAnswers, testFrequency: testFrequency, notifications: memoryNotifications, enabledNotifications: enabledNotifications);
     }
     catch (e)
     {
@@ -149,7 +149,7 @@ class MemoryAdapter extends TypeAdapter<Memory>
 
     List<int> notifyTimes = [];
     List<bool> isNotificationTestedList = [];
-    for(MemoryNotification memoryNotification in obj.m_notifyTimes)
+    for(MemoryNotification memoryNotification in obj.m_notifications)
     {
       notifyTimes.add(memoryNotification.m_notifyTime);
       isNotificationTestedList.add(memoryNotification.m_bHasBeenTested);
