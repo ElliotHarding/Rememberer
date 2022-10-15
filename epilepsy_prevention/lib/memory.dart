@@ -99,6 +99,16 @@ class Memory extends HiveObject
       m_notifications.add(MemoryNotification(notifyTime, notifyTime < DateTime.now().millisecondsSinceEpoch));
     }
   }
+
+  List<int> getNotifyTimes()
+  {
+    List<int> notifyTimes = [];
+    for(MemoryNotification memoryNotification in m_notifications)
+    {
+      notifyTimes.add(memoryNotification.m_notifyTime);
+    }
+    return notifyTimes;
+  }
 }
 
 class MemoryAdapter extends TypeAdapter<Memory>
@@ -243,7 +253,7 @@ class Database
     {
       for(Memory memory in memoryBox.values)
       {
-        Notifications().removeNotifications(memory.key, memory.m_notifyTimes);
+        Notifications().removeNotifications(memory.key, memory.getNotifyTimes());
         memoryBox.delete(memory.key);
       }
     }
@@ -256,8 +266,8 @@ class Database
     {
       for(Memory memory in memoryBox.values)
       {
-        Notifications().removeNotifications(memory.key, memory.m_notifyTimes);
-        memory.m_notifyTimes = [];
+        Notifications().removeNotifications(memory.key, memory.getNotifyTimes());
+        memory.m_notifications = [];
         memoryBox.put(memory.key, memory);
       }
     }
@@ -281,14 +291,14 @@ class Database
 
   void generateTestData() async
   {
-    Memory mem1 = Memory(question: "Question1", answer: "Answer1", multiChoice: false, falseAnswers: [], testFrequency: "Never", notifyTimes: [], enabledNotifications: true);
-    Memory mem2 = Memory(question: "question2", answer: "answer2", multiChoice: false, falseAnswers: [], testFrequency: "Frequently", notifyTimes: Notifications().genNotifyTimes(0, 5, 2, 900000), enabledNotifications: true);
-    Memory mem3 = Memory(question: "Question3", answer: "Answer3", multiChoice: false, falseAnswers: [], testFrequency: "Frequently", notifyTimes: Notifications().genNotifyTimes(0, 5, 2, 900000), enabledNotifications: false);
-    Memory mem4 = Memory(question: "Question4", answer: "Answer4", multiChoice: false, falseAnswers: [], testFrequency: "Occasionally", notifyTimes: Notifications().genNotifyTimes(0, 5, 3, 1200000), enabledNotifications: true);
-    Memory mem5 = Memory(question: "Question5", answer: "Answer5", multiChoice: true, falseAnswers: ["Apples", "Pears", "Oranges", "Pinapples", "Lemons"], testFrequency: "Never", notifyTimes: [], enabledNotifications: true);
-    Memory mem6 = Memory(question: "question6", answer: "answer6", multiChoice: true, falseAnswers: ["Apples", "Pears", "Oranges", "Pinapples", "Lemons"], testFrequency: "Frequently", notifyTimes: Notifications().genNotifyTimes(0, 5, 2, 900000), enabledNotifications: true);
-    Memory mem7 = Memory(question: "Question7", answer: "Answer7", multiChoice: true, falseAnswers: ["Apples", "Pears", "Oranges", "Pinapples", "Lemons"], testFrequency: "Frequently", notifyTimes: Notifications().genNotifyTimes(0, 5, 2, 900000), enabledNotifications: false);
-    Memory mem8 = Memory(question: "Question8", answer: "Answer8", multiChoice: true, falseAnswers: ["Apples"], testFrequency: "Occasionally", notifyTimes: Notifications().genNotifyTimes(0, 5, 3, 1200000), enabledNotifications: true);
+    Memory mem1 = Memory(question: "Question1", answer: "Answer1", multiChoice: false, falseAnswers: [], testFrequency: "Never", notifications: [], enabledNotifications: true);
+    Memory mem2 = Memory(question: "question2", answer: "answer2", multiChoice: false, falseAnswers: [], testFrequency: "Frequently", notifications: Notifications().genNotifyTimes(0, 5, 2, 900000), enabledNotifications: true);
+    Memory mem3 = Memory(question: "Question3", answer: "Answer3", multiChoice: false, falseAnswers: [], testFrequency: "Frequently", notifications: Notifications().genNotifyTimes(0, 5, 2, 900000), enabledNotifications: false);
+    Memory mem4 = Memory(question: "Question4", answer: "Answer4", multiChoice: false, falseAnswers: [], testFrequency: "Occasionally", notifications: Notifications().genNotifyTimes(0, 5, 3, 1200000), enabledNotifications: true);
+    Memory mem5 = Memory(question: "Question5", answer: "Answer5", multiChoice: true, falseAnswers: ["Apples", "Pears", "Oranges", "Pinapples", "Lemons"], testFrequency: "Never", notifications: [], enabledNotifications: true);
+    Memory mem6 = Memory(question: "question6", answer: "answer6", multiChoice: true, falseAnswers: ["Apples", "Pears", "Oranges", "Pinapples", "Lemons"], testFrequency: "Frequently", notifications: Notifications().genNotifyTimes(0, 5, 2, 900000), enabledNotifications: true);
+    Memory mem7 = Memory(question: "Question7", answer: "Answer7", multiChoice: true, falseAnswers: ["Apples", "Pears", "Oranges", "Pinapples", "Lemons"], testFrequency: "Frequently", notifications: Notifications().genNotifyTimes(0, 5, 2, 900000), enabledNotifications: false);
+    Memory mem8 = Memory(question: "Question8", answer: "Answer8", multiChoice: true, falseAnswers: ["Apples"], testFrequency: "Occasionally", notifications: Notifications().genNotifyTimes(0, 5, 3, 1200000), enabledNotifications: true);
 
     var box = Database().getMemoryBox();
     if(box != null)
@@ -296,26 +306,26 @@ class Database
       var notifications = Notifications();
 
       var key = await box.add(mem1);
-      notifications.scheduleNotifications(key, mem1.m_question, mem1.m_notifyTimes);
+      notifications.scheduleNotifications(key, mem1.m_question, mem1.getNotifyTimes());
 
       key = await box.add(mem2);
-      notifications.scheduleNotifications(key, mem2.m_question, mem2.m_notifyTimes);
+      notifications.scheduleNotifications(key, mem2.m_question, mem2.getNotifyTimes());
 
       await box.add(mem3);
 
       key = await box.add(mem4);
-      notifications.scheduleNotifications(key, mem4.m_question, mem4.m_notifyTimes);
+      notifications.scheduleNotifications(key, mem4.m_question, mem4.getNotifyTimes());
 
       key = await box.add(mem5);
-      notifications.scheduleNotifications(key, mem5.m_question, mem5.m_notifyTimes);
+      notifications.scheduleNotifications(key, mem5.m_question, mem5.getNotifyTimes());
 
       key = await box.add(mem6);
-      notifications.scheduleNotifications(key, mem6.m_question, mem6.m_notifyTimes);
+      notifications.scheduleNotifications(key, mem6.m_question, mem6.getNotifyTimes());
 
       await box.add(mem7);
 
       key = await box.add(mem8);
-      notifications.scheduleNotifications(key, mem8.m_question, mem8.m_notifyTimes);
+      notifications.scheduleNotifications(key, mem8.m_question, mem8.getNotifyTimes());
     }
   }
 }
