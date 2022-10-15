@@ -148,7 +148,7 @@ class PageMemoryState extends State<PageMemory>
     //If not new memory, and updated notify times, and notifcations are enabled: clear old scheduled notifications
     if(widget.m_memory.key != null && db.getNotificationsEnabledSetting() && m_bChangeNotifyTimes)
     {
-      Notifications().removeNotifications(widget.m_memory.key, m_oldMemory.getNotifyTimes());
+      await Notifications().removeNotifications(widget.m_memory.key, m_oldMemory.getNotifyTimes());
     }
 
     //Add or update memory to database and schedule its notifcations
