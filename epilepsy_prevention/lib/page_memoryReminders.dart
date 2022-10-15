@@ -14,6 +14,8 @@ class PageMemoryReminders extends StatefulWidget
   //Notification gen vars
   int m_notificationStartGoal = 0;
   int m_notificationCountGoal = 0;
+  int m_configureTimeFrequency = 120000;
+  int m_configureIncrement = 3;
 
   //Graph stuff
   int m_graphMaxTime = 0;
@@ -58,8 +60,9 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
               DropdownMenuItem(value: "Rare", child: Text("Rare", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
               DropdownMenuItem(value: "Occasionally", child: Text("Occasionally", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
               DropdownMenuItem(value: "Frequently", child: Text("Frequently", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
-              DropdownMenuItem(value: "Custom", child: Text("Custom", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center))
-            ],
+              DropdownMenuItem(value: "Custom", child: Text("Custom", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
+              DropdownMenuItem(value: "Configure", child: Text("Configure", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center))
+          ],
         ))),
 
         const SizedBox(height: 30),
@@ -92,6 +95,23 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
             ListView.builder(itemCount: widget.m_memory.m_notifications.length, physics: const NeverScrollableScrollPhysics(), shrinkWrap: true, scrollDirection: Axis.vertical,  itemBuilder: (context, i) => genCustomNotificationWidget(context, i))
           )
         ]))),
+
+        Visibility(visible: widget.m_memory.m_testFrequecy == "Configure", child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 190, child: ListView(physics: const NeverScrollableScrollPhysics(), children: <Widget>[
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Text("Time frequency: " + widget.m_configureTimeFrequency.toString(), style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
+
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
+            Slider(value: widget.m_configureTimeFrequency.toDouble(), min: 10000, max: 999999, onChanged: (newValue) => onConfigureTimeFrequencyChanged(newValue.toInt())
+          ))),
+
+          const SizedBox(height: 30),
+
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Text("Increment factor: " + widget.m_configureIncrement.toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
+
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
+            Slider(value: widget.m_configureIncrement.toDouble(), min: 1, max: 10, onChanged: (newValue) => onConfigureIncrementFactorChanged(newValue.toInt())
+          ))),
+        ]),
+        )),
 
         const SizedBox(height: 30),
 
@@ -235,6 +255,10 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
       widget.m_notificationCountGoal = widget.m_memory.m_notifications.length;
       widget.m_notificationStartGoal = getCurrentIteration(widget.m_memory.getNotifyTimes());
     }
+    else if(widget.m_memory.m_testFrequecy == "Configure")
+    {
+      widget.m_memory.m_notifications = Notifications().genNotifyTimes(widget.m_notificationStartGoal, widget.m_notificationCountGoal, widget.m_configureIncrement.toDouble(), widget.m_configureTimeFrequency);
+    }
     else
     {
       widget.m_memory.m_notifications = [];
@@ -273,6 +297,24 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
       }
 
       widget.m_notificationCountGoal = newValue;
+
+      updateNotifyTimes();
+    });
+  }
+
+  void onConfigureTimeFrequencyChanged(int value)
+  {
+    setState(() {
+      widget.m_configureTimeFrequency = value;
+
+      updateNotifyTimes();
+    });
+  }
+
+  void onConfigureIncrementFactorChanged(int value)
+  {
+    setState(() {
+      widget.m_configureIncrement = value;
 
       updateNotifyTimes();
     });
