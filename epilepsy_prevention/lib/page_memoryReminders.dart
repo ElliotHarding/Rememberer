@@ -254,13 +254,13 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     else if(widget.m_memory.m_testFrequecy == "Custom")
     {
       //Keep widget.m_memory.m_notifyTimes
-      widget.m_notificationCountGoal = widget.m_memory.m_notifications.length;
       widget.m_notificationStartGoal = getCurrentIteration(widget.m_memory.getNotifyTimes());
+      widget.m_notificationCountGoal = widget.m_memory.m_notifications.length;
     }
     else if(widget.m_memory.m_testFrequecy == "Configure")
     {
       widget.m_memory.m_notifications = Notifications().genNotifyTimes(widget.m_notificationStartGoal, widget.m_notificationCountGoal, widget.m_configureIncrement.toDouble(), widget.m_configureTimeFrequency);
-      widget.m_notificationCountGoal = widget.m_memory.m_notifications.length;
+      widget.m_notificationCountGoal = widget.m_memory.m_notifications.length + widget.m_notificationStartGoal;
     }
     else
     {
