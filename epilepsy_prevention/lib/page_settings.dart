@@ -69,7 +69,7 @@ class PageSettingsState extends State<PageSettings>
         {
           if(memory.m_bNotificationsEnabled)
           {
-            Notifications().scheduleNotifications(memory.key, memory.m_question, memory.m_notifyTimes);
+            Notifications().scheduleNotifications(memory.key, memory.m_question, memory.getNotifyTimes());
           }
         }
       }
@@ -79,7 +79,7 @@ class PageSettingsState extends State<PageSettings>
 
         for(Memory memory in box.values)
         {
-          Notifications().removeNotifications(memory.key, memory.m_notifyTimes);
+          Notifications().removeNotifications(memory.key, memory.getNotifyTimes());
         }
       }
     }

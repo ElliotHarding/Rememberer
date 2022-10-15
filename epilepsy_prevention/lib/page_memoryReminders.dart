@@ -34,9 +34,9 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     {
       widget.m_memoryBefore = widget.m_memory;
 
-      widget.m_notificationCountGoal = widget.m_memory.m_notifyTimes.length;
+      widget.m_notificationCountGoal = widget.m_memory.m_notifications.length;
 
-      widget.m_notificationStartGoal = getCurrentIteration(widget.m_memory.m_notifyTimes);
+      widget.m_notificationStartGoal = getCurrentIteration(widget.m_memory.getNotifyTimes());
       updateNotifyTimes();
     });
   }
@@ -89,7 +89,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
           ])),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
-            ListView.builder(itemCount: widget.m_memory.m_notifyTimes.length, physics: const NeverScrollableScrollPhysics(), shrinkWrap: true, scrollDirection: Axis.vertical,  itemBuilder: (context, i) => genCustomNotificationWidget(context, i))
+            ListView.builder(itemCount: widget.m_memory.m_notifications.length, physics: const NeverScrollableScrollPhysics(), shrinkWrap: true, scrollDirection: Axis.vertical,  itemBuilder: (context, i) => genCustomNotificationWidget(context, i))
           )
         ]))),
 
@@ -103,7 +103,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
               )),
 
               Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
-                Slider(value: widget.m_graphViewIterationsCount.toDouble(), min: 0, max: widget.m_memory.m_notifyTimes.length.toDouble(), onChanged: (newValue) => onGraphViewIterationsSliderChanged(newValue.toInt())
+                Slider(value: widget.m_graphViewIterationsCount.toDouble(), min: 0, max: widget.m_memory.m_notifications.length.toDouble(), onChanged: (newValue) => onGraphViewIterationsSliderChanged(newValue.toInt())
               ))),
 
               const SizedBox(height: 10),
@@ -219,30 +219,30 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   {
     if (widget.m_memory.m_testFrequecy == "Rare")
     {
-      widget.m_memory.m_notifyTimes = Notifications().genNotifyTimes(widget.m_notificationStartGoal, widget.m_notificationCountGoal, 4, 1800000);
+      widget.m_memory.m_notifications = Notifications().genNotifyTimes(widget.m_notificationStartGoal, widget.m_notificationCountGoal, 4, 1800000);
     }
     else if (widget.m_memory.m_testFrequecy == "Occasionally")
     {
-      widget.m_memory.m_notifyTimes = Notifications().genNotifyTimes(widget.m_notificationStartGoal, widget.m_notificationCountGoal, 3, 1200000);
+      widget.m_memory.m_notifications = Notifications().genNotifyTimes(widget.m_notificationStartGoal, widget.m_notificationCountGoal, 3, 1200000);
     }
     else if (widget.m_memory.m_testFrequecy == "Frequently")
     {
-      widget.m_memory.m_notifyTimes = Notifications().genNotifyTimes(widget.m_notificationStartGoal, widget.m_notificationCountGoal, 2, 900000);
+      widget.m_memory.m_notifications = Notifications().genNotifyTimes(widget.m_notificationStartGoal, widget.m_notificationCountGoal, 2, 900000);
     }
     else if(widget.m_memory.m_testFrequecy == "Custom")
     {
       //Keep widget.m_memory.m_notifyTimes
-      widget.m_notificationCountGoal = widget.m_memory.m_notifyTimes.length;
-      widget.m_notificationStartGoal = getCurrentIteration(widget.m_memory.m_notifyTimes);
+      widget.m_notificationCountGoal = widget.m_memory.m_notifications.length;
+      widget.m_notificationStartGoal = getCurrentIteration(widget.m_memory.getNotifyTimes());
     }
     else
     {
-      widget.m_memory.m_notifyTimes = [];
+      widget.m_memory.m_notifications = [];
     }
 
-    widget.m_graphViewIterationsCount = widget.m_memory.m_notifyTimes.length;
+    widget.m_graphViewIterationsCount = widget.m_memory.m_notifications.length;
 
-    updateGraphValues(widget.m_memory.m_notifyTimes);
+    updateGraphValues(widget.m_memory.getNotifyTimes());
   }
 
   void onCurrentIterationSliderChanged(int newValue)
@@ -259,7 +259,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     setState(()
     {
       widget.m_graphViewIterationsCount = newValue;
-      updateGraphValues(widget.m_memory.m_notifyTimes);
+      updateGraphValues(widget.m_memory.getNotifyTimes());
     });
   }
 
@@ -293,7 +293,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   {
     setState(()
     {
-      widget.m_memory.m_notifyTimes.add(DateTime.now().millisecondsSinceEpoch);
+      widget.m_memory.m_notifications.add(MemoryNotification(DateTime.now().millisecondsSinceEpoch, false));
       updateNotifyTimes();
     });
   }
@@ -314,7 +314,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
       Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
         SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
           TextButton(onPressed: () => onSelectCustomNotification(context, iCustomNotification), child:
-            Text(epochMsToDate(widget.m_memory.m_notifyTimes[iCustomNotification]), style: const TextStyle(fontSize: 20, color: Colors.grey))
+            Text(epochMsToDate(widget.m_memory.m_notifications[iCustomNotification].m_notifyTime), style: const TextStyle(fontSize: 20, color: Colors.grey))
           ),
         ),
         SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
@@ -328,7 +328,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
   void onSelectCustomNotification(BuildContext context, int iCustomNotification) async
   {
-    DateTime? newDate = await showDatePicker(context: context, initialDate: DateTime.fromMillisecondsSinceEpoch(widget.m_memory.m_notifyTimes[iCustomNotification]), firstDate: DateTime.now(), lastDate: DateTime.fromMillisecondsSinceEpoch(8640000000000000));
+    DateTime? newDate = await showDatePicker(context: context, initialDate: DateTime.fromMillisecondsSinceEpoch(widget.m_memory.m_notifications[iCustomNotification].m_notifyTime), firstDate: DateTime.now(), lastDate: DateTime.fromMillisecondsSinceEpoch(8640000000000000));
     TimeOfDay? newTime = await showTimePicker(context: context, initialTime: TimeOfDay.now());
 
     if(newDate != null && newTime != null)
@@ -336,7 +336,8 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
       var dateTime = DateTime(newDate.year, newDate.month, newDate.day, newTime.hour, newTime.minute);
       setState(()
       {
-        widget.m_memory.m_notifyTimes[iCustomNotification] = dateTime.millisecondsSinceEpoch;
+        widget.m_memory.m_notifications[iCustomNotification].m_notifyTime = dateTime.millisecondsSinceEpoch;
+        widget.m_memory.m_notifications[iCustomNotification].m_bHasBeenTested = dateTime.millisecondsSinceEpoch < DateTime.now().millisecondsSinceEpoch;
         updateNotifyTimes();
       });
     }
@@ -346,7 +347,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
   {
     setState(()
     {
-      widget.m_memory.m_notifyTimes.removeAt(iCustomNotification);
+      widget.m_memory.m_notifications.removeAt(iCustomNotification);
       updateNotifyTimes();
     });
   }

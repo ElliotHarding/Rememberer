@@ -15,7 +15,7 @@ class PageMemory extends StatefulWidget
 
 class PageMemoryState extends State<PageMemory>
 {
-  List<int> m_oldNotifyTimes = [];
+  Memory m_oldMemory = Memory();
   bool m_bChangeNotifyTimes = false;
 
   List<TextEditingController> m_falseAnswerTextEditControllers = [];
@@ -26,7 +26,7 @@ class PageMemoryState extends State<PageMemory>
   {
     initialFalseAnswerList();
 
-    m_oldNotifyTimes = widget.m_memory.m_notifyTimes;
+    m_oldMemory = widget.m_memory;
 
     m_questionTextController.text = widget.m_memory.m_question;
     m_answerTextController.text = widget.m_memory.m_answer;
@@ -148,14 +148,14 @@ class PageMemoryState extends State<PageMemory>
     //If not new memory, and updated notify times, and notifcations are enabled: clear old scheduled notifications
     if(widget.m_memory.key != null && db.getNotificationsEnabledSetting() && m_bChangeNotifyTimes)
     {
-      Notifications().removeNotifications(widget.m_memory.key, m_oldNotifyTimes);
+      Notifications().removeNotifications(widget.m_memory.key, m_oldMemory.getNotifyTimes());
     }
 
     //Add or update memory to database and schedule its notifcations
     var key = await db.addOrUpdateMemory(widget.m_memory);
     if(db.getNotificationsEnabledSetting() && widget.m_memory.m_bNotificationsEnabled)
     {
-      await Notifications().scheduleNotifications(key, widget.m_memory.m_question, widget.m_memory.m_notifyTimes);
+      await Notifications().scheduleNotifications(key, widget.m_memory.m_question, widget.m_memory.getNotifyTimes());
     }
 
     Navigator.of(context).pop();
@@ -166,7 +166,7 @@ class PageMemoryState extends State<PageMemory>
     if (widget.m_memory.key != null)
     {
       //Clear notifications
-      Notifications().removeNotifications(widget.m_memory.key, widget.m_memory.m_notifyTimes);
+      Notifications().removeNotifications(widget.m_memory.key, widget.m_memory.getNotifyTimes());
 
       Database().deleteMemory(widget.m_memory.key);
     }

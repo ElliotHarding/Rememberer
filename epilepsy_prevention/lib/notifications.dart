@@ -150,12 +150,12 @@ class Notifications
         ?.deleteNotificationChannel(channelId);
   }
 
-  List<int> genNotifyTimes(int iStart, int iMaxNotifications, double incFactor, int incTime)
+  List<MemoryNotification> genNotifyTimes(int iStart, int iMaxNotifications, double incFactor, int incTime)
   {
-    List<int> values = [];
+    List<MemoryNotification> values = [];
     for(int i = iStart; i < iMaxNotifications; i++)
     {
-      values.add(DateTime.now().millisecondsSinceEpoch + incTime * pow(incFactor, i).toInt());
+      values.add(MemoryNotification(DateTime.now().millisecondsSinceEpoch + incTime * pow(incFactor, i).toInt(), false));
     }
     return values;
   }

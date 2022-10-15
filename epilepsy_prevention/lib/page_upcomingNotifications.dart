@@ -53,10 +53,10 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
 
   List<Widget> getNotificationWidgets()
   {
-    List<MemoryNotification> notifications = getUppcommingNotifications();
+    List<MemoryAndNotification> notifications = getUppcommingNotifications();
 
     List<Widget> widgets = <Widget>[];
-    for(MemoryNotification memNotification in notifications)
+    for(MemoryAndNotification memNotification in notifications)
     {
       widgets.add(Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
         SizedBox(width: MediaQuery.of(context).size.width * 0.5, child: TextButton(onPressed: () => onQuestionPressed(memNotification.m_memory), child:
@@ -78,9 +78,9 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
     return widgets;
   }
 
-  List<MemoryNotification> getUppcommingNotifications()
+  List<MemoryAndNotification> getUppcommingNotifications()
   {
-    List<MemoryNotification> notifications = <MemoryNotification>[];
+    List<MemoryAndNotification> notifications = <MemoryAndNotification>[];
 
     var box = Database().getMemoryBox();
     if(box != null)
@@ -89,11 +89,11 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
       {
         if(!m_bEnabledOnly || memory.m_bNotificationsEnabled)
         {
-          for (int notifyTime in memory.m_notifyTimes)
+          for (int notifyTime in memory.getNotifyTimes())
           {
             if(!m_bDueOnly || notifyTime > DateTime.now().millisecondsSinceEpoch)
             {
-              notifications.add(MemoryNotification(notifyTime, memory));
+              notifications.add(MemoryAndNotification(notifyTime, memory));
             }
           }
         }
@@ -123,11 +123,11 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
     });
   }
 
-  void deleteNotification(MemoryNotification memoryNotification) async
+  void deleteNotification(MemoryAndNotification memoryNotification) async
   {
     await Notifications().removeNotification(memoryNotification.m_memory.key.toString() + "-" + memoryNotification.m_notificationTime.toString());
 
-    memoryNotification.m_memory.m_notifyTimes.remove(memoryNotification.m_notificationTime);
+    memoryNotification.m_memory.m_notifications.remove(memoryNotification.m_notificationTime);
     Database().addOrUpdateMemory(memoryNotification.m_memory);
   }
 
@@ -155,7 +155,7 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
     });
   }
 
-  void onDeleteNotificationPressed(MemoryNotification memNotification)
+  void onDeleteNotificationPressed(MemoryAndNotification memNotification)
   {
     deleteNotification(memNotification);
     setState(() {
@@ -164,9 +164,9 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
   }
 }
 
-class MemoryNotification
+class MemoryAndNotification
 {
-  MemoryNotification(int notificationTime, Memory memory)
+  MemoryAndNotification(int notificationTime, Memory memory)
   {
     m_notificationTime = notificationTime;
     m_memory = memory;
