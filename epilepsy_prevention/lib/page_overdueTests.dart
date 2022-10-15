@@ -2,6 +2,7 @@ import 'package:epilepsy_prevention/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_test.dart';
+import 'package:epilepsy_prevention/page_home.dart';
 
 class PageOverdueTests extends StatefulWidget
 {
@@ -21,7 +22,7 @@ class PageOverdueTestsState extends State<PageOverdueTests>
 
     m_overdueTestWidgets = getOverdueTestWidgets();
 
-    return Scaffold(body:
+    return WillPopScope(onWillPop: () async { Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome())); return true;}, child: Scaffold(body:
     ListView(shrinkWrap: true, children: <Widget>[
 
       const SizedBox(height: 30),
@@ -36,7 +37,7 @@ class PageOverdueTestsState extends State<PageOverdueTests>
         ListView(shrinkWrap: true, physics: const NeverScrollableScrollPhysics(), scrollDirection: Axis.vertical, children: m_overdueTestWidgets)
       ),
     ],)
-    );
+    ));
   }
 
   List<Widget> getOverdueTestWidgets()

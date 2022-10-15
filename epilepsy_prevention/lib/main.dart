@@ -40,7 +40,7 @@ class App extends StatelessWidget
       }
     }
 
-    return MaterialApp(
+    return const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: PageHome()
     );
