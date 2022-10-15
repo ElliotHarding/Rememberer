@@ -73,7 +73,7 @@ class PageOverdueTestsState extends State<PageOverdueTests>
         Text(Notifications().epochMsToDate(notifyTime), style: const TextStyle(fontSize: 20.0, color: Colors.blue)))
       ),
 
-      SizedBox(width: MediaQuery.of(context).size.width * 0.1, child: TextButton(onPressed: () => onDeleteTestPressed(memory, notifyTime), child:
+      SizedBox(width: MediaQuery.of(context).size.width * 0.1, child: TextButton(onPressed: () => askDeleteTest(memory, notifyTime), child:
         const Text("X"))
       )
     ]);
@@ -84,7 +84,7 @@ class PageOverdueTestsState extends State<PageOverdueTests>
     Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(memory, const PageOverdueTests())));
   }
 
-  void onDeleteTestPressed(Memory memory, int notifyTime)
+  void onSetTestDone(Memory memory, int notifyTime)
   {
       for(int i = 0; i < memory.m_notifications.length; i++)
       {
@@ -99,5 +99,30 @@ class PageOverdueTestsState extends State<PageOverdueTests>
       setState(() {
         m_overdueTestWidgets = getOverdueTestWidgets();
       });
+
+      Navigator.of(context).pop();
+  }
+
+  void onKeepTest()
+  {
+    Navigator.of(context).pop();
+  }
+
+  void askDeleteTest(Memory memory, int notifyTime)
+  {
+    showDialog(context: context, builder: (context) => promptDialog("Delete test?", "Are you sure you want to ignore this test?", "Yes", "No", memory, notifyTime));
+  }
+
+  AlertDialog promptDialog(String title, String content, String confirmText, String denyText, Memory memory, int notifyTime)
+  {
+    return AlertDialog(title: Text(title, style: const TextStyle(fontSize: 30.0, color: Colors.blue)), content: Text(content, style: const TextStyle(fontSize: 20.0, color: Colors.blue)), actions: <Widget>[
+      TextButton(onPressed: () => onKeepTest(), child:
+      Text(denyText, style: const TextStyle(fontSize: 20.0, color: Colors.blue))
+      ),
+
+      TextButton(onPressed: () => onSetTestDone(memory, notifyTime), child:
+      Text(confirmText, style: const TextStyle(fontSize: 20.0, color: Colors.blue))
+      ),
+    ],);
   }
 }
