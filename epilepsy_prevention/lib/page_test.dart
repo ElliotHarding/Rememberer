@@ -54,7 +54,7 @@ class PageTest extends StatelessWidget
         Center(child:
          Visibility(visible: !m_memory.m_bMultiChoice, child:
           TextButton(onPressed: () async {
-              await Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, m_answerTextController.text == m_memory.m_answer, m_returnScreen)));
+              await Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, m_answerTextController.text.toLowerCase() == m_memory.m_answer.toLowerCase(), m_returnScreen)));
               }, child: const Text("Guess", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center)
           )
         )),
