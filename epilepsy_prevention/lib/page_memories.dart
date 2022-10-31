@@ -26,33 +26,17 @@ class PageMemoriesState extends State<PageMemories>
     return WillPopScope(onWillPop: () async { Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome())); return true;}, child: Scaffold(body:
       ListView(shrinkWrap: true, children: <Widget>[
 
-        Center(child: Row(children: [
+        Row(children: [
           SizedBox(width: MediaQuery.of(context).size.width * 0.1),
           SizedBox(width: MediaQuery.of(context).size.width * 0.6, child:
             const Text("Memories", style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: Colors.blue), textAlign: TextAlign.left)
           ),
           SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
-            TextButton(onPressed: () => gotoAddNewMemory(), child:
-              const Text("+", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center)
-            ),
+            TextButton(onPressed: () => gotoAddNewMemory(), child: const Align(alignment: Alignment.centerRight, child:
+              Text("+", style: TextStyle(fontSize: 35, color: Colors.blue), textAlign: TextAlign.right)
+            )),
           )
-          
-        ])),
-
-        Row(mainAxisAlignment: MainAxisAlignment.end, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-          TextButton(onPressed: () => gotoAddNewMemory(), child:
-            const Text("Add New Memory", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center)
-          ),
-
-          SizedBox(width: MediaQuery.of(context).size.width * 0.02)
         ]),
-
-        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-
-        Center(child:
-          SizedBox(width: MediaQuery.of(context).size.width * 0.8, child:
-            const Text("Memories", style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: Colors.blue), textAlign: TextAlign.left)
-        )),
 
         ListView(shrinkWrap: true, physics: const NeverScrollableScrollPhysics(), scrollDirection: Axis.vertical, children: m_memoryWidgets),
       ])
