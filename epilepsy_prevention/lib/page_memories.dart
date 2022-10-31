@@ -52,7 +52,6 @@ class PageMemoriesState extends State<PageMemories>
 
   double getTextHeight(String textStr, TextStyle textStyle)
   {
-    const TextStyle titleTextStyle = TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: Colors.blue);
     return (TextPainter(text: TextSpan(text: textStr, style: textStyle), maxLines: 1, textDirection: TextDirection.ltr)..layout(minWidth: 0, maxWidth: double.infinity)).height;
   }
 
@@ -67,27 +66,25 @@ class PageMemoriesState extends State<PageMemories>
     {
       for(Memory memory in box.values)
       {
-        widgets.add(SizedBox(width: MediaQuery.of(context).size.width, height: getTextHeight(memory.m_question, memoryWidgetTextStyle) * 2, child:
-          Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,children: [
-            SizedBox(width: MediaQuery.of(context).size.width * 0.05),
+        widgets.add(Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,children: [
+          SizedBox(width: MediaQuery.of(context).size.width * 0.05),
 
-            SizedBox(width: MediaQuery.of(context).size.width * 0.6, child:
-              Text(memory.m_question, style: memoryWidgetTextStyle, textAlign: TextAlign.left)
-            ),
+          SizedBox(width: MediaQuery.of(context).size.width * 0.6, child:
+            Text(memory.m_question, style: memoryWidgetTextStyle, textAlign: TextAlign.left)
+          ),
 
-            SizedBox(width: MediaQuery.of(context).size.width * 0.15, child:
-              TextButton(onPressed: () => onMemoryPressed(memory), child:
-                const Text("⚙", style: memoryWidgetTextStyle)
-              )
-            ),
+          SizedBox(width: MediaQuery.of(context).size.width * 0.15, child:
+            TextButton(onPressed: () => onMemoryPressed(memory), child:
+              const Text("⚙", style: memoryWidgetTextStyle)
+          )
+          ),
 
-            SizedBox(width: MediaQuery.of(context).size.width * 0.15, child:
-              TextButton(onPressed: () => onMemoryTestPressed(memory), child:
-                const Text("?", style: memoryWidgetTextStyle)
-              )
-            )
-          ])
-        ));
+          SizedBox(width: MediaQuery.of(context).size.width * 0.15, child:
+            TextButton(onPressed: () => onMemoryTestPressed(memory), child:
+              const Text("?", style: memoryWidgetTextStyle)
+          )
+          )
+        ]));
       }
     }
     return widgets;
