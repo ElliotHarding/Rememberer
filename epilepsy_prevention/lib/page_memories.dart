@@ -25,7 +25,7 @@ class PageMemoriesState extends State<PageMemories>
 
     const String titleString = "Memories";
     const TextStyle titleTextStyle = TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: Colors.blue);
-    final double titleHeight = (TextPainter(text: const TextSpan(text: titleString, style: titleTextStyle), maxLines: 1, textDirection: TextDirection.ltr)..layout(minWidth: 0, maxWidth: double.infinity)).height * 2;
+    final double titleHeight = getTextHeight(titleString, titleTextStyle) * 2;
     
     return WillPopScope(onWillPop: () async { Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome())); return true;}, child: Scaffold(body:
       ListView(shrinkWrap: true, children: <Widget>[
@@ -50,32 +50,44 @@ class PageMemoriesState extends State<PageMemories>
     );
    }
 
+  double getTextHeight(String textStr, TextStyle textStyle)
+  {
+    const TextStyle titleTextStyle = TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: Colors.blue);
+    return (TextPainter(text: TextSpan(text: textStr, style: textStyle), maxLines: 1, textDirection: TextDirection.ltr)..layout(minWidth: 0, maxWidth: double.infinity)).height;
+  }
+
   List<Widget> getMemoryWidgets()
   {
     List<Widget> widgets = <Widget>[];
+
+    const TextStyle memoryWidgetTextStyle = TextStyle(fontSize: 30.0, color: Colors.blue);
 
     var box = Database().getMemoryBox();
     if(box != null)
     {
       for(Memory memory in box.values)
       {
-        widgets.add(
+        widgets.add(SizedBox(width: MediaQuery.of(context).size.width, height: getTextHeight(memory.m_question, memoryWidgetTextStyle) * 2, child:
           Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,children: [
-            SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
+            SizedBox(width: MediaQuery.of(context).size.width * 0.05),
+
+            SizedBox(width: MediaQuery.of(context).size.width * 0.6, child:
+              Text(memory.m_question, style: memoryWidgetTextStyle, textAlign: TextAlign.left)
+            ),
+
+            SizedBox(width: MediaQuery.of(context).size.width * 0.15, child:
               TextButton(onPressed: () => onMemoryPressed(memory), child:
-                Text(memory.m_question, style: const TextStyle(fontSize: 30.0, color: Colors.blue))
+                const Text("⚙", style: memoryWidgetTextStyle)
               )
             ),
 
-            SizedBox(width: MediaQuery.of(context).size.width * 0.3, child:
+            SizedBox(width: MediaQuery.of(context).size.width * 0.15, child:
               TextButton(onPressed: () => onMemoryTestPressed(memory), child:
-                const Text("Test", style: TextStyle(fontSize: 30.0, color: Colors.blue))
+                const Text("?", style: memoryWidgetTextStyle)
               )
-            ),
-
-            SizedBox(height: MediaQuery.of(context).size.height * 0.1)
+            )
           ])
-        );
+        ));
       }
     }
     return widgets;
