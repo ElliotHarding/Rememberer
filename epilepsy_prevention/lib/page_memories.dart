@@ -23,20 +23,25 @@ class PageMemoriesState extends State<PageMemories>
 
     m_memoryWidgets = getMemoryWidgets();
 
+    const TextStyle titleTextStyle = TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: Colors.blue);
+    final TextPainter textPainter = TextPainter(text: const TextSpan(text: "Memories", style: titleTextStyle), maxLines: 1, textDirection: TextDirection.ltr)..layout(minWidth: 0, maxWidth: double.infinity);
+    
     return WillPopScope(onWillPop: () async { Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome())); return true;}, child: Scaffold(body:
       ListView(shrinkWrap: true, children: <Widget>[
 
-        Row(children: [
-          SizedBox(width: MediaQuery.of(context).size.width * 0.1),
-          SizedBox(width: MediaQuery.of(context).size.width * 0.6, child:
-            const Text("Memories", style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: Colors.blue), textAlign: TextAlign.left)
-          ),
-          SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
-            TextButton(onPressed: () => gotoAddNewMemory(), child: const Align(alignment: Alignment.centerRight, child:
-              Text("+", style: TextStyle(fontSize: 35, color: Colors.blue), textAlign: TextAlign.right)
-            )),
-          )
-        ]),
+        SizedBox(width: MediaQuery.of(context).size.width, height: textPainter.height * 2, child:
+          Row(children: [
+            SizedBox(width: MediaQuery.of(context).size.width * 0.1),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.6, child:
+              const Text("Memories", style: titleTextStyle, textAlign: TextAlign.left)
+            ),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
+              TextButton(onPressed: () => gotoAddNewMemory(), child: const Align(alignment: Alignment.centerRight, child:
+                Text("+", style: titleTextStyle, textAlign: TextAlign.right)
+              )),
+            )
+          ])
+        ),
 
         ListView(shrinkWrap: true, physics: const NeverScrollableScrollPhysics(), scrollDirection: Axis.vertical, children: m_memoryWidgets),
       ])
