@@ -23,17 +23,18 @@ class PageMemoriesState extends State<PageMemories>
 
     m_memoryWidgets = getMemoryWidgets();
 
+    const String titleString = "Memories";
     const TextStyle titleTextStyle = TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: Colors.blue);
-    final TextPainter textPainter = TextPainter(text: const TextSpan(text: "Memories", style: titleTextStyle), maxLines: 1, textDirection: TextDirection.ltr)..layout(minWidth: 0, maxWidth: double.infinity);
+    final double titleHeight = (TextPainter(text: const TextSpan(text: titleString, style: titleTextStyle), maxLines: 1, textDirection: TextDirection.ltr)..layout(minWidth: 0, maxWidth: double.infinity)).height * 2;
     
     return WillPopScope(onWillPop: () async { Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome())); return true;}, child: Scaffold(body:
       ListView(shrinkWrap: true, children: <Widget>[
 
-        SizedBox(width: MediaQuery.of(context).size.width, height: textPainter.height * 2, child:
+        SizedBox(width: MediaQuery.of(context).size.width, height: titleHeight, child:
           Row(children: [
             SizedBox(width: MediaQuery.of(context).size.width * 0.1),
             SizedBox(width: MediaQuery.of(context).size.width * 0.6, child:
-              const Text("Memories", style: titleTextStyle, textAlign: TextAlign.left)
+              const Text(titleString, style: titleTextStyle, textAlign: TextAlign.left)
             ),
             SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
               TextButton(onPressed: () => gotoAddNewMemory(), child: const Align(alignment: Alignment.centerRight, child:
