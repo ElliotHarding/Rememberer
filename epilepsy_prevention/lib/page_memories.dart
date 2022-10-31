@@ -26,7 +26,18 @@ class PageMemoriesState extends State<PageMemories>
     return WillPopScope(onWillPop: () async { Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome())); return true;}, child: Scaffold(body:
       ListView(shrinkWrap: true, children: <Widget>[
 
-        SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+        Center(child: Row(children: [
+          SizedBox(width: MediaQuery.of(context).size.width * 0.1),
+          SizedBox(width: MediaQuery.of(context).size.width * 0.6, child:
+            const Text("Memories", style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: Colors.blue), textAlign: TextAlign.left)
+          ),
+          SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
+            TextButton(onPressed: () => gotoAddNewMemory(), child:
+              const Text("+", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center)
+            ),
+          )
+          
+        ])),
 
         Row(mainAxisAlignment: MainAxisAlignment.end, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
           TextButton(onPressed: () => gotoAddNewMemory(), child:
