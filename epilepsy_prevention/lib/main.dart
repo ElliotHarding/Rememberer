@@ -2,10 +2,13 @@ import 'package:epilepsy_prevention/page_home.dart';
 import 'package:epilepsy_prevention/page_test.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
+import 'package:flutter/services.dart';
 import 'notifications.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized(); //Used by setPreferredOrientations and something else...
+
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   //Setup database stuff
   var database = Database();
