@@ -71,13 +71,13 @@ class PageTest extends StatelessWidget
           const Spacer(),
 
           TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories())); }, child:
-            Text("Memories", style: Display.acceptButtonTextStyle)
+            Text("Memories", style: Display.miniNavButtonTextStyle)
           ),
 
           const Spacer(),
 
           TextButton(onPressed: () async { Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome())); }, child:
-            Text("Home", style: Display.acceptButtonTextStyle)
+            Text("Home", style: Display.miniNavButtonTextStyle)
           ),
 
           const Spacer()

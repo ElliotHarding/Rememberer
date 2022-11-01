@@ -23,7 +23,7 @@ class PageTestResult extends StatelessWidget
 
         Row(mainAxisAlignment: MainAxisAlignment.end, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
           TextButton(onPressed: () => onHomePressed(context), child:
-            Text("Home", style: Display.acceptButtonTextStyle)
+            Text("Home", style: Display.miniNavButtonTextStyle)
           ),
           SizedBox(width: MediaQuery.of(context).size.width * 0.02)
         ]),

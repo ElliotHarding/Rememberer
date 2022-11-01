@@ -105,11 +105,11 @@ class PageSettingsState extends State<PageSettings>
   {
     return AlertDialog(title: Text(title, style: Display.largeTextStyle), content: Text(content, style: Display.normalTextStyle), actions: <Widget>[
       TextButton(onPressed: () => denyAction(), child:
-        Text(denyText, style: Display.cancelButtonTextStyle)
+        Text(denyText, style: Display.miniNavButtonTextStyle)
       ),
 
       TextButton(onPressed: () => confirmAction(), child:
-        Text(confirmText, style: Display.acceptButtonTextStyle)
+        Text(confirmText, style: Display.miniNavButtonTextStyle)
       ),
     ],);
   }

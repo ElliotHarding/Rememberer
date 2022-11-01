@@ -18,8 +18,7 @@ class Display {
   static TextStyle largeTextStyle = TextStyle();
   static TextStyle largeTextStyleBlack = TextStyle();
   static TextStyle titleTextStyle = TextStyle();
-  static TextStyle acceptButtonTextStyle = TextStyle();
-  static TextStyle cancelButtonTextStyle = TextStyle();
+  static TextStyle miniNavButtonTextStyle = TextStyle();
 
   //Accessible text colors
   static MaterialColor normalTextColor = Colors.blue;
@@ -56,7 +55,6 @@ class Display {
 
     titleTextStyle = TextStyle(fontSize: largeTextSize, fontWeight: FontWeight.bold, color: Colors.blue);
 
-    acceptButtonTextStyle = TextStyle(fontSize: normalTextSize, color: Colors.blue);
-    cancelButtonTextStyle = TextStyle(fontSize: normalTextSize, color: Colors.blue);
+    miniNavButtonTextStyle = TextStyle(fontSize: normalTextSize, color: Colors.blue);
   }
 }

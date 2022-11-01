@@ -100,11 +100,11 @@ class PageMemoryState extends State<PageMemory>
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
           const Spacer(),
 
-          TextButton(onPressed: () => onDelete(context), child: Text("Delete", style: Display.cancelButtonTextStyle)),
+          TextButton(onPressed: () => onDelete(context), child: Text("Delete", style: Display.miniNavButtonTextStyle)),
 
           const Spacer(),
 
-          TextButton(onPressed: () => onSave(context), child: Text("Save", style: Display.acceptButtonTextStyle)),
+          TextButton(onPressed: () => onSave(context), child: Text("Save", style: Display.miniNavButtonTextStyle)),
 
           const Spacer()
         ]),
