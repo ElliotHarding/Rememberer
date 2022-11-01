@@ -59,13 +59,13 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     Notifications.setupNotificationActionListener(context);
 
     return WillPopScope(onWillPop: () async {onUpdate(); return true;}, child:
-      Scaffold(body: SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child: ListView(shrinkWrap: true, children: <Widget>[
+      Scaffold(body: ListView(shrinkWrap: true, children: <Widget>[
 
-        const SizedBox(height: 30),
+        Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, 30, 0, 0), child:
+          Text("Reminder frequency", style: Display.largeTextStyle, textAlign: TextAlign.left),
+        ),
 
-        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Text("Reminder frequency", style: Display.largeTextStyle, textAlign: TextAlign.left))),
-
-        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
+        Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, 0, 0, 0), child:
           DropdownButton(value: widget.m_memory.m_testFrequecy, onChanged: (String? selectedValue) => onFrequencyDropDownChanged(selectedValue), items: [
               DropdownMenuItem(value: "Never", child: Text("Never", style: Display.listItemTextStyleBlack, textAlign: TextAlign.center)),
               DropdownMenuItem(value: "Rare", child: Text("Rare", style: Display.listItemTextStyleBlack, textAlign: TextAlign.center)),
@@ -74,20 +74,21 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
               DropdownMenuItem(value: "Custom", child: Text("Custom", style: Display.listItemTextStyleBlack, textAlign: TextAlign.center)),
               DropdownMenuItem(value: "Configure", child: Text("Configure", style: Display.listItemTextStyleBlack, textAlign: TextAlign.center))
           ],
-        ))),
+        )),
 
-        const SizedBox(height: 30),
+        Visibility(visible: widget.m_memory.m_testFrequecy != "Never" && widget.m_memory.m_testFrequecy != "Custom", child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Column(children: <Widget>[
 
-        Visibility(visible: widget.m_memory.m_testFrequecy != "Never" && widget.m_memory.m_testFrequecy != "Custom", child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 190, child: ListView(physics: const NeverScrollableScrollPhysics(), children: <Widget>[
-          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Text("Iteration goal: " + widget.m_notificationCountGoal.toString(), style: Display.largeTextStyle, textAlign: TextAlign.left))),
+          Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, 30, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
+            Text("Iteration goal: " + widget.m_notificationCountGoal.toString(), style: Display.largeTextStyle, textAlign: TextAlign.left),
+          )),
 
-          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
             Slider(value: widget.m_notificationCountGoal.toDouble(), min: 0, max: 25, onChanged: (newValue) => onNotificationCountGoalSliderChanged(newValue.toInt())
           ))),
 
-          const SizedBox(height: 30),
-
-          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Text("Start iteration: " + widget.m_notificationStartGoal.toString(), style: Display.largeTextStyle, textAlign: TextAlign.left))),
+          Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, 30, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
+            Text("Start iteration: " + widget.m_notificationStartGoal.toString(), style: Display.largeTextStyle, textAlign: TextAlign.left),
+          )),
 
           Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
             Slider(value: widget.m_notificationStartGoal.toDouble(), min: 0, max: widget.m_notificationCountGoal.toDouble(), onChanged: (newValue) => onCurrentIterationSliderChanged(newValue.toInt())
@@ -188,7 +189,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
         const SizedBox(height: 10),
        ])
-    )));
+    ));
   }
 
   Widget getDateIndexValues(double value, TitleMeta meta)

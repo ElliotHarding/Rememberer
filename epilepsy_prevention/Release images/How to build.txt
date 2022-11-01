@@ -7,3 +7,4 @@ Fix indexes on graph overlapping
 Look at deleteNotification in upcommingNotifications
 
 Memory page needs delete, save & cancel
+Also memoryReminders page
