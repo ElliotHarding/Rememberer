@@ -61,15 +61,15 @@ class PageOverdueTestsState extends State<PageOverdueTests>
   {
     return Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
       SizedBox(width: MediaQuery.of(context).size.width * 0.5, child: TextButton(onPressed: () => onTestPressed(memory), child:
-        Text(memory.m_question, style: Display.normalTextStyle))
+        Text(memory.m_question, style: Display.listItemTextStyle))
       ),
 
       SizedBox(width: MediaQuery.of(context).size.width * 0.4, child: TextButton(onPressed: () => onTestPressed(memory), child:
-        Text(Notifications().epochMsToDate(notifyTime), style: Display.normalTextStyle))
+        Text(Notifications().epochMsToDate(notifyTime), style: Display.listItemTextStyle))
       ),
 
       SizedBox(width: MediaQuery.of(context).size.width * 0.1, child: TextButton(onPressed: () => askDeleteTest(memory, notifyTime), child:
-        Text("X", style: Display.normalTextStyle))
+        Text("X", style: Display.listItemTextStyle))
       )
     ]);
   }
@@ -110,13 +110,13 @@ class PageOverdueTestsState extends State<PageOverdueTests>
 
   AlertDialog promptDialog(String title, String content, String confirmText, String denyText, Memory memory, int notifyTime)
   {
-    return AlertDialog(title: Text(title, style: const TextStyle(fontSize: 30.0, color: Colors.blue)), content: Text(content, style: const TextStyle(fontSize: 20.0, color: Colors.blue)), actions: <Widget>[
+    return AlertDialog(title: Text(title, style: Display.largeTextStyle), content: Text(content, style: const TextStyle(fontSize: 20.0, color: Colors.blue)), actions: <Widget>[
       TextButton(onPressed: () => onKeepTest(), child:
-      Text(denyText, style: Display.normalTextStyle)
+      Text(denyText, style: TextStyle(fontSize: 20, color: Colors.blue))
       ),
 
       TextButton(onPressed: () => onSetTestDone(memory, notifyTime), child:
-      Text(confirmText, style: Display.normalTextStyle)
+      Text(confirmText, style: TextStyle(fontSize: 20, color: Colors.blue))
       ),
     ],);
   }

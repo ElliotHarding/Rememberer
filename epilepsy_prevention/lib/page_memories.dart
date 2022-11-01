@@ -63,18 +63,18 @@ class PageMemoriesState extends State<PageMemories>
           SizedBox(width: MediaQuery.of(context).size.width * 0.05),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.6, child:
-            Text(memory.m_question, style: Display.normalTextStyle, textAlign: TextAlign.left)
+            Text(memory.m_question, style: Display.listItemTextStyle, textAlign: TextAlign.left)
           ),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.15, child:
             TextButton(onPressed: () => onMemoryPressed(memory), child:
-              Text("⚙", style: Display.normalTextStyle)
+              Text("⚙", style: Display.listItemTextStyle)
             )
           ),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.15, child:
             TextButton(onPressed: () => onMemoryTestPressed(memory), child:
-              Text("?", style: Display.normalTextStyle)
+              Text("?", style: Display.listItemTextStyle)
             )
           )
         ]));

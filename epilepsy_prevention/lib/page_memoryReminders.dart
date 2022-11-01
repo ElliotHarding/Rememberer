@@ -367,7 +367,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         ),
         SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
           TextButton(onPressed: () => onDeleteCustomNotification(iCustomNotification), child:
-            Text("X", style: Display.normalTextStyle)
+            Text("X", style: Display.listItemTextStyle)
           ),
         )
       ])

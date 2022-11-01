@@ -236,7 +236,7 @@ class PageMemoryState extends State<PageMemory>
         SizedBox(width: MediaQuery.of(context).size.width * 0.14, child:
           TextButton(onPressed: () { setState(() {
             m_falseAnswerTextEditControllers.removeAt(iFalseAnswer);
-          });}, child: Text("X", style: Display.normalTextStyle)),
+          });}, child: Text("X", style: Display.listItemTextStyle)),
         )
       ])
     ));
