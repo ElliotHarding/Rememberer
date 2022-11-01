@@ -16,6 +16,9 @@ class Display {
   static TextStyle miniNavButtonTextStyle = TextStyle();
   static TextStyle searchOptionTextStyle = TextStyle();
 
+  //Accessible sizes (loaded after init)
+  static double graphTitleSpaceReserved = 0;
+
   //Accessible text colors
   static MaterialColor normalTextColor = Colors.blue;
 
@@ -44,6 +47,7 @@ class Display {
     largeTextStyleBlack = TextStyle(fontSize: 7 * unitWidthValue, color: Colors.black);
 
     graphIndexStyle = TextStyle(fontSize: 3 * unitWidthValue, color: Colors.blue);
+    graphTitleSpaceReserved = 3 * unitWidthValue * 5.5;
 
     titleTextStyle = TextStyle(fontSize: 7 * unitWidthValue, fontWeight: FontWeight.bold, color: Colors.blue);
     menuPageTextStyle = TextStyle(fontSize: 10 * unitWidthValue, color: Colors.blue);

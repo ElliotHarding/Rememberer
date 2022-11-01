@@ -135,7 +135,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
                 Text("Graph Timescale:", style: Display.largeTextStyle, textAlign: TextAlign.left),
               ),
 
-              Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
+              Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
                 Slider(value: widget.m_graphViewIterationsCount.toDouble(), min: 0, max: widget.m_memory.m_notifications.length.toDouble(), onChanged: (newValue) => onGraphViewIterationsSliderChanged(newValue.toInt())
               ))),
 
@@ -157,8 +157,8 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
                     ),
                     titlesData: FlTitlesData(
                         show: true,
-                        bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: true, getTitlesWidget: getIterationIndexValues, interval: 1)),
-                        leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: true, reservedSize: 70, getTitlesWidget: getDateIndexValues)),
+                        bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: true, reservedSize: Display.graphTitleSpaceReserved, getTitlesWidget: getIterationIndexValues, interval: 1)),
+                        leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: true, reservedSize: Display.graphTitleSpaceReserved, getTitlesWidget: getDateIndexValues)),
                         rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
                         topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false))
                     ),
