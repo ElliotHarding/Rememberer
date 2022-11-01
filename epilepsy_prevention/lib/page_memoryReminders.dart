@@ -382,7 +382,12 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
             Text(Notifications().epochMsToDate(widget.m_memory.m_notifications[iCustomNotification].m_notifyTime), style: Display.listItemTextStyleBlack)
           ),
         ),
-        SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
+        SizedBox(width: MediaQuery.of(context).size.width * 0.1, child:
+          TextButton(onPressed: () => onSelectCustomNotification(iCustomNotification), child:
+            Text("⚙", style: Display.listItemTextStyle)
+          )
+        ),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.1, child:
           TextButton(onPressed: () => onDeleteCustomNotification(iCustomNotification), child:
             Text("X", style: Display.listItemTextStyle)
           ),
