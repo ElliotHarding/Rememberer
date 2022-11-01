@@ -1,5 +1,6 @@
 import 'package:epilepsy_prevention/notifications.dart';
 import 'package:epilepsy_prevention/page_memoryReminders.dart';
+import 'package:epilepsy_prevention/page_multipleChoice.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/display.dart';
@@ -19,14 +20,11 @@ class PageMemoryState extends State<PageMemory>
   Memory m_oldMemory = Memory();
   bool m_bChangeNotifyTimes = false;
 
-  List<TextEditingController> m_falseAnswerTextEditControllers = [];
   final m_questionTextController = TextEditingController();
   final m_answerTextController = TextEditingController();
 
   void initState()
   {
-    initialFalseAnswerList();
-
     m_oldMemory = widget.m_memory;
 
     m_questionTextController.text = widget.m_memory.m_question;
@@ -109,14 +107,10 @@ class PageMemoryState extends State<PageMemory>
         Visibility(visible: widget.m_memory.m_bMultiChoice, child:
           Row(children: [
             Padding(padding: EdgeInsets.fromLTRB(headerLeftMargin * 2, 0, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
-              Text("Add:", style: Display.normalTextStyle, textAlign: TextAlign.left),
+              Text("Configure:", style: Display.normalTextStyle, textAlign: TextAlign.left),
             )),
-            TextButton(onPressed: addFalseAnswer, child: Text("+", style: Display.largeTextStyle, textAlign: TextAlign.center))
+            TextButton(onPressed: () => onPressMultiChoice(), child: Text("⚙", style: Display.largeTextStyle, textAlign: TextAlign.center))
         ])),
-
-        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Visibility(visible: widget.m_memory.m_bMultiChoice, child:
-          ListView.builder(itemCount: m_falseAnswerTextEditControllers.length, physics: const NeverScrollableScrollPhysics(), shrinkWrap: true, scrollDirection: Axis.vertical, itemBuilder: (context, i){ return genFalseAnswerWidget(context, i);}))
-        )),
 
         SizedBox(height: verticalSpacer),
 
@@ -147,13 +141,6 @@ class PageMemoryState extends State<PageMemory>
   {
     widget.m_memory.m_question = m_questionTextController.text;
     widget.m_memory.m_answer = m_answerTextController.text;
-
-    List<String> falseAnswers = [];
-    for(TextEditingController txtCtrllr in m_falseAnswerTextEditControllers)
-    {
-      falseAnswers.add(txtCtrllr.text);
-    }
-    widget.m_memory.m_falseAnswers = falseAnswers;
 
     final String validationResult = widget.m_memory.validate();
     if(validationResult != "Success")
@@ -213,6 +200,11 @@ class PageMemoryState extends State<PageMemory>
     m_bChangeNotifyTimes = true;
   }
 
+  void onPressMultiChoice() async
+  {
+    widget.m_memory.m_falseAnswers = await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMultipleChoices(m_previousMultiChoices: widget.m_memory.m_falseAnswers)));
+  }
+
   void setMultiChoice(bool? value)
   {
     if (value != null)
@@ -234,43 +226,5 @@ class PageMemoryState extends State<PageMemory>
         m_bChangeNotifyTimes = true;
       });
     }
-  }
-
-  void initialFalseAnswerList()
-  {
-    for(String falseAnswer in widget.m_memory.m_falseAnswers)
-    {
-      TextEditingController txtEditController = TextEditingController();
-      txtEditController.text = falseAnswer;
-      m_falseAnswerTextEditControllers.add(txtEditController);
-    }
-  }
-
-  void addFalseAnswer()
-  {
-    setState(() {
-      m_falseAnswerTextEditControllers.add(TextEditingController());
-    });
-  }
-
-  Widget genFalseAnswerWidget(BuildContext context, int iFalseAnswer)
-  {
-    return IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
-      Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-        SizedBox(width: MediaQuery.of(context).size.width * 0.76, child:
-          TextField(
-            decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter wrong answer.'),
-            style: Display.listItemTextStyleBlack,
-            controller: m_falseAnswerTextEditControllers[iFalseAnswer],
-            maxLines: null,
-          )
-        ),
-        SizedBox(width: MediaQuery.of(context).size.width * 0.14, child:
-          TextButton(onPressed: () { setState(() {
-            m_falseAnswerTextEditControllers.removeAt(iFalseAnswer);
-          });}, child: Text("X", style: Display.listItemTextStyle)),
-        )
-      ])
-    ));
   }
 }
