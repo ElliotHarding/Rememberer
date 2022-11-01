@@ -8,3 +8,5 @@ Look at deleteNotification in upcommingNotifications
 
 Memory page needs delete, save & cancel
 Also memoryReminders page
+
+score system for correct answers, stats on how well you're reminded

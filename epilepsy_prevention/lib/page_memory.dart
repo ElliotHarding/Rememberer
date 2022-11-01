@@ -85,15 +85,25 @@ class PageMemoryState extends State<PageMemory>
           )
         ])),
 
-        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+        Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, MediaQuery.of(context).size.height * 0.05, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
+          Text("Reminders:", style: Display.largeTextStyle, textAlign: TextAlign.left),
+        )),
 
-        Center(child:SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Row(children : [
-          Text("Reminders: ", style: Display.largeTextStyle, textAlign: TextAlign.left),
-          Checkbox(value: widget.m_memory.m_bNotificationsEnabled, onChanged: (bool? value) => onEnableNotificationsChanged(value)),
+        Row(children: [
+          Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.1, 0, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
+            Text("Enable:", style: Display.normalTextStyle, textAlign: TextAlign.left),
+          )),
+          Checkbox(value: widget.m_memory.m_bNotificationsEnabled, onChanged: (bool? value) => onEnableNotificationsChanged(value))
+        ]),
+
+        Row(children: [
+          Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.1, 0, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
+            Text("Configure:", style: Display.normalTextStyle, textAlign: TextAlign.left),
+          )),
           TextButton(onPressed: () => onPressReminders(context), child:
             Text("⚙", style: Display.largeTextStyle, textAlign: TextAlign.left)
           )
-        ]))),
+        ]),
 
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
@@ -228,7 +238,7 @@ class PageMemoryState extends State<PageMemory>
         SizedBox(width: MediaQuery.of(context).size.width * 0.76, child:
           TextField(
             decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter wrong answer.'),
-            style: Display.largeTextStyleBlack,
+            style: Display.listItemTextStyleBlack,
             controller: m_falseAnswerTextEditControllers[iFalseAnswer],
             maxLines: null,
           )
