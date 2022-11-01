@@ -2,6 +2,7 @@ import 'package:epilepsy_prevention/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_memory.dart';
+import 'package:epilepsy_prevention/display.dart';
 
 class PageUpcomingNotifications extends StatefulWidget
 {
@@ -27,11 +28,7 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
     return Scaffold(body:
       ListView(shrinkWrap: true, children: <Widget>[
 
-        const SizedBox(height: 30),
-
-        const Center(child: SizedBox(height: 50, child:
-          Text("Notifications", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.blue), textAlign: TextAlign.center),
-        )),
+        Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1), child: Center(child: Text("Notifications", style:Display.titleTextStyle, textAlign: TextAlign.center))),
 
         Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
           SizedBox(width: MediaQuery.of(context).size.width * 0.45, height: 35, child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -60,15 +57,15 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
     {
       widgets.add(Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
         SizedBox(width: MediaQuery.of(context).size.width * 0.5, child: TextButton(onPressed: () => onQuestionPressed(memNotification.m_memory), child:
-          Text(memNotification.m_memory.m_question, style: const TextStyle(fontSize: 20.0, color: Colors.blue)))
+          Text(memNotification.m_memory.m_question, style: Display.listItemTextStyle))
         ),
 
         SizedBox(width: MediaQuery.of(context).size.width * 0.4, child: TextButton(onPressed: () => onQuestionPressed(memNotification.m_memory), child:
-          Text(Notifications().epochMsToDate(memNotification.m_notificationTime), style: const TextStyle(fontSize: 20.0, color: Colors.blue)))
+          Text(Notifications().epochMsToDate(memNotification.m_notificationTime), style: Display.listItemTextStyle))
         ),
 
         SizedBox(width: MediaQuery.of(context).size.width * 0.1, child: TextButton(onPressed: () => onDeleteNotificationPressed(memNotification), child:
-          const Text("X"))
+          Text("X", style: Display.listItemTextStyle))
         )
       ]));
 
