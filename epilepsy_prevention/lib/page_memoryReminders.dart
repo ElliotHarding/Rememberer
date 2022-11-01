@@ -82,17 +82,17 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
             Text("Iteration goal: " + widget.m_notificationCountGoal.toString(), style: Display.largeTextStyle, textAlign: TextAlign.left),
           )),
 
-          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
+          SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
             Slider(value: widget.m_notificationCountGoal.toDouble(), min: 0, max: 25, onChanged: (newValue) => onNotificationCountGoalSliderChanged(newValue.toInt())
-          ))),
+          )),
 
           Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, 30, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
             Text("Start iteration: " + widget.m_notificationStartGoal.toString(), style: Display.largeTextStyle, textAlign: TextAlign.left),
           )),
 
-          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
+          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
             Slider(value: widget.m_notificationStartGoal.toDouble(), min: 0, max: widget.m_notificationCountGoal.toDouble(), onChanged: (newValue) => onCurrentIterationSliderChanged(newValue.toInt())
-          ))),
+          )),
         ]),
         )),
 
