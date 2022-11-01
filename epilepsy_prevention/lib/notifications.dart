@@ -179,7 +179,7 @@ class Notifications
     {
       minute = "0" + minute;
     }
-    return date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString() + " " + hour + ":" + minute;
+    return date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString().substring(2) + " " + hour + ":" + minute;
   }
 
 }
