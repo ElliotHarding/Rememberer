@@ -1,6 +1,7 @@
 import 'package:epilepsy_prevention/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
+import 'package:epilepsy_prevention/display.dart';
 
 class PageSettings extends StatefulWidget
 {
@@ -24,26 +25,26 @@ class PageSettingsState extends State<PageSettings>
         const Spacer(),
 
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-          const Text("Enable Notifications: ", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center),
+          Text("Enable Notifications: ", style: Display.largeTextStyle, textAlign: TextAlign.center),
           Checkbox(value: m_bNotificationsEnabled, onChanged: (bool? value) => setEnableNotifications(value))
         ]),
 
         const Spacer(),
 
         TextButton(onPressed: () => askDeleteAllMemories(), child:
-          const Text("Delete all memories", style: TextStyle(fontSize: 30.0, color: Colors.blue))
+          Text("Delete all memories", style: Display.largeTextStyle)
         ),
 
         const Spacer(),
 
         TextButton(onPressed: () => askDeleteAllNotifications(), child:
-          const Text("Delete all notifications", style: TextStyle(fontSize: 30.0, color: Colors.blue))
+          Text("Delete all notifications", style: Display.largeTextStyle)
         ),
 
         const Spacer(),
 
         TextButton(onPressed: () => askGenTestData(), child:
-          const Text("Generate test data", style: TextStyle(fontSize: 30.0, color: Colors.blue))
+          Text("Generate test data", style: Display.largeTextStyle)
         ),
 
         const Spacer()
@@ -104,11 +105,11 @@ class PageSettingsState extends State<PageSettings>
   {
     return AlertDialog(title: Text(title, style: const TextStyle(fontSize: 30.0, color: Colors.blue)), content: Text(content, style: const TextStyle(fontSize: 20.0, color: Colors.blue)), actions: <Widget>[
       TextButton(onPressed: () => denyAction(), child:
-        Text(denyText, style: const TextStyle(fontSize: 20.0, color: Colors.blue))
+        Text(denyText, style: Display.normalTextStyle)
       ),
 
       TextButton(onPressed: () => confirmAction(), child:
-        Text(confirmText, style: const TextStyle(fontSize: 20.0, color: Colors.blue))
+        Text(confirmText, style: Display.normalTextStyle)
       ),
     ],);
   }
