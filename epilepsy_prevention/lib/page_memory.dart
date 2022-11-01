@@ -228,7 +228,7 @@ class PageMemoryState extends State<PageMemory>
         SizedBox(width: MediaQuery.of(context).size.width * 0.76, child:
           TextField(
             decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter wrong answer.'),
-            style: Display.largeBlackTextStyle,
+            style: Display.largeTextStyleBlack,
             controller: m_falseAnswerTextEditControllers[iFalseAnswer],
             maxLines: null,
           )

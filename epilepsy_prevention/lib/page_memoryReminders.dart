@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
-import 'dart:math';
+import 'package:epilepsy_prevention/display.dart';
 import 'package:epilepsy_prevention/notifications.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -52,23 +52,23 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
         const SizedBox(height: 30),
 
-        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: const Text("Reminder frequency", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
+        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Text("Reminder frequency", style: Display.largeTextStyle, textAlign: TextAlign.left))),
 
         Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
-          DropdownButton(value: widget.m_memory.m_testFrequecy, onChanged: (String? selectedValue) => onFrequencyDropDownChanged(selectedValue), items: const [
-              DropdownMenuItem(value: "Never", child: Text("Never", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
-              DropdownMenuItem(value: "Rare", child: Text("Rare", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
-              DropdownMenuItem(value: "Occasionally", child: Text("Occasionally", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
-              DropdownMenuItem(value: "Frequently", child: Text("Frequently", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
-              DropdownMenuItem(value: "Custom", child: Text("Custom", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center)),
-              DropdownMenuItem(value: "Configure", child: Text("Configure", style: TextStyle(fontSize: 25, color: Colors.black), textAlign: TextAlign.center))
+          DropdownButton(value: widget.m_memory.m_testFrequecy, onChanged: (String? selectedValue) => onFrequencyDropDownChanged(selectedValue), items: [
+              DropdownMenuItem(value: "Never", child: Text("Never", style: Display.normalTextStyleBlack, textAlign: TextAlign.center)),
+              DropdownMenuItem(value: "Rare", child: Text("Rare", style: Display.normalTextStyleBlack, textAlign: TextAlign.center)),
+              DropdownMenuItem(value: "Occasionally", child: Text("Occasionally", style: Display.normalTextStyleBlack, textAlign: TextAlign.center)),
+              DropdownMenuItem(value: "Frequently", child: Text("Frequently", style: Display.normalTextStyleBlack, textAlign: TextAlign.center)),
+              DropdownMenuItem(value: "Custom", child: Text("Custom", style: Display.normalTextStyleBlack, textAlign: TextAlign.center)),
+              DropdownMenuItem(value: "Configure", child: Text("Configure", style: Display.normalTextStyleBlack, textAlign: TextAlign.center))
           ],
         ))),
 
         const SizedBox(height: 30),
 
         Visibility(visible: widget.m_memory.m_testFrequecy != "Never" && widget.m_memory.m_testFrequecy != "Custom", child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 190, child: ListView(physics: const NeverScrollableScrollPhysics(), children: <Widget>[
-          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Text("Iteration goal: " + widget.m_notificationCountGoal.toString(), style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Text("Iteration goal: " + widget.m_notificationCountGoal.toString(), style: Display.largeTextStyle, textAlign: TextAlign.left))),
 
           Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
             Slider(value: widget.m_notificationCountGoal.toDouble(), min: 0, max: 25, onChanged: (newValue) => onNotificationCountGoalSliderChanged(newValue.toInt())
@@ -76,7 +76,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
           const SizedBox(height: 30),
 
-          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Text("Start iteration: " + widget.m_notificationStartGoal.toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Text("Start iteration: " + widget.m_notificationStartGoal.toString(), style: Display.largeTextStyle, textAlign: TextAlign.left))),
 
           Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
             Slider(value: widget.m_notificationStartGoal.toDouble(), min: 0, max: widget.m_notificationCountGoal.toDouble(), onChanged: (newValue) => onCurrentIterationSliderChanged(newValue.toInt())
@@ -87,8 +87,8 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         Center(child: Visibility(visible: widget.m_memory.m_testFrequecy == "Custom", child: Column(children: [
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Row(children: [
-            const Text("Notifications: ", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left),
-            TextButton(onPressed: () => onAddCustomNotification(), child: const Text("+", style: TextStyle(fontSize: 30, color: Colors.blue))),
+            Text("Notifications: ", style: Display.largeTextStyle, textAlign: TextAlign.left),
+            TextButton(onPressed: () => onAddCustomNotification(), child: Text("+", style: Display.largeTextStyle)),
           ])),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
@@ -99,7 +99,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         Visibility(visible: widget.m_memory.m_testFrequecy == "Configure", child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 220, child: ListView(physics: const NeverScrollableScrollPhysics(), children: <Widget>[
           const SizedBox(height: 30),
 
-          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Text("Time: " + widget.m_configureTimeFrequency.toString(), style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Text("Time: " + widget.m_configureTimeFrequency.toString(), style: Display.largeTextStyle, textAlign: TextAlign.left))),
 
           Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
             Slider(value: widget.m_configureTimeFrequency.toDouble(), min: 10000, max: 9999999, onChanged: (newValue) => onConfigureTimeFrequencyChanged(newValue.toInt())
@@ -107,7 +107,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
           const SizedBox(height: 30),
 
-          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Text("Increment: " + widget.m_configureIncrement.toString(), style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left))),
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Text("Increment: " + widget.m_configureIncrement.toString(), style: Display.largeTextStyle, textAlign: TextAlign.left))),
 
           Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
             Slider(value: widget.m_configureIncrement.toDouble(), min: 1, max: 10, onChanged: (newValue) => onConfigureIncrementFactorChanged(newValue.toInt())
@@ -121,7 +121,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
             Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
 
               Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child:
-                const Text("Graph Timescale:", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
+                Text("Graph Timescale:", style: Display.largeTextStyle, textAlign: TextAlign.left)
               )),
 
               Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
@@ -165,9 +165,9 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         const SizedBox(height: 10),
 
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-          TextButton(onPressed: () => onCancel(), child: const Text("Cancel", style: TextStyle(fontSize: 30, color: Colors.blue))),
+          TextButton(onPressed: () => onCancel(), child: Text("Cancel", style: Display.largeTextStyle)),
 
-          TextButton(onPressed: () => onUpdate(), child: const Text("Update", style: TextStyle(fontSize: 30, color: Colors.blue)))
+          TextButton(onPressed: () => onUpdate(), child: Text("Update", style: Display.largeTextStyle))
         ]),
 
         const SizedBox(height: 10),
@@ -199,14 +199,14 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     }
 
     return SideTitleWidget(axisSide: meta.axisSide, child:
-      Text(timeStr, style: const TextStyle(color: Colors.blue, fontSize: 13))
+      Text(timeStr, style: Display.graphIndexStyle)
     );
   }
 
   Widget getIterationIndexValues(double value, TitleMeta meta)
   {
     return SideTitleWidget(axisSide: meta.axisSide, child:
-      Text(value.toInt().toString(), style: const TextStyle(color: Colors.blue, fontSize: 13))
+      Text(value.toInt().toString(), style: Display.graphIndexStyle)
     );
   }
 
@@ -362,12 +362,12 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
       Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
         SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
           TextButton(onPressed: () => onSelectCustomNotification(iCustomNotification), child:
-            Text(Notifications().epochMsToDate(widget.m_memory.m_notifications[iCustomNotification].m_notifyTime), style: const TextStyle(fontSize: 20, color: Colors.grey))
+            Text(Notifications().epochMsToDate(widget.m_memory.m_notifications[iCustomNotification].m_notifyTime), style: Display.normalTextStyleBlack)
           ),
         ),
         SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
           TextButton(onPressed: () => onDeleteCustomNotification(iCustomNotification), child:
-            const Text("X", style: TextStyle(fontSize: 20, color: Colors.grey))
+            Text("X", style: Display.normalTextStyle)
           ),
         )
       ])

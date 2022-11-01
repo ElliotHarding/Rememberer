@@ -11,9 +11,11 @@ class Display {
   static double menuPageTextSize = 0;
 
   //Accessible text styles (loaded after init)
+  static TextStyle graphIndexStyle = TextStyle();
   static TextStyle normalTextStyle = TextStyle();
+  static TextStyle normalTextStyleBlack = TextStyle();
   static TextStyle largeTextStyle = TextStyle();
-  static TextStyle largeBlackTextStyle = TextStyle();
+  static TextStyle largeTextStyleBlack = TextStyle();
 
   //Accessible text colors
   static MaterialColor normalTextColor = Colors.blue;
@@ -34,13 +36,15 @@ class Display {
     var appScreenWidth = screenWidth - leftPadding - rightPadding;
 
     final double unitWidthValue = appScreenWidth * 0.01;
-    smallTextSize = 4 * unitWidthValue;
+    smallTextSize = 3 * unitWidthValue;
     normalTextSize = 6 * unitWidthValue;
     largeTextSize = 7 * unitWidthValue;
     menuPageTextSize = 10 * unitWidthValue;
 
     normalTextStyle = TextStyle(fontSize: normalTextSize, color: normalTextColor);
+    normalTextStyleBlack = TextStyle(fontSize: normalTextSize, color: Colors.black);
     largeTextStyle = TextStyle(fontSize: largeTextSize, color: normalTextColor);
-    largeBlackTextStyle = TextStyle(fontSize: largeTextSize, color: Colors.black);
+    largeTextStyleBlack = TextStyle(fontSize: largeTextSize, color: Colors.black);
+    graphIndexStyle = TextStyle(fontSize: smallTextSize, color: Colors.blue);
   }
 }
