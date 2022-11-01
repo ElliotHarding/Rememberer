@@ -22,6 +22,7 @@ class PageMemoryReminders extends StatefulWidget
   int m_graphMinTime = 0;
   int m_graphViewIterationsCount = 0;
   List<ScatterSpot> m_graphDataPoints = [];
+  double m_graphTimeInterval = 1;
 
   @override
   State<PageMemoryReminders> createState() => PageMemoryRemindersState();
@@ -158,7 +159,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
                     titlesData: FlTitlesData(
                         show: true,
                         bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: true, reservedSize: Display.graphTitleSpaceReserved, getTitlesWidget: getIterationIndexValues, interval: 1)),
-                        leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: true, reservedSize: Display.graphTitleSpaceReserved, getTitlesWidget: getDateIndexValues)),
+                        leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: true, reservedSize: Display.graphTitleSpaceReserved, getTitlesWidget: getDateIndexValues, interval: widget.m_graphTimeInterval)),
                         rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
                         topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false))
                     ),
@@ -199,19 +200,19 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     var minutes = value.toInt() / 60000;
     if(minutes < 120 && minutes > -120)
     {
-      timeStr = minutes.toInt().toString() + " min";
+        timeStr = minutes.toInt().toString() + " M";
     }
     else
     {
       var hours = value.toInt() / 3600000;
       if(hours < 48 && hours > -48)
       {
-        timeStr = hours.toInt().toString() + " Hrs";
+        timeStr = hours.toInt().toString() + " H";
       }
       else
       {
         var days = hours / 24;
-        timeStr = days.toInt().toString() + " Days";
+        timeStr = days.toInt().toString() + " D";
       }
     }
 
@@ -250,6 +251,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         graphData.add(ScatterSpot(i.toDouble(), (notifyTimes[i-1] - nowMs).toDouble(), color: Colors.blue, radius: 5));
     }
 
+    widget.m_graphTimeInterval = widget.m_graphMaxTime / 10;
     widget.m_graphDataPoints = graphData;
   }
 
