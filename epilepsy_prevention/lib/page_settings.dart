@@ -103,7 +103,7 @@ class PageSettingsState extends State<PageSettings>
 
   AlertDialog promptDialog(String title, String content, String confirmText, String denyText, var confirmAction, var denyAction)
   {
-    return AlertDialog(title: Text(title, style: const TextStyle(fontSize: 30.0, color: Colors.blue)), content: Text(content, style: const TextStyle(fontSize: 20.0, color: Colors.blue)), actions: <Widget>[
+    return AlertDialog(title: Text(title, style: Display.largeTextStyle), content: Text(content, style: const TextStyle(fontSize: 20.0, color: Colors.blue)), actions: <Widget>[
       TextButton(onPressed: () => denyAction(), child:
         Text(denyText, style: Display.normalTextStyle)
       ),
