@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_test.dart';
 import 'package:epilepsy_prevention/page_home.dart';
+import 'package:epilepsy_prevention/display.dart';
 
 class PageOverdueTests extends StatefulWidget
 {
@@ -25,13 +26,7 @@ class PageOverdueTestsState extends State<PageOverdueTests>
     return WillPopScope(onWillPop: () async { Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome())); return true;}, child: Scaffold(body:
     ListView(shrinkWrap: true, children: <Widget>[
 
-      const SizedBox(height: 30),
-
-      const Center(child: SizedBox(height: 50, child:
-        Text("Overdue tests", style:
-          TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.blue), textAlign: TextAlign.center
-        ),
-      )),
+      Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1), child: Center(child: Text("Overdue tests", style:Display.titleTextStyle, textAlign: TextAlign.center))),
 
       SizedBox(width: MediaQuery.of(context).size.width, child:
         ListView(shrinkWrap: true, physics: const NeverScrollableScrollPhysics(), scrollDirection: Axis.vertical, children: m_overdueTestWidgets)
@@ -66,15 +61,15 @@ class PageOverdueTestsState extends State<PageOverdueTests>
   {
     return Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
       SizedBox(width: MediaQuery.of(context).size.width * 0.5, child: TextButton(onPressed: () => onTestPressed(memory), child:
-        Text(memory.m_question, style: const TextStyle(fontSize: 20.0, color: Colors.blue)))
+        Text(memory.m_question, style: Display.normalTextStyle))
       ),
 
       SizedBox(width: MediaQuery.of(context).size.width * 0.4, child: TextButton(onPressed: () => onTestPressed(memory), child:
-        Text(Notifications().epochMsToDate(notifyTime), style: const TextStyle(fontSize: 20.0, color: Colors.blue)))
+        Text(Notifications().epochMsToDate(notifyTime), style: Display.normalTextStyle))
       ),
 
       SizedBox(width: MediaQuery.of(context).size.width * 0.1, child: TextButton(onPressed: () => askDeleteTest(memory, notifyTime), child:
-        const Text("X"))
+        Text("X", style: Display.normalTextStyle))
       )
     ]);
   }
@@ -117,11 +112,11 @@ class PageOverdueTestsState extends State<PageOverdueTests>
   {
     return AlertDialog(title: Text(title, style: const TextStyle(fontSize: 30.0, color: Colors.blue)), content: Text(content, style: const TextStyle(fontSize: 20.0, color: Colors.blue)), actions: <Widget>[
       TextButton(onPressed: () => onKeepTest(), child:
-      Text(denyText, style: const TextStyle(fontSize: 20.0, color: Colors.blue))
+      Text(denyText, style: Display.normalTextStyle)
       ),
 
       TextButton(onPressed: () => onSetTestDone(memory, notifyTime), child:
-      Text(confirmText, style: const TextStyle(fontSize: 20.0, color: Colors.blue))
+      Text(confirmText, style: Display.normalTextStyle)
       ),
     ],);
   }

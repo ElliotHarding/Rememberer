@@ -16,6 +16,7 @@ class Display {
   static TextStyle normalTextStyleBlack = TextStyle();
   static TextStyle largeTextStyle = TextStyle();
   static TextStyle largeTextStyleBlack = TextStyle();
+  static TextStyle titleTextStyle = TextStyle();
 
   //Accessible text colors
   static MaterialColor normalTextColor = Colors.blue;
@@ -46,5 +47,6 @@ class Display {
     largeTextStyle = TextStyle(fontSize: largeTextSize, color: normalTextColor);
     largeTextStyleBlack = TextStyle(fontSize: largeTextSize, color: Colors.black);
     graphIndexStyle = TextStyle(fontSize: smallTextSize, color: Colors.blue);
+    titleTextStyle = TextStyle(fontSize: largeTextSize, fontWeight: FontWeight.bold, color: Colors.blue);
   }
 }
