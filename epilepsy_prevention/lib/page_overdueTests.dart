@@ -110,13 +110,13 @@ class PageOverdueTestsState extends State<PageOverdueTests>
 
   AlertDialog promptDialog(String title, String content, String confirmText, String denyText, Memory memory, int notifyTime)
   {
-    return AlertDialog(title: Text(title, style: Display.largeTextStyle), content: Text(content, style: const TextStyle(fontSize: 20.0, color: Colors.blue)), actions: <Widget>[
+    return AlertDialog(title: Text(title, style: Display.largeTextStyle), content: Text(content, style: Display.normalTextStyle), actions: <Widget>[
       TextButton(onPressed: () => onKeepTest(), child:
-      Text(denyText, style: TextStyle(fontSize: 20, color: Colors.blue))
+      Text(denyText, style: Display.cancelButtonTextStyle)
       ),
 
       TextButton(onPressed: () => onSetTestDone(memory, notifyTime), child:
-      Text(confirmText, style: TextStyle(fontSize: 20, color: Colors.blue))
+      Text(confirmText, style: Display.acceptButtonTextStyle)
       ),
     ],);
   }

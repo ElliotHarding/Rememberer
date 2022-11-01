@@ -5,6 +5,7 @@ import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_testResult.dart';
 import 'package:epilepsy_prevention/notifications.dart';
 import 'dart:math';
+import 'package:epilepsy_prevention/display.dart';
 
 class PageTest extends StatelessWidget
 {
@@ -70,13 +71,13 @@ class PageTest extends StatelessWidget
           const Spacer(),
 
           TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories())); }, child:
-            const Text("Memories", style: TextStyle(fontSize: 30, color: Colors.blue))
+            Text("Memories", style: Display.acceptButtonTextStyle)
           ),
 
           const Spacer(),
 
           TextButton(onPressed: () async { Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome())); }, child:
-            const Text("Home", style: TextStyle(fontSize: 30, color: Colors.blue))
+            Text("Home", style: Display.acceptButtonTextStyle)
           ),
 
           const Spacer()
@@ -123,7 +124,7 @@ class PageTest extends StatelessWidget
       Row(children: [
 
         SizedBox(width: MediaQuery.of(context).size.width * 0.75, child:
-          Text(option, style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
+          Text(option, style: Display.normalTextStyle, textAlign: TextAlign.left)
         ),
 
         Checkbox(value: false, onChanged: (bool? value) {

@@ -14,9 +14,12 @@ class Display {
   static TextStyle graphIndexStyle = TextStyle();
   static TextStyle listItemTextStyle = TextStyle();
   static TextStyle listItemTextStyleBlack = TextStyle();
+  static TextStyle normalTextStyle = TextStyle();
   static TextStyle largeTextStyle = TextStyle();
   static TextStyle largeTextStyleBlack = TextStyle();
   static TextStyle titleTextStyle = TextStyle();
+  static TextStyle acceptButtonTextStyle = TextStyle();
+  static TextStyle cancelButtonTextStyle = TextStyle();
 
   //Accessible text colors
   static MaterialColor normalTextColor = Colors.blue;
@@ -44,9 +47,16 @@ class Display {
 
     listItemTextStyle = TextStyle(fontSize: normalTextSize, color: normalTextColor);
     listItemTextStyleBlack = TextStyle(fontSize: normalTextSize, color: Colors.black);
+
+    normalTextStyle = TextStyle(fontSize: normalTextSize, color: normalTextColor);
     largeTextStyle = TextStyle(fontSize: largeTextSize, color: normalTextColor);
     largeTextStyleBlack = TextStyle(fontSize: largeTextSize, color: Colors.black);
+
     graphIndexStyle = TextStyle(fontSize: smallTextSize, color: Colors.blue);
+
     titleTextStyle = TextStyle(fontSize: largeTextSize, fontWeight: FontWeight.bold, color: Colors.blue);
+
+    acceptButtonTextStyle = TextStyle(fontSize: normalTextSize, color: Colors.blue);
+    cancelButtonTextStyle = TextStyle(fontSize: normalTextSize, color: Colors.blue);
   }
 }
