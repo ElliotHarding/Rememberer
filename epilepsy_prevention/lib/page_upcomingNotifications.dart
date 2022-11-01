@@ -30,12 +30,12 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
 
         Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1), child: Center(child: Text("Notifications", style:Display.titleTextStyle, textAlign: TextAlign.center))),
 
-        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
-          SizedBox(width: MediaQuery.of(context).size.width * 0.45, height: 35, child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
+        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
+          SizedBox(width: MediaQuery.of(context).size.width * 0.45, child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
             Text("Enabled only: ", style: Display.searchOptionTextStyle, textAlign: TextAlign.center),
             Checkbox(value: m_bEnabledOnly, onChanged: (bool? value) => onEnabledOnlyCheckboxChanged(value)),
           ])),
-          SizedBox(width: MediaQuery.of(context).size.width * 0.45, height: 35, child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
+          SizedBox(width: MediaQuery.of(context).size.width * 0.45, child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
             Text("Due only: ", style: Display.searchOptionTextStyle, textAlign: TextAlign.center),
             Checkbox(value: m_bDueOnly, onChanged: (bool? value) => onDueOnlyCheckboxChanged(value)),
           ])),
