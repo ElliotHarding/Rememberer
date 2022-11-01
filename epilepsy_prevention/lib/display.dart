@@ -18,6 +18,7 @@ class Display {
   static TextStyle largeTextStyle = TextStyle();
   static TextStyle largeTextStyleBlack = TextStyle();
   static TextStyle titleTextStyle = TextStyle();
+  static TextStyle menuPageTextStyle = TextStyle();
   static TextStyle miniNavButtonTextStyle = TextStyle();
   static TextStyle searchOptionTextStyle = TextStyle();
 
@@ -55,6 +56,7 @@ class Display {
     graphIndexStyle = TextStyle(fontSize: smallTextSize, color: Colors.blue);
 
     titleTextStyle = TextStyle(fontSize: largeTextSize, fontWeight: FontWeight.bold, color: Colors.blue);
+    menuPageTextStyle = TextStyle(fontSize: menuPageTextSize, color: Colors.blue);
 
     miniNavButtonTextStyle = TextStyle(fontSize: normalTextSize, color: Colors.blue);
 
