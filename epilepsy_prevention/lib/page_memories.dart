@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_memory.dart';
 import 'package:epilepsy_prevention/notifications.dart';
+import 'package:hive/hive.dart';
 
 class PageMemories extends StatefulWidget
 {
@@ -53,7 +54,7 @@ class PageMemoriesState extends State<PageMemories>
   {
     List<Widget> widgets = <Widget>[];
 
-    const TextStyle memoryWidgetTextStyle = TextStyle(fontSize: 30.0, color: Colors.blue);
+    const TextStyle memoryWidgetTextStyle = TextStyle(color: Colors.blue, fontSize: 30);
 
     var box = Database().getMemoryBox();
     if(box != null)
@@ -68,15 +69,15 @@ class PageMemoriesState extends State<PageMemories>
           ),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.15, child:
-            TextButton(onPressed: () => onMemoryPressed(memory), child:
-              const Text("⚙", style: memoryWidgetTextStyle)
-          )
+            TextButton(onPressed: () => onMemoryPressed(memory), child: const FittedBox(fit: BoxFit.fill, child:
+              Text("⚙", style: memoryWidgetTextStyle)
+          ))
           ),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.15, child:
-            TextButton(onPressed: () => onMemoryTestPressed(memory), child:
-              const Text("?", style: memoryWidgetTextStyle)
-          )
+            TextButton(onPressed: () => onMemoryTestPressed(memory), child: const FittedBox(fit: BoxFit.fill, child:
+              Text("?", style: memoryWidgetTextStyle)
+          ))
           )
         ]));
       }
