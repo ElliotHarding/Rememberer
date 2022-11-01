@@ -128,7 +128,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         ]),
         ),
 
-        Visibility(visible: widget.m_memory.m_testFrequecy != "Never", child: SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.7 + 125, child:
+        Visibility(visible: widget.m_memory.m_testFrequecy != "Never", child:
             Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
 
               Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, 30, 0, 0), child:
@@ -139,7 +139,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
                 Slider(value: widget.m_graphViewIterationsCount.toDouble(), min: 0, max: widget.m_memory.m_notifications.length.toDouble(), onChanged: (newValue) => onGraphViewIterationsSliderChanged(newValue.toInt())
               ))),
 
-              const SizedBox(height: 10),
+              const SizedBox(height: 30),
 
               SizedBox(width: MediaQuery.of(context).size.width * 0.95, height: MediaQuery.of(context).size.height * 0.7, child:
                 ScatterChart(
@@ -171,9 +171,9 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
                 ),
               ),
             ],),
-        )),
+        ),
 
-        const SizedBox(height: 10),
+        const SizedBox(height: 30),
 
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
           const Spacer(),
