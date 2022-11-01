@@ -2,6 +2,7 @@ import 'package:epilepsy_prevention/notifications.dart';
 import 'package:epilepsy_prevention/page_memoryReminders.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
+import 'package:epilepsy_prevention/display.dart';
 
 class PageMemory extends StatefulWidget
 {
@@ -43,7 +44,7 @@ class PageMemoryState extends State<PageMemory>
 
         Center(child: Column(children: [
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
-            const Text("Question", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
+            Text("Question", style: Display.largeTextStyle, textAlign: TextAlign.left)
           ),
           IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
             TextField(maxLines: null, decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a search question'), style: const TextStyle(fontSize: 30.0, color: Colors.black), controller: m_questionTextController)
@@ -54,11 +55,11 @@ class PageMemoryState extends State<PageMemory>
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
         Center(child: Column(children: [
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: const Text("Correct Answer", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)),
+          SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Text("Correct Answer", style: Display.largeTextStyle, textAlign: TextAlign.left)),
 
           IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: TextField(maxLines: null,
             decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a answer'),
-            style: const TextStyle(fontSize: 30.0, color: Colors.black),
+            style: TextStyle(fontSize: Display.normalTextSize, color: Colors.black),
             controller: m_answerTextController,
           ))),
         ])),
@@ -68,14 +69,14 @@ class PageMemoryState extends State<PageMemory>
         Center(child: Column(children: [
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Row(children: [
 
-            const Text("Multiple Choice: ", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left),
+            Text("Multiple Choice: ", style: Display.largeTextStyle, textAlign: TextAlign.left),
 
             Checkbox(value: widget.m_memory.m_bMultiChoice, onChanged: (bool? value) => setMultiChoice(value)),
 
             const Spacer(),
 
             Visibility(visible: widget.m_memory.m_bMultiChoice, child:
-              TextButton(onPressed: addFalseAnswer, child: const Text("+", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center))
+              TextButton(onPressed: addFalseAnswer, child: Text("+", style: Display.largeTextStyle, textAlign: TextAlign.center))
             )
           ])),
 
@@ -87,10 +88,10 @@ class PageMemoryState extends State<PageMemory>
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
         Center(child:SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Row(children : [
-          const Text("Reminders: ", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left),
+          Text("Reminders: ", style: Display.largeTextStyle, textAlign: TextAlign.left),
           Checkbox(value: widget.m_memory.m_bNotificationsEnabled, onChanged: (bool? value) => onEnableNotificationsChanged(value)),
           TextButton(onPressed: () => onPressReminders(context), child:
-            const Text("⚙", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
+            Text("⚙", style: Display.largeTextStyle, textAlign: TextAlign.left)
           )
         ]))),
 
@@ -99,11 +100,11 @@ class PageMemoryState extends State<PageMemory>
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
           const Spacer(),
 
-          TextButton(onPressed: () => onDelete(context), child: const Text("Delete", style: TextStyle(fontSize: 30, color: Colors.blue))),
+          TextButton(onPressed: () => onDelete(context), child: Text("Delete", style: Display.largeTextStyle)),
 
           const Spacer(),
 
-          TextButton(onPressed: () => onSave(context), child: const Text("Save", style: TextStyle(fontSize: 30, color: Colors.blue))),
+          TextButton(onPressed: () => onSave(context), child: Text("Save", style: Display.largeTextStyle)),
 
           const Spacer()
         ]),
@@ -224,18 +225,18 @@ class PageMemoryState extends State<PageMemory>
   {
     return IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
       Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-        SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
+        SizedBox(width: MediaQuery.of(context).size.width * 0.76, child:
           TextField(
             decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter wrong answer.'),
-            style: const TextStyle(fontSize: 30, color: Colors.black),
+            style: Display.largeBlackTextStyle,
             controller: m_falseAnswerTextEditControllers[iFalseAnswer],
             maxLines: null,
           )
         ),
-        SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
+        SizedBox(width: MediaQuery.of(context).size.width * 0.14, child:
           TextButton(onPressed: () { setState(() {
             m_falseAnswerTextEditControllers.removeAt(iFalseAnswer);
-          });}, child: const Text("X", style: TextStyle(fontSize: 30, color: Colors.black))),
+          });}, child: Text("X", style: Display.normalTextStyle)),
         )
       ])
     ));

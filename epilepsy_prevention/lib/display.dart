@@ -12,6 +12,8 @@ class Display {
 
   //Accessible text styles (loaded after init)
   static TextStyle normalTextStyle = TextStyle();
+  static TextStyle largeTextStyle = TextStyle();
+  static TextStyle largeBlackTextStyle = TextStyle();
 
   //Accessible text colors
   static MaterialColor normalTextColor = Colors.blue;
@@ -38,5 +40,7 @@ class Display {
     menuPageTextSize = 10 * unitWidthValue;
 
     normalTextStyle = TextStyle(fontSize: normalTextSize, color: normalTextColor);
+    largeTextStyle = TextStyle(fontSize: largeTextSize, color: normalTextColor);
+    largeBlackTextStyle = TextStyle(fontSize: largeTextSize, color: Colors.black);
   }
 }
