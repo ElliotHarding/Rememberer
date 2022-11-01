@@ -165,9 +165,15 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         const SizedBox(height: 10),
 
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+          const Spacer(),
+
           TextButton(onPressed: () => onCancel(), child: Text("Cancel", style: Display.miniNavButtonTextStyle)),
 
-          TextButton(onPressed: () => onUpdate(), child: Text("Update", style: Display.miniNavButtonTextStyle))
+          const Spacer(),
+
+          TextButton(onPressed: () => onUpdate(), child: Text("Update", style: Display.miniNavButtonTextStyle)),
+
+          const Spacer()
         ]),
 
         const SizedBox(height: 10),
