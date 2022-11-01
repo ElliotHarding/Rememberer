@@ -69,15 +69,15 @@ class PageMemoriesState extends State<PageMemories>
           ),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.15, child:
-            TextButton(onPressed: () => onMemoryPressed(memory), child: const FittedBox(fit: BoxFit.fill, child:
-              Text("⚙", style: memoryWidgetTextStyle)
-          ))
+            TextButton(onPressed: () => onMemoryPressed(memory), child:
+              const Text("⚙", style: memoryWidgetTextStyle)
+            )
           ),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.15, child:
-            TextButton(onPressed: () => onMemoryTestPressed(memory), child: const FittedBox(fit: BoxFit.fill, child:
-              Text("?", style: memoryWidgetTextStyle)
-          ))
+            TextButton(onPressed: () => onMemoryTestPressed(memory), child:
+              const Text("?", style: memoryWidgetTextStyle)
+            )
           )
         ]));
       }
