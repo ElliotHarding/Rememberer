@@ -22,25 +22,23 @@ class PageMemoriesState extends State<PageMemories>
     Notifications.setupNotificationActionListener(context);
 
     m_memoryWidgets = getMemoryWidgets();
-
-    const String titleString = "Memories";
-    const TextStyle titleTextStyle = TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: Colors.blue);
-    final double titleHeight = getTextHeight(titleString, titleTextStyle) * 2;
     
     return WillPopScope(onWillPop: () async { Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome())); return true;}, child: Scaffold(body:
       ListView(shrinkWrap: true, children: <Widget>[
 
-        SizedBox(width: MediaQuery.of(context).size.width, height: titleHeight, child:
+        SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.2, child:
           Row(children: [
             SizedBox(width: MediaQuery.of(context).size.width * 0.1),
-            SizedBox(width: MediaQuery.of(context).size.width * 0.6, child:
-              const Text(titleString, style: titleTextStyle, textAlign: TextAlign.left)
+            SizedBox(width: MediaQuery.of(context).size.width * 0.6, child: const FittedBox(fit: BoxFit.fill, child:
+              Align(alignment: Alignment.centerLeft, child: Text("Memories", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue), textAlign: TextAlign.left))
+            )),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.1),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.1, child:
+              TextButton(onPressed: () => gotoAddNewMemory(), child: Align(alignment: Alignment.centerRight, child: SizedBox(width: MediaQuery.of(context).size.width * 0.1, child:
+                const FittedBox(fit: BoxFit.fill, child: Text("+", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue), textAlign: TextAlign.right)
+              )))),
             ),
-            SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
-              TextButton(onPressed: () => gotoAddNewMemory(), child: const Align(alignment: Alignment.centerRight, child:
-                Text("+", style: titleTextStyle, textAlign: TextAlign.right)
-              )),
-            )
+            SizedBox(width: MediaQuery.of(context).size.width * 0.1)
           ])
         ),
 
@@ -49,11 +47,6 @@ class PageMemoriesState extends State<PageMemories>
       )
     );
    }
-
-  double getTextHeight(String textStr, TextStyle textStyle)
-  {
-    return (TextPainter(text: TextSpan(text: textStr, style: textStyle), maxLines: 1, textDirection: TextDirection.ltr)..layout(minWidth: 0, maxWidth: double.infinity)).height;
-  }
 
   List<Widget> getMemoryWidgets()
   {
