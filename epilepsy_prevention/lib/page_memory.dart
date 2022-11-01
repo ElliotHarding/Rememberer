@@ -37,10 +37,13 @@ class PageMemoryState extends State<PageMemory>
   {
     Notifications.setupNotificationActionListener(context);
 
+    final double headerLeftMargin = MediaQuery.of(context).size.width * 0.05;
+    final double verticalSpacer = MediaQuery.of(context).size.height * 0.05;
+
     return Scaffold(body: SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child:
       ListView(shrinkWrap: true, children: <Widget>[
 
-        Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, MediaQuery.of(context).size.height * 0.05, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
+        Padding(padding: EdgeInsets.fromLTRB(headerLeftMargin, verticalSpacer, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
           Text("Question:", style: Display.largeTextStyle, textAlign: TextAlign.left),
         )),
 
@@ -48,7 +51,7 @@ class PageMemoryState extends State<PageMemory>
           TextField(maxLines: null, decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a search question'), style: Display.largeTextStyleBlack, controller: m_questionTextController)
         ))),
 
-        Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, MediaQuery.of(context).size.height * 0.05, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
+        Padding(padding: EdgeInsets.fromLTRB(headerLeftMargin, verticalSpacer, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
           Text("Correct Answer:", style: Display.largeTextStyle, textAlign: TextAlign.left),
         )),
 
@@ -59,12 +62,12 @@ class PageMemoryState extends State<PageMemory>
             controller: m_answerTextController,
         )))),
 
-        Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, MediaQuery.of(context).size.height * 0.05, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
+        Padding(padding: EdgeInsets.fromLTRB(headerLeftMargin, verticalSpacer, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
           Text("Multiple Choice:", style: Display.largeTextStyle, textAlign: TextAlign.left),
         )),
 
         Row(children: [
-          Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.1, 0, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
+          Padding(padding: EdgeInsets.fromLTRB(headerLeftMargin * 2, 0, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
             Text("Enable:", style: Display.normalTextStyle, textAlign: TextAlign.left),
           )),
           Checkbox(value: widget.m_memory.m_bMultiChoice, onChanged: (bool? value) => setMultiChoice(value))
@@ -72,7 +75,7 @@ class PageMemoryState extends State<PageMemory>
 
         Visibility(visible: widget.m_memory.m_bMultiChoice, child:
           Row(children: [
-            Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.1, 0, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
+            Padding(padding: EdgeInsets.fromLTRB(headerLeftMargin * 2, 0, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
               Text("Add:", style: Display.normalTextStyle, textAlign: TextAlign.left),
             )),
             TextButton(onPressed: addFalseAnswer, child: Text("+", style: Display.largeTextStyle, textAlign: TextAlign.center))
@@ -82,19 +85,19 @@ class PageMemoryState extends State<PageMemory>
           ListView.builder(itemCount: m_falseAnswerTextEditControllers.length, physics: const NeverScrollableScrollPhysics(), shrinkWrap: true, scrollDirection: Axis.vertical, itemBuilder: (context, i){ return genFalseAnswerWidget(context, i);}))
         )),
 
-        Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, MediaQuery.of(context).size.height * 0.05, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
+        Padding(padding: EdgeInsets.fromLTRB(headerLeftMargin, verticalSpacer, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
           Text("Reminders:", style: Display.largeTextStyle, textAlign: TextAlign.left),
         )),
 
         Row(children: [
-          Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.1, 0, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
+          Padding(padding: EdgeInsets.fromLTRB(headerLeftMargin * 2, 0, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
             Text("Enable:", style: Display.normalTextStyle, textAlign: TextAlign.left),
           )),
           Checkbox(value: widget.m_memory.m_bNotificationsEnabled, onChanged: (bool? value) => onEnableNotificationsChanged(value))
         ]),
 
         Row(children: [
-          Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.1, 0, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
+          Padding(padding: EdgeInsets.fromLTRB(headerLeftMargin * 2, 0, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
             Text("Configure:", style: Display.normalTextStyle, textAlign: TextAlign.left),
           )),
           TextButton(onPressed: () => onPressReminders(context), child:
@@ -102,7 +105,7 @@ class PageMemoryState extends State<PageMemory>
           )
         ]),
 
-        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+        SizedBox(height: verticalSpacer),
 
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
           const Spacer(),
