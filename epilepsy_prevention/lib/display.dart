@@ -39,18 +39,18 @@ class Display {
 
     final double unitWidthValue = appScreenWidth * 0.01;
 
-    listItemTextStyle = TextStyle(fontSize: 3.5 * unitWidthValue, color: normalTextColor);
-    listItemTextStyleBlack = TextStyle(fontSize: 3.5 * unitWidthValue, color: Colors.black);
+    listItemTextStyle = TextStyle(fontSize: 5 * unitWidthValue, color: normalTextColor);
+    listItemTextStyleBlack = TextStyle(fontSize: 5 * unitWidthValue, color: Colors.black);
 
     normalTextStyle = TextStyle(fontSize: 5 * unitWidthValue, color: normalTextColor);
-    largeTextStyle = TextStyle(fontSize: 7 * unitWidthValue, color: normalTextColor);
-    largeTextStyleBlack = TextStyle(fontSize: 7 * unitWidthValue, color: Colors.black);
+    largeTextStyle = TextStyle(fontSize: 6 * unitWidthValue, color: normalTextColor);
+    largeTextStyleBlack = TextStyle(fontSize: 6 * unitWidthValue, color: Colors.black);
 
     graphIndexStyle = TextStyle(fontSize: 3 * unitWidthValue, color: Colors.blue);
     graphTitleSpaceReserved = 3 * unitWidthValue * 5.5;
 
     titleTextStyle = TextStyle(fontSize: 7 * unitWidthValue, fontWeight: FontWeight.bold, color: Colors.blue);
-    menuPageTextStyle = TextStyle(fontSize: 10 * unitWidthValue, color: Colors.blue);
+    menuPageTextStyle = TextStyle(fontSize: 9 * unitWidthValue, color: Colors.blue);
 
     miniNavButtonTextStyle = TextStyle(fontSize: 6 * unitWidthValue, color: Colors.blue);
 

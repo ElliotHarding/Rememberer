@@ -47,7 +47,7 @@ class PageMemoryState extends State<PageMemory>
             Text("Question", style: Display.largeTextStyle, textAlign: TextAlign.left)
           ),
           IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
-            TextField(maxLines: null, decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a search question'), style: const TextStyle(fontSize: 30.0, color: Colors.black), controller: m_questionTextController)
+            TextField(maxLines: null, decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a search question'), style: Display.largeTextStyleBlack, controller: m_questionTextController)
           ))
           ])
         ),
