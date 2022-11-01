@@ -13,7 +13,7 @@ class Display {
   //Accessible text styles (loaded after init)
   static TextStyle graphIndexStyle = TextStyle();
   static TextStyle normalTextStyle = TextStyle();
-  static TextStyle normalTextStyleBlack = TextStyle();
+  static TextStyle listItemTextStyleBlack = TextStyle();
   static TextStyle largeTextStyle = TextStyle();
   static TextStyle largeTextStyleBlack = TextStyle();
   static TextStyle titleTextStyle = TextStyle();
@@ -43,7 +43,7 @@ class Display {
     menuPageTextSize = 10 * unitWidthValue;
 
     normalTextStyle = TextStyle(fontSize: normalTextSize, color: normalTextColor);
-    normalTextStyleBlack = TextStyle(fontSize: normalTextSize, color: Colors.black);
+    listItemTextStyleBlack = TextStyle(fontSize: normalTextSize, color: Colors.black);
     largeTextStyle = TextStyle(fontSize: largeTextSize, color: normalTextColor);
     largeTextStyleBlack = TextStyle(fontSize: largeTextSize, color: Colors.black);
     graphIndexStyle = TextStyle(fontSize: smallTextSize, color: Colors.blue);

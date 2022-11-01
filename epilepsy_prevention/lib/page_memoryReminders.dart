@@ -56,12 +56,12 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
         Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
           DropdownButton(value: widget.m_memory.m_testFrequecy, onChanged: (String? selectedValue) => onFrequencyDropDownChanged(selectedValue), items: [
-              DropdownMenuItem(value: "Never", child: Text("Never", style: Display.normalTextStyleBlack, textAlign: TextAlign.center)),
-              DropdownMenuItem(value: "Rare", child: Text("Rare", style: Display.normalTextStyleBlack, textAlign: TextAlign.center)),
-              DropdownMenuItem(value: "Occasionally", child: Text("Occasionally", style: Display.normalTextStyleBlack, textAlign: TextAlign.center)),
-              DropdownMenuItem(value: "Frequently", child: Text("Frequently", style: Display.normalTextStyleBlack, textAlign: TextAlign.center)),
-              DropdownMenuItem(value: "Custom", child: Text("Custom", style: Display.normalTextStyleBlack, textAlign: TextAlign.center)),
-              DropdownMenuItem(value: "Configure", child: Text("Configure", style: Display.normalTextStyleBlack, textAlign: TextAlign.center))
+              DropdownMenuItem(value: "Never", child: Text("Never", style: Display.listItemTextStyleBlack, textAlign: TextAlign.center)),
+              DropdownMenuItem(value: "Rare", child: Text("Rare", style: Display.listItemTextStyleBlack, textAlign: TextAlign.center)),
+              DropdownMenuItem(value: "Occasionally", child: Text("Occasionally", style: Display.listItemTextStyleBlack, textAlign: TextAlign.center)),
+              DropdownMenuItem(value: "Frequently", child: Text("Frequently", style: Display.listItemTextStyleBlack, textAlign: TextAlign.center)),
+              DropdownMenuItem(value: "Custom", child: Text("Custom", style: Display.listItemTextStyleBlack, textAlign: TextAlign.center)),
+              DropdownMenuItem(value: "Configure", child: Text("Configure", style: Display.listItemTextStyleBlack, textAlign: TextAlign.center))
           ],
         ))),
 
@@ -362,7 +362,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
       Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
         SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
           TextButton(onPressed: () => onSelectCustomNotification(iCustomNotification), child:
-            Text(Notifications().epochMsToDate(widget.m_memory.m_notifications[iCustomNotification].m_notifyTime), style: Display.normalTextStyleBlack)
+            Text(Notifications().epochMsToDate(widget.m_memory.m_notifications[iCustomNotification].m_notifyTime), style: Display.listItemTextStyleBlack)
           ),
         ),
         SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
