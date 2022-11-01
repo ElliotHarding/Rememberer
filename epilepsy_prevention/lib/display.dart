@@ -1,20 +1,20 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class Display {
   static final Display _m_display = Display._internal();
 
   //Accessible text sizes (loaded after init)
-  double smallTextSize = 0;
-  double normalTextSize = 0;
-  double largeTextSize = 0;
-  double menuPageTextSize = 0;
+  static double smallTextSize = 0;
+  static double normalTextSize = 0;
+  static double largeTextSize = 0;
+  static double menuPageTextSize = 0;
 
   //Accessible text styles (loaded after init)
-  TextStyle normalTextStyle = TextStyle();
+  static TextStyle normalTextStyle = TextStyle();
 
   //Accessible text colors
-  MaterialColor normalTextColor = Colors.blue;
+  static MaterialColor normalTextColor = Colors.blue;
 
   factory Display()
   {
@@ -23,9 +23,15 @@ class Display {
 
   Display._internal();
 
-  void init(BuildContext context)
+  void init()
   {
-    final double unitWidthValue = MediaQuery.of(context).size.width * 0.01;
+    var screenWidth = window.physicalSize.width / window.devicePixelRatio;
+    var leftPadding = window.padding.left / window.devicePixelRatio;
+    var rightPadding = window.padding.right / window.devicePixelRatio;
+
+    var appScreenWidth = screenWidth - leftPadding - rightPadding;
+
+    final double unitWidthValue = appScreenWidth * 0.01;
     smallTextSize = 4 * unitWidthValue;
     normalTextSize = 6 * unitWidthValue;
     largeTextSize = 7 * unitWidthValue;

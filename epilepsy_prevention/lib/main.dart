@@ -19,6 +19,9 @@ void main() async {
   var notifications = Notifications();
   await notifications.init();
 
+  //Setup display settings
+  Display().init();
+
   //Run app
   runApp(App(notifications.getNotificationPayload()));
 }
@@ -32,8 +35,6 @@ class App extends StatelessWidget
   @override
   Widget build(BuildContext context)
   {
-    Display().init(context);
-
     //Comming from notification
     if(_m_notificationPayload != null) {
       var database = Database();
