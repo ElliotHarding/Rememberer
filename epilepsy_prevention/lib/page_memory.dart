@@ -105,6 +105,19 @@ class PageMemoryState extends State<PageMemory>
           )
         ]),
 
+        Padding(padding: EdgeInsets.fromLTRB(headerLeftMargin, verticalSpacer, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
+          Text("Stats:", style: Display.largeTextStyle, textAlign: TextAlign.left),
+        )),
+
+        Row(children: [
+          Padding(padding: EdgeInsets.fromLTRB(headerLeftMargin * 2, 0, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
+            Text("View stats", style: Display.normalTextStyle, textAlign: TextAlign.left),
+          )),
+          TextButton(onPressed: () => onPressReminders(), child:
+            Text("⚙", style: Display.largeTextStyle, textAlign: TextAlign.left)
+          )
+        ]),
+
         SizedBox(height: verticalSpacer),
 
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
