@@ -42,14 +42,26 @@ class App extends StatelessWidget
       if (mem != null) {
         return MaterialApp(
             debugShowCheckedModeBanner: false,
+            builder: (BuildContext context, Widget? child) {
+              return MediaQuery(
+                data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0), //set desired text scale factor here
+                child: child!,
+              );
+            },
             home: PageTest(mem, const PageHome())
         );
       }
     }
 
-    return const MaterialApp(
+    return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: PageHome()
+        builder: (BuildContext context, Widget? child) {
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0), //set desired text scale factor here
+            child: child!,
+          );
+        },
+        home: const PageHome()
     );
   }
 }
