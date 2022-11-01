@@ -100,7 +100,7 @@ class PageMemoryState extends State<PageMemory>
           Padding(padding: EdgeInsets.fromLTRB(headerLeftMargin * 2, 0, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
             Text("Configure:", style: Display.normalTextStyle, textAlign: TextAlign.left),
           )),
-          TextButton(onPressed: () => onPressReminders(context), child:
+          TextButton(onPressed: () => onPressReminders(), child:
             Text("⚙", style: Display.largeTextStyle, textAlign: TextAlign.left)
           )
         ]),
@@ -110,15 +110,15 @@ class PageMemoryState extends State<PageMemory>
         Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
           const Spacer(),
 
-          TextButton(onPressed: () => onDelete(context), child: Text("Delete", style: Display.miniNavButtonTextStyle)),
+          TextButton(onPressed: () => onDelete(), child: Text("Delete", style: Display.miniNavButtonTextStyle)),
 
           const Spacer(),
 
-          TextButton(onPressed: () => onCancel(context), child: Text("|Cancel|", style: Display.miniNavButtonTextStyle)),
+          TextButton(onPressed: () => onCancel(), child: Text("|Cancel|", style: Display.miniNavButtonTextStyle)),
 
           const Spacer(),
 
-          TextButton(onPressed: () => onSave(context), child: Text("Save", style: Display.miniNavButtonTextStyle)),
+          TextButton(onPressed: () => onSave(), child: Text("Save", style: Display.miniNavButtonTextStyle)),
 
           const Spacer()
         ]),
@@ -151,7 +151,7 @@ class PageMemoryState extends State<PageMemory>
     return true;
   }
 
-  void onSave(BuildContext context) async
+  void onSave() async
   {
     if(!getMemorySettingsAndValidate(context))
     {
@@ -176,7 +176,7 @@ class PageMemoryState extends State<PageMemory>
     Navigator.of(context).pop();
   }
 
-  void onDelete(BuildContext context)
+  void onDelete()
   {
     if (widget.m_memory.key != null)
     {
@@ -189,12 +189,12 @@ class PageMemoryState extends State<PageMemory>
     Navigator.of(context).pop();
   }
 
-  void onCancel(BuildContext context)
+  void onCancel()
   {
     Navigator.of(context).pop();
   }
 
-  void onPressReminders(BuildContext context) async
+  void onPressReminders() async
   {
     widget.m_memory = await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemoryReminders(m_memory: widget.m_memory)));
     m_bChangeNotifyTimes = true;
