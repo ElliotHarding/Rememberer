@@ -1,5 +1,3 @@
-
-import 'package:flutter/cupertino.dart';
 import 'package:epilepsy_prevention/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/display.dart';

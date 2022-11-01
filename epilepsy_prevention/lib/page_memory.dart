@@ -1,6 +1,7 @@
 import 'package:epilepsy_prevention/notifications.dart';
 import 'package:epilepsy_prevention/page_memoryReminders.dart';
 import 'package:epilepsy_prevention/page_multipleChoice.dart';
+import 'package:epilepsy_prevention/page_stats.dart';
 import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/display.dart';
@@ -68,7 +69,7 @@ class PageMemoryState extends State<PageMemory>
           Padding(padding: EdgeInsets.fromLTRB(headerLeftMargin * 2, 0, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
             Text("View stats", style: Display.normalTextStyle, textAlign: TextAlign.left),
           )),
-          TextButton(onPressed: () => onPressReminders(), child:
+          TextButton(onPressed: () => onPressStats(), child:
             Text("⚙", style: Display.largeTextStyle, textAlign: TextAlign.left)
           )
         ]),
@@ -198,6 +199,11 @@ class PageMemoryState extends State<PageMemory>
   {
     widget.m_memory = await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemoryReminders(m_memory: widget.m_memory)));
     m_bChangeNotifyTimes = true;
+  }
+
+  void onPressStats() async
+  {
+    await Navigator.push(context, MaterialPageRoute(builder: (context) => PageStats(m_memory: widget.m_memory)));
   }
 
   void onPressMultiChoice() async
