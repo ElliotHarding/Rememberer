@@ -56,11 +56,11 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
     for(MemoryAndNotification memNotification in notifications)
     {
       widgets.add(Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
-        SizedBox(width: MediaQuery.of(context).size.width * 0.5, child: TextButton(onPressed: () => onQuestionPressed(memNotification.m_memory), child:
+        SizedBox(width: MediaQuery.of(context).size.width * 0.45, child: TextButton(onPressed: () => onQuestionPressed(memNotification.m_memory), child:
           Text(memNotification.m_memory.m_question, style: Display.listItemTextStyle))
         ),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.4, child: TextButton(onPressed: () => onQuestionPressed(memNotification.m_memory), child:
+        SizedBox(width: MediaQuery.of(context).size.width * 0.45, child: TextButton(onPressed: () => onQuestionPressed(memNotification.m_memory), child:
           Text(Notifications().epochMsToDate(memNotification.m_notificationTime), style: Display.listItemTextStyle))
         ),
 
