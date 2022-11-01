@@ -40,50 +40,47 @@ class PageMemoryState extends State<PageMemory>
     return Scaffold(body: SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child:
       ListView(shrinkWrap: true, children: <Widget>[
 
-        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+        Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, MediaQuery.of(context).size.height * 0.05, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
+          Text("Question:", style: Display.largeTextStyle, textAlign: TextAlign.left),
+        )),
 
-        Center(child: Column(children: [
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
-            Text("Question", style: Display.largeTextStyle, textAlign: TextAlign.left)
-          ),
-          IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
-            TextField(maxLines: null, decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a search question'), style: Display.largeTextStyleBlack, controller: m_questionTextController)
-          ))
-          ])
-        ),
+        Center(child: IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
+          TextField(maxLines: null, decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a search question'), style: Display.largeTextStyleBlack, controller: m_questionTextController)
+        ))),
 
-        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+        Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, MediaQuery.of(context).size.height * 0.05, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
+          Text("Correct Answer:", style: Display.largeTextStyle, textAlign: TextAlign.left),
+        )),
 
-        Center(child: Column(children: [
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Text("Correct Answer", style: Display.largeTextStyle, textAlign: TextAlign.left)),
-
-          IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: TextField(maxLines: null,
+        Center(child: IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
+          TextField(maxLines: null,
             decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a answer'),
             style: Display.largeTextStyleBlack,
             controller: m_answerTextController,
-          ))),
+        )))),
+
+        Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, MediaQuery.of(context).size.height * 0.05, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
+          Text("Multiple Choice:", style: Display.largeTextStyle, textAlign: TextAlign.left),
+        )),
+
+        Row(children: [
+          Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.1, 0, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
+            Text("Enable:", style: Display.normalTextStyle, textAlign: TextAlign.left),
+          )),
+          Checkbox(value: widget.m_memory.m_bMultiChoice, onChanged: (bool? value) => setMultiChoice(value))
+        ]),
+
+        Visibility(visible: widget.m_memory.m_bMultiChoice, child:
+          Row(children: [
+            Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.1, 0, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
+              Text("Add:", style: Display.normalTextStyle, textAlign: TextAlign.left),
+            )),
+            TextButton(onPressed: addFalseAnswer, child: Text("+", style: Display.largeTextStyle, textAlign: TextAlign.center))
         ])),
 
-        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-
-        Center(child: Column(children: [
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Row(children: [
-
-            Text("Multiple Choice: ", style: Display.largeTextStyle, textAlign: TextAlign.left),
-
-            Checkbox(value: widget.m_memory.m_bMultiChoice, onChanged: (bool? value) => setMultiChoice(value)),
-
-            const Spacer(),
-
-            Visibility(visible: widget.m_memory.m_bMultiChoice, child:
-              TextButton(onPressed: addFalseAnswer, child: Text("+", style: Display.largeTextStyle, textAlign: TextAlign.center))
-            )
-          ])),
-
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Visibility(visible: widget.m_memory.m_bMultiChoice, child:
-            ListView.builder(itemCount: m_falseAnswerTextEditControllers.length, physics: const NeverScrollableScrollPhysics(), shrinkWrap: true, scrollDirection: Axis.vertical, itemBuilder: (context, i){ return genFalseAnswerWidget(context, i);}))
-          )
-        ])),
+        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Visibility(visible: widget.m_memory.m_bMultiChoice, child:
+          ListView.builder(itemCount: m_falseAnswerTextEditControllers.length, physics: const NeverScrollableScrollPhysics(), shrinkWrap: true, scrollDirection: Axis.vertical, itemBuilder: (context, i){ return genFalseAnswerWidget(context, i);}))
+        )),
 
         Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, MediaQuery.of(context).size.height * 0.05, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
           Text("Reminders:", style: Display.largeTextStyle, textAlign: TextAlign.left),
