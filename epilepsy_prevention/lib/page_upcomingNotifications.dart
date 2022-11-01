@@ -32,11 +32,11 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
 
         Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 35, child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
           SizedBox(width: MediaQuery.of(context).size.width * 0.45, height: 35, child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
-            const Text("Enabled only: ", style: TextStyle(fontSize: 20, color: Colors.blue), textAlign: TextAlign.center),
+            Text("Enabled only: ", style: Display.searchOptionTextStyle, textAlign: TextAlign.center),
             Checkbox(value: m_bEnabledOnly, onChanged: (bool? value) => onEnabledOnlyCheckboxChanged(value)),
           ])),
           SizedBox(width: MediaQuery.of(context).size.width * 0.45, height: 35, child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
-            const Text("Due only: ", style: TextStyle(fontSize: 20, color: Colors.blue), textAlign: TextAlign.center),
+            Text("Due only: ", style: Display.searchOptionTextStyle, textAlign: TextAlign.center),
             Checkbox(value: m_bDueOnly, onChanged: (bool? value) => onDueOnlyCheckboxChanged(value)),
           ])),
         ]))),

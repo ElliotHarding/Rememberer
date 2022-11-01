@@ -19,6 +19,7 @@ class Display {
   static TextStyle largeTextStyleBlack = TextStyle();
   static TextStyle titleTextStyle = TextStyle();
   static TextStyle miniNavButtonTextStyle = TextStyle();
+  static TextStyle searchOptionTextStyle = TextStyle();
 
   //Accessible text colors
   static MaterialColor normalTextColor = Colors.blue;
@@ -56,5 +57,7 @@ class Display {
     titleTextStyle = TextStyle(fontSize: largeTextSize, fontWeight: FontWeight.bold, color: Colors.blue);
 
     miniNavButtonTextStyle = TextStyle(fontSize: normalTextSize, color: Colors.blue);
+
+    searchOptionTextStyle = TextStyle(fontSize: smallTextSize, color: Colors.blue);
   }
 }
