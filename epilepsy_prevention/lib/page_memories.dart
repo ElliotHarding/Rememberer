@@ -32,14 +32,14 @@ class PageMemoriesState extends State<PageMemories>
         SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.2, child:
           Row(children: [
             Padding(padding: EdgeInsets.all(titlePadding), child:
-              SizedBox(width: MediaQuery.of(context).size.width * 0.6, child: const FittedBox(fit: BoxFit.fill, child:
-                Align(alignment: Alignment.centerLeft, child: Text("Memories", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue), textAlign: TextAlign.left))
-            ))),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.6, child:
+                Align(alignment: Alignment.centerLeft, child: Text("Memories", style: Display.titleTextStyle, textAlign: TextAlign.left))
+            )),
 
             Padding(padding: EdgeInsets.fromLTRB(0, titlePadding, MediaQuery.of(context).size.width * 0.1, titlePadding), child: SizedBox(width: MediaQuery.of(context).size.width * 0.1, child:
               TextButton(onPressed: () => gotoAddNewMemory(), child: Align(alignment: Alignment.centerRight, child: SizedBox(width: MediaQuery.of(context).size.width * 0.1, child:
-                const FittedBox(fit: BoxFit.fill, child: Text("+", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue), textAlign: TextAlign.right)
-              )))),
+                Text("+", style: Display.titleTextStyle, textAlign: TextAlign.right)
+              ))),
             ))
           ])
         ),
