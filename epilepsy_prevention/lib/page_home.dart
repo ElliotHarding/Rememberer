@@ -6,6 +6,7 @@ import 'package:epilepsy_prevention/page_memory.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_memories.dart';
 import 'package:epilepsy_prevention/page_overdueTests.dart';
+import 'package:epilepsy_prevention/display.dart';
 
 class PageHome extends StatefulWidget
 {
@@ -23,9 +24,7 @@ class PageHomeState extends State<PageHome>
     Notifications.setupNotificationActionListener(context);
 
     final double screenHeight = MediaQuery.of(context).size.height - MediaQuery.of(context).viewPadding.top - MediaQuery.of(context).viewPadding.bottom;
-    final double unitWidthValue = MediaQuery.of(context).size.width * 0.01;
-    final double fontSize = 10 * unitWidthValue;
-    final TextStyle textStyle = TextStyle(fontSize: fontSize, color: Colors.blue);
+    final TextStyle textStyle = TextStyle(fontSize: Display().menuPageTextSize, color: Colors.blue);
 
     return Scaffold(
       body:  SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child: ListView(physics: const NeverScrollableScrollPhysics(),
