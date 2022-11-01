@@ -97,7 +97,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
         Center(child: Visibility(visible: widget.m_memory.m_testFrequecy == "Custom", child: Column(children: [
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Row(children: [
+          SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Row(children: [
             Text("Notifications: ", style: Display.largeTextStyle, textAlign: TextAlign.left),
             TextButton(onPressed: () => onAddCustomNotification(), child: Text("+", style: Display.largeTextStyle)),
           ])),
@@ -107,20 +107,20 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
           )
         ]))),
 
-        Visibility(visible: widget.m_memory.m_testFrequecy == "Configure", child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 220, child: ListView(physics: const NeverScrollableScrollPhysics(), children: <Widget>[
+        Visibility(visible: widget.m_memory.m_testFrequecy == "Configure", child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Column(children: <Widget>[
           const SizedBox(height: 30),
 
-          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Text("Time: " + widget.m_configureTimeFrequency.toString(), style: Display.largeTextStyle, textAlign: TextAlign.left))),
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Text("Time: " + widget.m_configureTimeFrequency.toString(), style: Display.largeTextStyle, textAlign: TextAlign.left))),
 
-          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
             Slider(value: widget.m_configureTimeFrequency.toDouble(), min: 10000, max: 9999999, onChanged: (newValue) => onConfigureTimeFrequencyChanged(newValue.toInt())
           ))),
 
           const SizedBox(height: 30),
 
-          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child: Text("Increment: " + widget.m_configureIncrement.toString(), style: Display.largeTextStyle, textAlign: TextAlign.left))),
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Text("Increment: " + widget.m_configureIncrement.toString(), style: Display.largeTextStyle, textAlign: TextAlign.left))),
 
-          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
+          Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
             Slider(value: widget.m_configureIncrement.toDouble(), min: 1, max: 10, onChanged: (newValue) => onConfigureIncrementFactorChanged(newValue.toInt())
           ))),
         ]),
