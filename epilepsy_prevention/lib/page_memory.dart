@@ -63,27 +63,17 @@ class PageMemoryState extends State<PageMemory>
         )))),
 
         Padding(padding: EdgeInsets.fromLTRB(headerLeftMargin, verticalSpacer, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
-          Text("Multiple Choice:", style: Display.largeTextStyle, textAlign: TextAlign.left),
+          Text("Stats:", style: Display.largeTextStyle, textAlign: TextAlign.left),
         )),
 
         Row(children: [
           Padding(padding: EdgeInsets.fromLTRB(headerLeftMargin * 2, 0, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
-            Text("Enable:", style: Display.normalTextStyle, textAlign: TextAlign.left),
+            Text("View stats", style: Display.normalTextStyle, textAlign: TextAlign.left),
           )),
-          Checkbox(value: widget.m_memory.m_bMultiChoice, onChanged: (bool? value) => setMultiChoice(value))
+          TextButton(onPressed: () => onPressReminders(), child:
+            Text("⚙", style: Display.largeTextStyle, textAlign: TextAlign.left)
+          )
         ]),
-
-        Visibility(visible: widget.m_memory.m_bMultiChoice, child:
-          Row(children: [
-            Padding(padding: EdgeInsets.fromLTRB(headerLeftMargin * 2, 0, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
-              Text("Add:", style: Display.normalTextStyle, textAlign: TextAlign.left),
-            )),
-            TextButton(onPressed: addFalseAnswer, child: Text("+", style: Display.largeTextStyle, textAlign: TextAlign.center))
-        ])),
-
-        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Visibility(visible: widget.m_memory.m_bMultiChoice, child:
-          ListView.builder(itemCount: m_falseAnswerTextEditControllers.length, physics: const NeverScrollableScrollPhysics(), shrinkWrap: true, scrollDirection: Axis.vertical, itemBuilder: (context, i){ return genFalseAnswerWidget(context, i);}))
-        )),
 
         Padding(padding: EdgeInsets.fromLTRB(headerLeftMargin, verticalSpacer, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
           Text("Reminders:", style: Display.largeTextStyle, textAlign: TextAlign.left),
@@ -106,17 +96,27 @@ class PageMemoryState extends State<PageMemory>
         ]),
 
         Padding(padding: EdgeInsets.fromLTRB(headerLeftMargin, verticalSpacer, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
-          Text("Stats:", style: Display.largeTextStyle, textAlign: TextAlign.left),
+          Text("Multiple Choice:", style: Display.largeTextStyle, textAlign: TextAlign.left),
         )),
 
         Row(children: [
           Padding(padding: EdgeInsets.fromLTRB(headerLeftMargin * 2, 0, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
-            Text("View stats", style: Display.normalTextStyle, textAlign: TextAlign.left),
+            Text("Enable:", style: Display.normalTextStyle, textAlign: TextAlign.left),
           )),
-          TextButton(onPressed: () => onPressReminders(), child:
-            Text("⚙", style: Display.largeTextStyle, textAlign: TextAlign.left)
-          )
+          Checkbox(value: widget.m_memory.m_bMultiChoice, onChanged: (bool? value) => setMultiChoice(value))
         ]),
+
+        Visibility(visible: widget.m_memory.m_bMultiChoice, child:
+          Row(children: [
+            Padding(padding: EdgeInsets.fromLTRB(headerLeftMargin * 2, 0, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
+              Text("Add:", style: Display.normalTextStyle, textAlign: TextAlign.left),
+            )),
+            TextButton(onPressed: addFalseAnswer, child: Text("+", style: Display.largeTextStyle, textAlign: TextAlign.center))
+        ])),
+
+        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Visibility(visible: widget.m_memory.m_bMultiChoice, child:
+          ListView.builder(itemCount: m_falseAnswerTextEditControllers.length, physics: const NeverScrollableScrollPhysics(), shrinkWrap: true, scrollDirection: Axis.vertical, itemBuilder: (context, i){ return genFalseAnswerWidget(context, i);}))
+        )),
 
         SizedBox(height: verticalSpacer),
 
