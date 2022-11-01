@@ -111,6 +111,10 @@ class PageMemoryState extends State<PageMemory>
 
           const Spacer(),
 
+          TextButton(onPressed: () => onCancel(context), child: Text("|Cancel|", style: Display.miniNavButtonTextStyle)),
+
+          const Spacer(),
+
           TextButton(onPressed: () => onSave(context), child: Text("Save", style: Display.miniNavButtonTextStyle)),
 
           const Spacer()
@@ -179,6 +183,11 @@ class PageMemoryState extends State<PageMemory>
       Database().deleteMemory(widget.m_memory.key);
     }
 
+    Navigator.of(context).pop();
+  }
+
+  void onCancel(BuildContext context)
+  {
     Navigator.of(context).pop();
   }
 
