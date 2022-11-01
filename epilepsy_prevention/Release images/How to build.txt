@@ -4,3 +4,5 @@
 Re display the custom notifications.
 Seperate update/cancel buttons
 Fix indexes on graph overlapping
+
+do padding on answer in page_test, no height with numbers...

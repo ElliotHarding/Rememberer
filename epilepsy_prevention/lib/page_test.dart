@@ -29,7 +29,7 @@ class PageTest extends StatelessWidget
 
         Center(child:
           SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.height * 0.1, child:
-            Text(m_memory.m_question, style: const TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center)
+            Text(m_memory.m_question, style: Display.largeTextStyle, textAlign: TextAlign.center)
         )),
 
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
@@ -37,7 +37,7 @@ class PageTest extends StatelessWidget
         Center(child:
           Visibility(visible: !m_memory.m_bMultiChoice, child:
             SizedBox(width: MediaQuery.of(context).size.width * 0.8, height: 50, child:
-              const Text("Answer", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.left)
+              Text("Answer", style: Display.largeTextStyle, textAlign: TextAlign.left)
             )
         )),
 
@@ -46,7 +46,7 @@ class PageTest extends StatelessWidget
             IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
               TextField(
                 decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a answer'),
-                style: const TextStyle(fontSize: 30, color: Colors.black),
+                style: Display.largeTextStyleBlack,
                 controller: m_answerTextController,
                 maxLines: null
               )
@@ -56,7 +56,7 @@ class PageTest extends StatelessWidget
          Visibility(visible: !m_memory.m_bMultiChoice, child:
           TextButton(onPressed: () async {
               await Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, m_answerTextController.text.toLowerCase() == m_memory.m_answer.toLowerCase(), m_returnScreen)));
-              }, child: const Text("Guess", style: TextStyle(fontSize: 30, color: Colors.blue), textAlign: TextAlign.center)
+              }, child: Text("Guess", style: Display.largeTextStyle, textAlign: TextAlign.center)
           )
         )),
 
