@@ -98,7 +98,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
         Center(child: Visibility(visible: widget.m_memory.m_testFrequecy == "Custom", child: Column(children: [
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Row(children: [
+          Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, 30, 0, 0), child: Row(children: [
             Text("Notifications: ", style: Display.largeTextStyle, textAlign: TextAlign.left),
             TextButton(onPressed: () => onAddCustomNotification(), child: Text("+", style: Display.largeTextStyle)),
           ])),
@@ -126,14 +126,12 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         ]),
         )),
 
-        const SizedBox(height: 30),
-
         Visibility(visible: widget.m_memory.m_testFrequecy != "Never", child: SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.7 + 125, child:
             Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
 
-              Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 50, child:
-                Text("Graph Timescale:", style: Display.largeTextStyle, textAlign: TextAlign.left)
-              )),
+              Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, 30, 0, 0), child:
+                Text("Graph Timescale:", style: Display.largeTextStyle, textAlign: TextAlign.left),
+              ),
 
               Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, height: 30, child:
                 Slider(value: widget.m_graphViewIterationsCount.toDouble(), min: 0, max: widget.m_memory.m_notifications.length.toDouble(), onChanged: (newValue) => onGraphViewIterationsSliderChanged(newValue.toInt())
