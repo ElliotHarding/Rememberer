@@ -21,12 +21,10 @@ class PageTestResult extends StatelessWidget
     return WillPopScope(onWillPop: () async {Navigator.push(context, MaterialPageRoute(builder: (context) => m_returnWidget)); return true;}, child: Scaffold(body:
       ListView(shrinkWrap: true, children: <Widget>[
 
-        Row(mainAxisAlignment: MainAxisAlignment.end, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+        Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02), child: Align(alignment: Alignment.centerLeft, child:
           TextButton(onPressed: () => onHomePressed(context), child:
-            Text("Home", style: Display.miniNavButtonTextStyle)
-          ),
-          SizedBox(width: MediaQuery.of(context).size.width * 0.02)
-        ]),
+            Text("<- Home", style: Display.miniNavButtonTextStyle)
+        ))),
 
         SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.25, child:
           Center(child:
