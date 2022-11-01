@@ -43,7 +43,7 @@ class Display {
     listItemTextStyleBlack = TextStyle(fontSize: 5 * unitWidthValue, color: Colors.black);
 
     normalTextStyle = TextStyle(fontSize: 5 * unitWidthValue, color: normalTextColor);
-    largeTextStyle = TextStyle(fontSize: 6 * unitWidthValue, color: normalTextColor);
+    largeTextStyle = TextStyle(fontSize: 6 * unitWidthValue, color: Colors.indigo);
     largeTextStyleBlack = TextStyle(fontSize: 6 * unitWidthValue, color: Colors.black);
 
     graphIndexStyle = TextStyle(fontSize: 3 * unitWidthValue, color: Colors.blue);
