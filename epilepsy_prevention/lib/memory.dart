@@ -70,7 +70,7 @@ class Memory extends HiveObject
     {
       if(m_falseAnswers.isEmpty)
       {
-        return "Must have at least one false answer";
+        return "Must have at least one multiple choice answer. Or disable multiple choice.";
       }
 
       for(String falseAnswer in m_falseAnswers)
