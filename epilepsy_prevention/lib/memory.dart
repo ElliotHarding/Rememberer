@@ -109,6 +109,18 @@ class Memory extends HiveObject
     }
     return notifyTimes;
   }
+
+  void removeNotification(int notifyTime)
+  {
+    for(int i = 0; i < m_notifications.length; i++)
+    {
+      if(m_notifications[i].m_notifyTime == notifyTime)
+      {
+        m_notifications.removeAt(i);
+        return;
+      }
+    }
+  }
 }
 
 class MemoryAdapter extends TypeAdapter<Memory>

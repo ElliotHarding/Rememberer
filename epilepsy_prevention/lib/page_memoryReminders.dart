@@ -36,6 +36,17 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
     {
       widget.m_memoryBefore = widget.m_memory;
 
+      //If first time generating notify times, auto set up some
+      if(Database().getMemoryWithId(widget.m_memory.key) == null)
+      {
+        widget.m_notificationStartGoal = 0;
+        widget.m_notificationCountGoal = 5;
+        widget.m_configureIncrement = 4;
+        widget.m_configureTimeFrequency = 1800000;
+        widget.m_memory.m_testFrequecy = "Configure";
+        updateNotifyTimes();
+      }
+
       widget.m_notificationCountGoal = widget.m_memory.m_notifications.length;
 
       widget.m_notificationStartGoal = getCurrentIteration(widget.m_memory.getNotifyTimes());

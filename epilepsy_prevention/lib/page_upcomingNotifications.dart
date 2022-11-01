@@ -124,7 +124,7 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
   {
     await Notifications().removeNotification(memoryNotification.m_memory.key.toString() + "-" + memoryNotification.m_notificationTime.toString());
 
-    memoryNotification.m_memory.m_notifications.remove(memoryNotification.m_notificationTime);
+    memoryNotification.m_memory.removeNotification(memoryNotification.m_notificationTime);
     Database().addOrUpdateMemory(memoryNotification.m_memory);
   }
 
