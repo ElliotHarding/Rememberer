@@ -23,25 +23,28 @@ class PageHomeState extends State<PageHome>
     Notifications.setupNotificationActionListener(context);
 
     final double screenHeight = MediaQuery.of(context).size.height - MediaQuery.of(context).viewPadding.top - MediaQuery.of(context).viewPadding.bottom;
+    final double unitWidthValue = MediaQuery.of(context).size.width * 0.01;
+    final double fontSize = 10 * unitWidthValue;
+    final TextStyle textStyle = TextStyle(fontSize: fontSize, color: Colors.blue);
 
     return Scaffold(
       body:  SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child: ListView(physics: const NeverScrollableScrollPhysics(),
           children: <Widget>[
             SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: screenHeight * 0.2, child: TextButton( onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory())));
-            }, child: const Text("New Memory", style: TextStyle(fontSize: 30.0, color: Colors.blue)))),
+            }, child: Text("New Memory", style: textStyle))),
             SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: screenHeight * 0.2, child: TextButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories()));
-            }, child: const Text("Memories", style: TextStyle(fontSize: 30.0, color: Colors.blue)))),
+            }, child: Text("Memories", style: textStyle))),
             SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: screenHeight * 0.2, child: TextButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => const PageOverdueTests()));
-            }, child: const Text("Overdue Tests", style: TextStyle(fontSize: 30.0, color: Colors.blue)))),
+            }, child: Text("Overdue Tests", style: textStyle))),
             SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: screenHeight * 0.2, child: TextButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => const PageUpcomingNotifications()));
-            }, child: const Text("Notifications", style: TextStyle(fontSize: 30.0, color: Colors.blue)))),
+            }, child: Text("Notifications", style: textStyle))),
             SizedBox(width: MediaQuery.of(context).size.width * 0.5, height: screenHeight * 0.2, child: TextButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => const PageSettings()));
-            }, child: const Text("Settings", style: TextStyle(fontSize: 30.0, color: Colors.blue))))
+            }, child: Text("Settings", style: textStyle)))
           ])
       )
     );
