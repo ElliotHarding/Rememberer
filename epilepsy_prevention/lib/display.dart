@@ -4,12 +4,6 @@ import 'package:flutter/material.dart';
 class Display {
   static final Display _m_display = Display._internal();
 
-  //Accessible text sizes (loaded after init)
-  static double smallTextSize = 0;
-  static double normalTextSize = 0;
-  static double largeTextSize = 0;
-  static double menuPageTextSize = 0;
-
   //Accessible text styles (loaded after init)
   static TextStyle graphIndexStyle = TextStyle();
   static TextStyle listItemTextStyle = TextStyle();
@@ -41,25 +35,21 @@ class Display {
     var appScreenWidth = screenWidth - leftPadding - rightPadding;
 
     final double unitWidthValue = appScreenWidth * 0.01;
-    smallTextSize = 3 * unitWidthValue;
-    normalTextSize = 6 * unitWidthValue;
-    largeTextSize = 7 * unitWidthValue;
-    menuPageTextSize = 10 * unitWidthValue;
 
-    listItemTextStyle = TextStyle(fontSize: normalTextSize, color: normalTextColor);
-    listItemTextStyleBlack = TextStyle(fontSize: normalTextSize, color: Colors.black);
+    listItemTextStyle = TextStyle(fontSize: 5 * unitWidthValue, color: normalTextColor);
+    listItemTextStyleBlack = TextStyle(fontSize: 5 * unitWidthValue, color: Colors.black);
 
-    normalTextStyle = TextStyle(fontSize: normalTextSize, color: normalTextColor);
-    largeTextStyle = TextStyle(fontSize: largeTextSize, color: normalTextColor);
-    largeTextStyleBlack = TextStyle(fontSize: largeTextSize, color: Colors.black);
+    normalTextStyle = TextStyle(fontSize: 5 * unitWidthValue, color: normalTextColor);
+    largeTextStyle = TextStyle(fontSize: 7 * unitWidthValue, color: normalTextColor);
+    largeTextStyleBlack = TextStyle(fontSize: 7 * unitWidthValue, color: Colors.black);
 
-    graphIndexStyle = TextStyle(fontSize: smallTextSize, color: Colors.blue);
+    graphIndexStyle = TextStyle(fontSize: 3 * unitWidthValue, color: Colors.blue);
 
-    titleTextStyle = TextStyle(fontSize: largeTextSize, fontWeight: FontWeight.bold, color: Colors.blue);
-    menuPageTextStyle = TextStyle(fontSize: menuPageTextSize, color: Colors.blue);
+    titleTextStyle = TextStyle(fontSize: 7 * unitWidthValue, fontWeight: FontWeight.bold, color: Colors.blue);
+    menuPageTextStyle = TextStyle(fontSize: 10 * unitWidthValue, color: Colors.blue);
 
-    miniNavButtonTextStyle = TextStyle(fontSize: normalTextSize, color: Colors.blue);
+    miniNavButtonTextStyle = TextStyle(fontSize: 6 * unitWidthValue, color: Colors.blue);
 
-    searchOptionTextStyle = TextStyle(fontSize: smallTextSize, color: Colors.blue);
+    searchOptionTextStyle = TextStyle(fontSize: 3 * unitWidthValue, color: Colors.blue);
   }
 }
