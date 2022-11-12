@@ -30,9 +30,7 @@ class PageOverdueTestsState extends State<PageOverdueTests>
 
       Visibility(visible: m_overdueTestWidgets.isEmpty, child: Text("No Overdue tests!", style: Display.largeTextStyle, textAlign: TextAlign.center,)),
 
-      SizedBox(width: MediaQuery.of(context).size.width, child:
-        ListView(shrinkWrap: true, physics: const NeverScrollableScrollPhysics(), scrollDirection: Axis.vertical, children: m_overdueTestWidgets)
-      ),
+      ListView(shrinkWrap: true, physics: const NeverScrollableScrollPhysics(), scrollDirection: Axis.vertical, children: m_overdueTestWidgets),
     ],)
     ));
   }
