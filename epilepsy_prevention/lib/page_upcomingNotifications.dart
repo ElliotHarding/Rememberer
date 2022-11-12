@@ -30,7 +30,7 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
 
         Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1), child: Text("Notifications", style:Display.titleTextStyle, textAlign: TextAlign.center)),
 
-        Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
+        Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, 0, MediaQuery.of(context).size.width * 0.05, MediaQuery.of(context).size.width * 0.05), child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
           SizedBox(width: MediaQuery.of(context).size.width * 0.45, child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
             Text("Enabled only: ", style: Display.searchOptionTextStyle, textAlign: TextAlign.center),
             Checkbox(value: m_bEnabledOnly, onChanged: (bool? value) => onEnabledOnlyCheckboxChanged(value)),
@@ -39,7 +39,7 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
             Text("Due only: ", style: Display.searchOptionTextStyle, textAlign: TextAlign.center),
             Checkbox(value: m_bDueOnly, onChanged: (bool? value) => onDueOnlyCheckboxChanged(value)),
           ])),
-        ]))),
+        ])),
 
         Visibility(visible: m_notificationsWidget.isEmpty, child: Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1), child: Text("No Notifications!", style: Display.largeTextStyle, textAlign: TextAlign.center,))),
 
