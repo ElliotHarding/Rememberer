@@ -41,6 +41,8 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
           ])),
         ]))),
 
+        Visibility(visible: m_notificationsWidget.isEmpty, child: Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1), child:  Text("No Notifications!", style: Display.largeTextStyle, textAlign: TextAlign.center,))),
+
         SizedBox(width: MediaQuery.of(context).size.width, child:
           ListView(shrinkWrap: true, physics: const NeverScrollableScrollPhysics(), scrollDirection: Axis.vertical, children: m_notificationsWidget)
         ),
