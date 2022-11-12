@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_memory.dart';
 import 'package:epilepsy_prevention/display.dart';
+import 'package:epilepsy_prevention/page_test.dart';
 
 class PageUpcomingNotifications extends StatefulWidget
 {
@@ -56,12 +57,18 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
     for(MemoryAndNotification memNotification in notifications)
     {
       widgets.add(Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
-        SizedBox(width: MediaQuery.of(context).size.width * 0.45, child: TextButton(onPressed: () => onQuestionPressed(memNotification.m_memory), child:
+        SizedBox(width: MediaQuery.of(context).size.width * 0.4, child: TextButton(onPressed: () => onTestPressed(memNotification.m_memory), child:
           Text(memNotification.m_memory.m_question, style: Display.listItemTextStyle))
         ),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.45, child: TextButton(onPressed: () => onQuestionPressed(memNotification.m_memory), child:
+        SizedBox(width: MediaQuery.of(context).size.width * 0.4, child: TextButton(onPressed: () => onTestPressed(memNotification.m_memory), child:
           Text(Notifications().epochMsToDate(memNotification.m_notificationTime), style: Display.listItemTextStyle))
+        ),
+
+        SizedBox(width: MediaQuery.of(context).size.width * 0.1, child:
+          TextButton(onPressed: () => onQuestionPressed(memNotification.m_memory), child:
+            Text("⚙", style: Display.listItemTextStyle)
+          )
         ),
 
         SizedBox(width: MediaQuery.of(context).size.width * 0.1, child: TextButton(onPressed: () => onDeleteNotificationPressed(memNotification), child:
@@ -126,6 +133,11 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
 
     memoryNotification.m_memory.removeNotification(memoryNotification.m_notificationTime);
     Database().addOrUpdateMemory(memoryNotification.m_memory);
+  }
+
+  void onTestPressed(Memory memory)
+  {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(memory, const PageUpcomingNotifications())));
   }
 
   void onQuestionPressed(Memory memory) async
