@@ -26,7 +26,7 @@ class PageOverdueTestsState extends State<PageOverdueTests>
     return WillPopScope(onWillPop: () async { Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome())); return true;}, child: Scaffold(body:
     ListView(shrinkWrap: true, children: <Widget>[
 
-      Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1), child: Center(child: Text("Overdue tests", style: Display.titleTextStyle, textAlign: TextAlign.center))),
+      Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1), child: Text("Overdue tests", style: Display.titleTextStyle, textAlign: TextAlign.center)),
 
       Visibility(visible: m_overdueTestWidgets.isEmpty, child: Text("No Overdue tests!", style: Display.largeTextStyle, textAlign: TextAlign.center,)),
 
