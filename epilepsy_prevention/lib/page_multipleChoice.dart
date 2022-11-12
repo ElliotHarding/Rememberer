@@ -81,7 +81,7 @@ class PageMultipleChoicesState extends State<PageMultipleChoices> {
       SizedBox(width: MediaQuery.of(context).size.width * 0.14, child:
       TextButton(onPressed: () { setState(() {
         m_multiChoiceTextEditControllers.removeAt(iFalseAnswer);
-      });}, child: Text("X", style: Display.listItemTextStyle)),
+      });}, child: Text("🗑", style: Display.listItemTextStyle)),
       )
     ])
     ));
