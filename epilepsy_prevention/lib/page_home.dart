@@ -26,7 +26,7 @@ class PageHomeState extends State<PageHome>
     final double screenHeight = MediaQuery.of(context).size.height - MediaQuery.of(context).viewPadding.top - MediaQuery.of(context).viewPadding.bottom;
 
     return Scaffold(
-      drawer: NavigationDrawer(),
+      drawer: SizedBox(width: MediaQuery.of(context).size.width * 0.7, child: NavigationDrawer()),
       appBar: AppBar(),
       body: SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child: ListView(physics: const NeverScrollableScrollPhysics(), children: <Widget>[
 
@@ -41,24 +41,22 @@ class NavigationDrawer extends StatelessWidget
   NavigationDrawer();
 
   Widget build(BuildContext context) => Drawer(
-    child: SingleChildScrollView(
-      child: Column(children: [
-        header(context),
-        menuPages(context)
-      ],),
-    )
+    child: Column(children: [
+      header(context),
+      menuPages(context)
+    ],)
   );
 
   Widget header(BuildContext context) => Container(
-    padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+    padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
   );
 
-  Widget menuPages(BuildContext context) => Column(children: [
-    ListTile(leading: Text("🏠", style: Display.menuPageTextStyle), title: Text("Home", style: Display.menuPageTextStyle,), onTap: () => {Navigator.pop(context)},),
-    ListTile(leading: Text("📝⁺", style: Display.menuPageTextStyle), title: Text("New Memory", style: Display.menuPageTextStyle), onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory())))},),
-    ListTile(leading: Text("📝", style: Display.menuPageTextStyle), title: Text("Memories", style: Display.menuPageTextStyle), onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories()))},),
-    ListTile(leading: Text("🕑", style: Display.menuPageTextStyle), title: Text("Overdue Tests", style: Display.menuPageTextStyle), onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => const PageOverdueTests()))},),
-    ListTile(leading: Text("🔔", style: Display.menuPageTextStyle), title: Text("Notifications", style: Display.menuPageTextStyle), onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => const PageUpcomingNotifications()))},),
-    ListTile(leading: Text("⚙", style: Display.menuPageTextStyle), title: Text("Settings", style: Display.menuPageTextStyle), onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => const PageSettings()))},)
+  Widget menuPages(BuildContext context) => Wrap(runSpacing: 20, children: [
+    ListTile(leading: SizedBox(width: MediaQuery.of(context).size.width * 0.1, child: Text("🏠", style: Display.menuPageTextStyle)), title: Text("Home", style: Display.menuPageTextStyle,), onTap: () => {Navigator.pop(context)},),
+    ListTile(leading: SizedBox(width: MediaQuery.of(context).size.width * 0.1, child: Text("📝⁺", style: Display.menuPageTextStyle)), title: Text("New Memory", style: Display.menuPageTextStyle), onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(Memory())))},),
+    ListTile(leading: SizedBox(width: MediaQuery.of(context).size.width * 0.1, child: Text("📝", style: Display.menuPageTextStyle)), title: Text("Memories", style: Display.menuPageTextStyle), onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories()))},),
+    ListTile(leading: SizedBox(width: MediaQuery.of(context).size.width * 0.1, child: Text("🕑", style: Display.menuPageTextStyle)), title: Text("Overdue Tests", style: Display.menuPageTextStyle), onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => const PageOverdueTests()))},),
+    ListTile(leading: SizedBox(width: MediaQuery.of(context).size.width * 0.1, child: Text("🔔", style: Display.menuPageTextStyle)), title: Text("Notifications", style: Display.menuPageTextStyle), onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => const PageUpcomingNotifications()))},),
+    ListTile(leading: SizedBox(width: MediaQuery.of(context).size.width * 0.1, child: Text("⚙", style: Display.menuPageTextStyle)), title: Text("Settings", style: Display.menuPageTextStyle), onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => const PageSettings()))},)
   ],);
 }
