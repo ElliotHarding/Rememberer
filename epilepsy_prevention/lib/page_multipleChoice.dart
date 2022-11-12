@@ -37,8 +37,8 @@ class PageMultipleChoicesState extends State<PageMultipleChoices> {
 
         Row(children: [
           SizedBox(width: MediaQuery.of(context).size.width * 0.1),
-          SizedBox(width: MediaQuery.of(context).size.width * 0.7 , child: Text("Multiple Choices:", style: Display.largeTextStyle, textAlign: TextAlign.left)),
-          SizedBox(width: MediaQuery.of(context).size.width * 0.1, child: TextButton(onPressed: addFalseAnswer, child: Text("+", style: Display.largeTextStyle, textAlign: TextAlign.center)))
+          SizedBox(width: MediaQuery.of(context).size.width * 0.6 , child: Text("Multiple Choices:", style: Display.largeTextStyle, textAlign: TextAlign.left)),
+          SizedBox(width: MediaQuery.of(context).size.width * 0.2, child: TextButton(onPressed: addFalseAnswer, child: Text("📝⁺", style: Display.largeTextStyle, textAlign: TextAlign.center)))
         ],),
 
         SizedBox(height: verticalSpacer),

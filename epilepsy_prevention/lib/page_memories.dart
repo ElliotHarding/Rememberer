@@ -31,13 +31,13 @@ class PageMemoriesState extends State<PageMemories>
 
         Row(children: [
           Padding(padding: EdgeInsets.all(titlePadding), child:
-            SizedBox(width: MediaQuery.of(context).size.width * 0.6, child:
+            SizedBox(width: MediaQuery.of(context).size.width * 0.5, child:
               Align(alignment: Alignment.centerLeft, child: Text("Memories", style: Display.titleTextStyle, textAlign: TextAlign.left))
           )),
 
-          Padding(padding: EdgeInsets.fromLTRB(0, titlePadding, titlePadding, titlePadding), child: SizedBox(width: MediaQuery.of(context).size.width * 0.1, child:
-            TextButton(onPressed: () => gotoAddNewMemory(), child: Align(alignment: Alignment.centerRight, child: SizedBox(width: MediaQuery.of(context).size.width * 0.1, child:
-              Text("+", style: Display.titleTextStyle, textAlign: TextAlign.right)
+          Padding(padding: EdgeInsets.fromLTRB(0, titlePadding, titlePadding, titlePadding), child: SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
+            TextButton(onPressed: () => gotoAddNewMemory(), child: Align(alignment: Alignment.centerRight, child: SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
+              Text("📝⁺", style: Display.titleTextStyle, textAlign: TextAlign.right)
             ))),
           ))
         ]),

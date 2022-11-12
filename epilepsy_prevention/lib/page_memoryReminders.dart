@@ -101,7 +101,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
           Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, 30, 0, 0), child: Row(children: [
             Text("Notifications: ", style: Display.largeTextStyle, textAlign: TextAlign.left),
-            TextButton(onPressed: () => onAddCustomNotification(), child: Text("+", style: Display.largeTextStyle)),
+            TextButton(onPressed: () => onAddCustomNotification(), child: Text("📝⁺", style: Display.largeTextStyle)),
           ])),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
