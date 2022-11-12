@@ -24,69 +24,57 @@ class PageTest extends StatelessWidget
     m_answerTextController.text = "";
     return Scaffold(
       body: ListView(shrinkWrap: true, children: <Widget>[
+        Column(children: [
 
-        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+          Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05), child: Text("Question", style: Display.titleTextStyle, textAlign: TextAlign.center)),
 
-        Center(child:
-          SizedBox(width: MediaQuery.of(context).size.width * 0.8, child:
-            Text(m_memory.m_question, style: Display.largeTextStyle, textAlign: TextAlign.center)
-        )),
+          Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05), child: Text(m_memory.m_question, style: Display.largeTextStyle, textAlign: TextAlign.center)),
 
-        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+          Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05), child: Text("Answer", style: Display.titleTextStyle, textAlign: TextAlign.center)),
 
-        Center(child:
-          Visibility(visible: !m_memory.m_bMultiChoice, child:
-            SizedBox(width: MediaQuery.of(context).size.width * 0.8, child:
-              Text("Answer", style: Display.largeTextStyle, textAlign: TextAlign.left)
-            )
-        )),
-
-        Center(child:
           Visibility(visible: !m_memory.m_bMultiChoice, child:
             IntrinsicHeight(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
               TextField(
-                decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a answer'),
-                style: Display.largeTextStyleBlack,
-                controller: m_answerTextController,
-                maxLines: null
+                  decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a answer'),
+                  style: Display.largeTextStyleBlack,
+                  controller: m_answerTextController,
+                  maxLines: null
               )
-        )))),
+          ))),
 
-        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
-        Center(child:
-         Visibility(visible: !m_memory.m_bMultiChoice, child:
-          TextButton(onPressed: () async {
+          Visibility(visible: !m_memory.m_bMultiChoice, child:
+            TextButton(onPressed: () async {
               await Navigator.push(context, MaterialPageRoute(builder: (context) => PageTestResult(m_memory, m_answerTextController.text.toLowerCase() == m_memory.m_answer.toLowerCase(), m_returnScreen)));
-              }, child: Text("Guess", style: Display.largeTextStyle, textAlign: TextAlign.center)
-          )
-        )),
+            }, child: Text("Guess", style: Display.largeTextStyle, textAlign: TextAlign.center)
+            )
+          ),
 
-        Center(child:
           Visibility(visible: m_memory.m_bMultiChoice, child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
             ListView(shrinkWrap: true, physics: const NeverScrollableScrollPhysics(), scrollDirection: Axis.vertical, children: getMultiChoiceAnswers(context))
-        ))),
+          )),
 
-        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
-        Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-          const Spacer(),
+          Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+            const Spacer(),
 
-          TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories())); }, child:
-            Text("Memories", style: Display.miniNavButtonTextStyle)
-          ),
+            TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemories())); }, child:
+              Text("Memories", style: Display.miniNavButtonTextStyle)
+            ),
 
-          const Spacer(),
+            const Spacer(),
 
-          TextButton(onPressed: () async { Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome())); }, child:
-            Text("Home", style: Display.miniNavButtonTextStyle)
-          ),
+            TextButton(onPressed: () async { Navigator.push(context, MaterialPageRoute(builder: (context) => const PageHome())); }, child:
+              Text("Home", style: Display.miniNavButtonTextStyle)
+            ),
 
-          const Spacer()
-        ]),
+            const Spacer()
+          ]),
 
-        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-      ]
+          SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+        ])]
       ),
     );
   }
