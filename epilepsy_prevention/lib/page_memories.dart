@@ -123,6 +123,8 @@ class PageMemoriesState extends State<PageMemories>
         Text(denyText, style: Display.miniNavButtonTextStyle)
       ),
 
+      const SizedBox(width: 10),
+
       TextButton(onPressed: () => onDeleteMemoryConfirmed(memory), child:
         Text(confirmText, style: Display.miniNavButtonTextStyle)
       ),

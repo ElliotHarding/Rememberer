@@ -108,6 +108,8 @@ class PageSettingsState extends State<PageSettings>
         Text(denyText, style: Display.miniNavButtonTextStyle)
       ),
 
+      const SizedBox(width: 10),
+
       TextButton(onPressed: () => confirmAction(), child:
         Text(confirmText, style: Display.miniNavButtonTextStyle)
       ),

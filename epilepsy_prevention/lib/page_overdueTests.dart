@@ -134,11 +134,13 @@ class PageOverdueTestsState extends State<PageOverdueTests>
   {
     return AlertDialog(title: Text(title, style: Display.largeTextStyle), content: Text(content, style: Display.normalTextStyle), actions: <Widget>[
       TextButton(onPressed: () => onKeepTest(), child:
-      Text(denyText, style: Display.miniNavButtonTextStyle)
+        Text(denyText, style: Display.miniNavButtonTextStyle)
       ),
 
+      const SizedBox(width: 10),
+
       TextButton(onPressed: () => onSetTestDone(memory, notifyTime), child:
-      Text(confirmText, style: Display.miniNavButtonTextStyle)
+        Text(confirmText, style: Display.miniNavButtonTextStyle)
       ),
     ],);
   }

@@ -52,7 +52,7 @@ class Display {
     titleTextStyle = TextStyle(fontSize: 7 * unitWidthValue, fontWeight: FontWeight.bold, color: Colors.blue);
     menuPageTextStyle = TextStyle(fontSize: 9 * unitWidthValue, color: Colors.blue);
 
-    miniNavButtonTextStyle = TextStyle(fontSize: 6 * unitWidthValue, color: Colors.blue);
+    miniNavButtonTextStyle = TextStyle(fontSize: 5 * unitWidthValue, color: Colors.blue);
 
     searchOptionTextStyle = TextStyle(fontSize: 3 * unitWidthValue, color: Colors.blue);
   }
