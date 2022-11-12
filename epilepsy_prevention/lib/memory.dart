@@ -304,7 +304,7 @@ class Database
   void generateTestData() async
   {
     Memory mem1 = Memory(question: "Question1", answer: "Answer1", multiChoice: false, falseAnswers: [], testFrequency: "Never", notifications: [], enabledNotifications: true);
-    Memory mem2 = Memory(question: "question2", answer: "answer2", multiChoice: false, falseAnswers: [], testFrequency: "Frequently", notifications: Notifications().genNotifyTimes(0, 5, 2, 90000), enabledNotifications: true);
+    Memory mem2 = Memory(question: "question2 The really long question that could trip up some things potentially maybe we'll have to see!", answer: "answer2", multiChoice: false, falseAnswers: [], testFrequency: "Frequently", notifications: Notifications().genNotifyTimes(0, 5, 2, 90000), enabledNotifications: true);
     Memory mem3 = Memory(question: "Question3", answer: "Answer3", multiChoice: false, falseAnswers: [], testFrequency: "Frequently", notifications: Notifications().genNotifyTimes(0, 5, 2, 900000), enabledNotifications: false);
     Memory mem4 = Memory(question: "Question4", answer: "Answer4", multiChoice: false, falseAnswers: [], testFrequency: "Occasionally", notifications: Notifications().genNotifyTimes(0, 5, 3, 1200000), enabledNotifications: true);
     Memory mem5 = Memory(question: "Question5", answer: "Answer5", multiChoice: true, falseAnswers: ["Apples", "Pears", "Oranges", "Pinapples", "Lemons"], testFrequency: "Never", notifications: [], enabledNotifications: true);
