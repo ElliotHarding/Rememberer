@@ -50,7 +50,7 @@ class Display {
     graphTitleSpaceReserved = 3 * unitWidthValue * 5.5;
 
     titleTextStyle = TextStyle(fontSize: 7 * unitWidthValue, fontWeight: FontWeight.bold, color: Colors.blue);
-    menuPageTextStyle = TextStyle(fontSize: 9 * unitWidthValue, color: Colors.blue);
+    menuPageTextStyle = TextStyle(fontSize: 5 * unitWidthValue, color: Colors.blue);
 
     miniNavButtonTextStyle = TextStyle(fontSize: 5 * unitWidthValue, color: Colors.blue);
 
