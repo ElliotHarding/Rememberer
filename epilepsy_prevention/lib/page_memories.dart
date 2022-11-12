@@ -59,25 +59,32 @@ class PageMemoriesState extends State<PageMemories>
     {
       for(Memory memory in box.values)
       {
-        widgets.add(Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,children: [
+        widgets.add(Row(children: [
           SizedBox(width: MediaQuery.of(context).size.width * 0.05),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
             Text(memory.m_question, style: Display.listItemTextStyle, textAlign: TextAlign.left)
           ),
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.1, child:
+          SizedBox(width: MediaQuery.of(context).size.width * 0.1, child: Column(children: [
             TextButton(onPressed: () => onMemoryPressed(memory), child:
               Text("⚙", style: Display.listItemTextStyle)
-            )
-          ),
+            ),
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.1, child:
             TextButton(onPressed: () => onMemoryTestPressed(memory), child:
               Text("?", style: Display.listItemTextStyle)
             )
+          ])
+          ),
+
+          SizedBox(width: MediaQuery.of(context).size.width * 0.1, child:
+            TextButton(onPressed: () => onDeletePressed(memory), child:
+              Text("🗑", style: Display.listItemTextStyle)
+            )
           )
         ]));
+
+        widgets.add(const SizedBox(height: 15));
       }
     }
     return widgets;
@@ -102,5 +109,42 @@ class PageMemoriesState extends State<PageMemories>
   void onMemoryTestPressed(Memory memory)
   {
     Navigator.push(context, MaterialPageRoute(builder: (context) => PageTest(memory, PageMemories())));
+  }
+
+  void onDeletePressed(Memory memory)
+  {
+    showDialog(context: context, builder: (context) => promptDialog("Delete Memory?", "Are you sure you want to delete this memory?", "Yes", "No", memory));
+  }
+
+  AlertDialog promptDialog(String title, String content, String confirmText, String denyText, Memory memory)
+  {
+    return AlertDialog(title: Text(title, style: Display.largeTextStyle), content: Text(content, style: Display.normalTextStyle), actions: <Widget>[
+      TextButton(onPressed: () => onKeepMemory(), child:
+        Text(denyText, style: Display.miniNavButtonTextStyle)
+      ),
+
+      TextButton(onPressed: () => onDeleteMemoryConfirmed(memory), child:
+        Text(confirmText, style: Display.miniNavButtonTextStyle)
+      ),
+    ],);
+  }
+
+  void onKeepMemory()
+  {
+    Navigator.of(context).pop();
+  }
+
+  void onDeleteMemoryConfirmed(Memory memory)
+  {
+    //Clear notifications
+    Notifications().removeNotifications(memory.key, memory.getNotifyTimes());
+
+    Database().deleteMemory(memory.key);
+
+    Navigator.of(context).pop();
+
+    setState(() {
+      m_memoryWidgets = getMemoryWidgets();
+    });
   }
 }
