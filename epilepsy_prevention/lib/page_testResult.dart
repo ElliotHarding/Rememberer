@@ -23,7 +23,7 @@ class PageTestResult extends StatelessWidget
 
         Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02), child: Align(alignment: Alignment.centerLeft, child:
           TextButton(onPressed: () => onHomePressed(context), child:
-            Text("<- Home", style: Display.miniNavButtonTextStyle)
+            Text("↫ Home", style: Display.miniNavButtonTextStyle)
         ))),
 
         SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height * 0.25, child:
