@@ -4,6 +4,7 @@ import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/page_test.dart';
 import 'package:epilepsy_prevention/page_home.dart';
 import 'package:epilepsy_prevention/display.dart';
+import 'package:epilepsy_prevention/page_memory.dart';
 
 class PageOverdueTests extends StatefulWidget
 {
@@ -60,18 +61,32 @@ class PageOverdueTestsState extends State<PageOverdueTests>
   Widget generateOverdueTestWidget(Memory memory, int notifyTime)
   {
     return Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
-      SizedBox(width: MediaQuery.of(context).size.width * 0.45, child: TextButton(onPressed: () => onTestPressed(memory), child:
+      SizedBox(width: MediaQuery.of(context).size.width * 0.4, child: TextButton(onPressed: () => onTestPressed(memory), child:
         Text(memory.m_question, style: Display.listItemTextStyle))
       ),
 
-      SizedBox(width: MediaQuery.of(context).size.width * 0.45, child: TextButton(onPressed: () => onTestPressed(memory), child:
+      SizedBox(width: MediaQuery.of(context).size.width * 0.4, child: TextButton(onPressed: () => onTestPressed(memory), child:
         Text(Notifications().epochMsToDate(notifyTime), style: Display.listItemTextStyle))
+      ),
+
+      SizedBox(width: MediaQuery.of(context).size.width * 0.1, child:
+        TextButton(onPressed: () => onMemoryPressed(memory), child:
+          Text("⚙", style: Display.listItemTextStyle)
+        )
       ),
 
       SizedBox(width: MediaQuery.of(context).size.width * 0.1, child: TextButton(onPressed: () => askDeleteTest(memory, notifyTime), child:
         Text("X", style: Display.listItemTextStyle))
       )
     ]);
+  }
+
+  void onMemoryPressed(Memory memory) async
+  {
+    await Navigator.push(context, MaterialPageRoute(builder: (context) => PageMemory(memory)));
+    setState(() {
+      m_overdueTestWidgets = getOverdueTestWidgets();
+    });
   }
 
   void onTestPressed(Memory memory)
