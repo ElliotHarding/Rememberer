@@ -20,7 +20,7 @@ class Display {
   static double graphTitleSpaceReserved = 0;
 
   //Accessible text colors
-  static MaterialColor normalTextColor = Colors.blue;
+  static MaterialColor normalTextColor = Colors.blueGrey;
 
   factory Display()
   {
@@ -43,10 +43,10 @@ class Display {
     listItemTextStyleBlack = TextStyle(fontSize: 4 * unitWidthValue, color: Colors.black);
 
     normalTextStyle = TextStyle(fontSize: 5 * unitWidthValue, color: normalTextColor);
-    largeTextStyle = TextStyle(fontSize: 6 * unitWidthValue, color: Colors.indigo);
+    largeTextStyle = TextStyle(fontSize: 6 * unitWidthValue, color: Colors.blue);
     largeTextStyleBlack = TextStyle(fontSize: 6 * unitWidthValue, color: Colors.black);
 
-    graphIndexStyle = TextStyle(fontSize: 3 * unitWidthValue, color: Colors.blue);
+    graphIndexStyle = TextStyle(fontSize: 3 * unitWidthValue, color: Colors.blueGrey);
     graphTitleSpaceReserved = 3 * unitWidthValue * 5.5;
 
     titleTextStyle = TextStyle(fontSize: 7 * unitWidthValue, fontWeight: FontWeight.bold, color: Colors.blue);
@@ -54,6 +54,6 @@ class Display {
 
     miniNavButtonTextStyle = TextStyle(fontSize: 5 * unitWidthValue, color: Colors.blue);
 
-    searchOptionTextStyle = TextStyle(fontSize: 3 * unitWidthValue, color: Colors.blue);
+    searchOptionTextStyle = TextStyle(fontSize: 3 * unitWidthValue, color: Colors.blueGrey);
   }
 }
