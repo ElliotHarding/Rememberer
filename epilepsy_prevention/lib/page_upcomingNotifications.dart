@@ -28,7 +28,7 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
     return Scaffold(body:
       ListView(shrinkWrap: true, children: <Widget>[
 
-        Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1), child: Center(child: Text("Notifications", style:Display.titleTextStyle, textAlign: TextAlign.center))),
+        Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1), child: Text("Notifications", style:Display.titleTextStyle, textAlign: TextAlign.center)),
 
         Center(child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
           SizedBox(width: MediaQuery.of(context).size.width * 0.45, child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -41,11 +41,9 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
           ])),
         ]))),
 
-        Visibility(visible: m_notificationsWidget.isEmpty, child: Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1), child:  Text("No Notifications!", style: Display.largeTextStyle, textAlign: TextAlign.center,))),
+        Visibility(visible: m_notificationsWidget.isEmpty, child: Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1), child: Text("No Notifications!", style: Display.largeTextStyle, textAlign: TextAlign.center,))),
 
-        SizedBox(width: MediaQuery.of(context).size.width, child:
-          ListView(shrinkWrap: true, physics: const NeverScrollableScrollPhysics(), scrollDirection: Axis.vertical, children: m_notificationsWidget)
-        ),
+        ListView(shrinkWrap: true, physics: const NeverScrollableScrollPhysics(), scrollDirection: Axis.vertical, children: m_notificationsWidget),
       ],)
     );
   }
