@@ -56,11 +56,11 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
     List<Widget> widgets = <Widget>[];
     for(MemoryAndNotification memNotification in notifications)
     {
-      widgets.add(Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
+      widgets.add(Row( children: [
         SizedBox(width: MediaQuery.of(context).size.width * 0.05),
 
         SizedBox(width: MediaQuery.of(context).size.width * 0.6, child: TextButton(onPressed: () => onTestPressed(memNotification.m_memory), child:
-          Text(memNotification.m_memory.m_question, style: Display.listItemTextStyle))
+          Align(alignment: Alignment.centerLeft, child: Text(memNotification.m_memory.m_question, style: Display.listItemTextStyle)))
         ),
 
         SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
@@ -82,7 +82,7 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
         )
       ]));
 
-      widgets.add(const SizedBox(height: 10));
+      widgets.add(const SizedBox(height: 12));
     }
 
     return widgets;
