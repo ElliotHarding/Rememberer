@@ -50,6 +50,7 @@ class PageOverdueTestsState extends State<PageOverdueTests>
           if(memoryNotification.m_notifyTime < DateTime.now().millisecondsSinceEpoch && !memoryNotification.m_bHasBeenTested)
           {
             overdueTestWidgets.add(generateOverdueTestWidget(memory, memoryNotification.m_notifyTime));
+            overdueTestWidgets.add(const SizedBox(height: 12));
           }
         }
       }
@@ -60,23 +61,29 @@ class PageOverdueTestsState extends State<PageOverdueTests>
 
   Widget generateOverdueTestWidget(Memory memory, int notifyTime)
   {
-    return Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
-      SizedBox(width: MediaQuery.of(context).size.width * 0.5, child: TextButton(onPressed: () => onTestPressed(memory), child:
-        Text(memory.m_question, style: Display.listItemTextStyle))
+    return Row(children: [
+      SizedBox(width: MediaQuery.of(context).size.width * 0.05),
+
+      SizedBox(width: MediaQuery.of(context).size.width * 0.6, child: TextButton(onPressed: () => onTestPressed(memory), child:
+        Align(alignment: Alignment.centerLeft, child: Text(memory.m_question, style: Display.listItemTextStyle)))
       ),
 
-      SizedBox(width: MediaQuery.of(context).size.width * 0.3, child: TextButton(onPressed: () => onTestPressed(memory), child:
-        Text(Notifications().epochMsToDate(notifyTime), style: Display.listItemTextStyle))
-      ),
+      SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
+        TextButton(onPressed: () => onTestPressed(memory), child: Column(children: [
+          Text(Notifications().epochMsToDateTime(notifyTime), style: Display.listItemTextStyle),
+          Text(Notifications().epochMsToDateDay(notifyTime), style: Display.listItemTextStyle)
+        ],)
+      )),
 
-      SizedBox(width: MediaQuery.of(context).size.width * 0.1, child:
+      SizedBox(width: MediaQuery.of(context).size.width * 0.1, child: Column(children: [
         TextButton(onPressed: () => onMemoryPressed(memory), child:
           Text("⚙", style: Display.listItemTextStyle)
-        )
-      ),
+        ),
 
-      SizedBox(width: MediaQuery.of(context).size.width * 0.1, child: TextButton(onPressed: () => askDeleteTest(memory, notifyTime), child:
-        Text("X", style: Display.listItemTextStyle))
+        TextButton(onPressed: () => askDeleteTest(memory, notifyTime), child:
+          Text("🗑", style: Display.listItemTextStyle)
+        )
+      ])
       )
     ]);
   }
