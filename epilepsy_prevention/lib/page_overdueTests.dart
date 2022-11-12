@@ -61,11 +61,11 @@ class PageOverdueTestsState extends State<PageOverdueTests>
   Widget generateOverdueTestWidget(Memory memory, int notifyTime)
   {
     return Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
-      SizedBox(width: MediaQuery.of(context).size.width * 0.4, child: TextButton(onPressed: () => onTestPressed(memory), child:
+      SizedBox(width: MediaQuery.of(context).size.width * 0.5, child: TextButton(onPressed: () => onTestPressed(memory), child:
         Text(memory.m_question, style: Display.listItemTextStyle))
       ),
 
-      SizedBox(width: MediaQuery.of(context).size.width * 0.4, child: TextButton(onPressed: () => onTestPressed(memory), child:
+      SizedBox(width: MediaQuery.of(context).size.width * 0.3, child: TextButton(onPressed: () => onTestPressed(memory), child:
         Text(Notifications().epochMsToDate(notifyTime), style: Display.listItemTextStyle))
       ),
 

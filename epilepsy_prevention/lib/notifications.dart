@@ -182,4 +182,26 @@ class Notifications
     return date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString().substring(2) + " " + hour + ":" + minute;
   }
 
+  String epochMsToDateDay(int epochMs)
+  {
+    var date = DateTime.fromMillisecondsSinceEpoch(epochMs);
+    return date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString().substring(2);
+  }
+
+  String epochMsToDateTime(int epochMs)
+  {
+    var date = DateTime.fromMillisecondsSinceEpoch(epochMs);
+    var hour = date.hour.toString();
+    if(hour.length == 1)
+    {
+      hour = "0" + hour;
+    }
+    var minute = date.minute.toString();
+    if(minute.length == 1)
+    {
+      minute = "0" + minute;
+    }
+    return hour + ":" + minute;
+  }
+
 }

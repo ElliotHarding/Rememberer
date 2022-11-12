@@ -62,17 +62,17 @@ class PageMemoriesState extends State<PageMemories>
         widgets.add(Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,children: [
           SizedBox(width: MediaQuery.of(context).size.width * 0.05),
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.6, child:
+          SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
             Text(memory.m_question, style: Display.listItemTextStyle, textAlign: TextAlign.left)
           ),
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.15, child:
+          SizedBox(width: MediaQuery.of(context).size.width * 0.1, child:
             TextButton(onPressed: () => onMemoryPressed(memory), child:
               Text("⚙", style: Display.listItemTextStyle)
             )
           ),
 
-          SizedBox(width: MediaQuery.of(context).size.width * 0.15, child:
+          SizedBox(width: MediaQuery.of(context).size.width * 0.1, child:
             TextButton(onPressed: () => onMemoryTestPressed(memory), child:
               Text("?", style: Display.listItemTextStyle)
             )

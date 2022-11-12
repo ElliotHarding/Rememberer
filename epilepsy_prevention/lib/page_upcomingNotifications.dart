@@ -57,22 +57,28 @@ class PageUpcomingNotificationsState extends State<PageUpcomingNotifications>
     for(MemoryAndNotification memNotification in notifications)
     {
       widgets.add(Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
-        SizedBox(width: MediaQuery.of(context).size.width * 0.4, child: TextButton(onPressed: () => onTestPressed(memNotification.m_memory), child:
+        SizedBox(width: MediaQuery.of(context).size.width * 0.05),
+
+        SizedBox(width: MediaQuery.of(context).size.width * 0.6, child: TextButton(onPressed: () => onTestPressed(memNotification.m_memory), child:
           Text(memNotification.m_memory.m_question, style: Display.listItemTextStyle))
         ),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.4, child: TextButton(onPressed: () => onTestPressed(memNotification.m_memory), child:
-          Text(Notifications().epochMsToDate(memNotification.m_notificationTime), style: Display.listItemTextStyle))
-        ),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.2, child:
+          TextButton(onPressed: () => onTestPressed(memNotification.m_memory),child: Column(children: [
+            Text(Notifications().epochMsToDateTime(memNotification.m_notificationTime), style: Display.listItemTextStyle),
+            Text(Notifications().epochMsToDateDay(memNotification.m_notificationTime), style: Display.listItemTextStyle)
+          ],)
+        )),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.1, child:
+        SizedBox(width: MediaQuery.of(context).size.width * 0.1, child: Column(children: [
           TextButton(onPressed: () => onQuestionPressed(memNotification.m_memory), child:
             Text("⚙", style: Display.listItemTextStyle)
-          )
-        ),
+          ),
 
-        SizedBox(width: MediaQuery.of(context).size.width * 0.1, child: TextButton(onPressed: () => onDeleteNotificationPressed(memNotification), child:
-          Text("X", style: Display.listItemTextStyle))
+          TextButton(onPressed: () => onDeleteNotificationPressed(memNotification), child:
+            Text("🗑", style: Display.listItemTextStyle)
+          )
+          ])
         )
       ]));
 
