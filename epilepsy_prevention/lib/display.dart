@@ -39,8 +39,8 @@ class Display {
 
     final double unitWidthValue = appScreenWidth * 0.01;
 
-    listItemTextStyle = TextStyle(fontSize: 5 * unitWidthValue, color: normalTextColor);
-    listItemTextStyleBlack = TextStyle(fontSize: 5 * unitWidthValue, color: Colors.black);
+    listItemTextStyle = TextStyle(fontSize: 4 * unitWidthValue, color: normalTextColor);
+    listItemTextStyleBlack = TextStyle(fontSize: 4 * unitWidthValue, color: Colors.black);
 
     normalTextStyle = TextStyle(fontSize: 5 * unitWidthValue, color: normalTextColor);
     largeTextStyle = TextStyle(fontSize: 6 * unitWidthValue, color: Colors.indigo);
