@@ -377,11 +377,10 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
   Widget genCustomNotificationWidget(int iCustomNotification)
   {
-    return SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
-      Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-        SizedBox(width: MediaQuery.of(context).size.width * 0.7, child:
+    return Row(children: <Widget>[
+        SizedBox(width: MediaQuery.of(context).size.width * 0.4, child:
           TextButton(onPressed: () => onSelectCustomNotification(iCustomNotification), child:
-            Text(Notifications().epochMsToDate(widget.m_memory.m_notifications[iCustomNotification].m_notifyTime), style: Display.listItemTextStyleBlack)
+            Text(Notifications().epochMsToDate(widget.m_memory.m_notifications[iCustomNotification].m_notifyTime), style: Display.listItemTextStyle)
           ),
         ),
         SizedBox(width: MediaQuery.of(context).size.width * 0.1, child:
@@ -391,11 +390,11 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         ),
         SizedBox(width: MediaQuery.of(context).size.width * 0.1, child:
           TextButton(onPressed: () => onDeleteCustomNotification(iCustomNotification), child:
-            Text("X", style: Display.listItemTextStyle)
+            Text("🗑", style: Display.listItemTextStyle)
           ),
         )
       ])
-    );
+    ;
   }
 
   void onSelectCustomNotification(int iCustomNotification) async
