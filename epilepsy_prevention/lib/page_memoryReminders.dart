@@ -316,7 +316,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
 
       final DateTime dateTime = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, widget.m_fixedNotifyTime.hour, widget.m_fixedNotifyTime.minute);
       int epochIncTime = 0;
-      for(int i = 1; i < 100; i++)
+      for(int i = 1; i < 30; i++)
       {
         widget.m_memory.m_notifications.add(MemoryNotification(dateTime.millisecondsSinceEpoch + epochIncTime, false));
         epochIncTime += DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + i, 0, 0, 0, 0, 0).millisecondsSinceEpoch;
