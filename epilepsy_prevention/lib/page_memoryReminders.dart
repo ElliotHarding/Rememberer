@@ -3,6 +3,7 @@ import 'package:epilepsy_prevention/memory.dart';
 import 'package:epilepsy_prevention/display.dart';
 import 'package:epilepsy_prevention/notifications.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class PageMemoryReminders extends StatefulWidget
 {
@@ -23,6 +24,9 @@ class PageMemoryReminders extends StatefulWidget
   int m_graphViewIterationsCount = 0;
   List<ScatterSpot> m_graphDataPoints = [];
   double m_graphTimeInterval = 1;
+
+  //New fixed time
+  TimeOfDay m_fixedNotifyTime = TimeOfDay.now();
 
   @override
   State<PageMemoryReminders> createState() => PageMemoryRemindersState();
@@ -45,10 +49,21 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         widget.m_configureIncrement = 4;
         widget.m_configureTimeFrequency = 1800000;
         widget.m_memory.m_testFrequecy = "Configure";
+        widget.m_fixedNotifyTime = TimeOfDay.now();
         updateNotifyTimes();
       }
 
       widget.m_notificationCountGoal = widget.m_memory.m_notifications.length;
+
+      if(widget.m_memory.m_notifications.length > 0)
+      {
+        DateTime notifyTime = DateTime.fromMillisecondsSinceEpoch(widget.m_memory.m_notifications[0].m_notifyTime);
+        widget.m_fixedNotifyTime = TimeOfDay(hour: notifyTime.hour, minute: notifyTime.minute);
+      }
+      else
+      {
+        widget.m_fixedNotifyTime = TimeOfDay.now();
+      }
 
       widget.m_notificationStartGoal = getCurrentIteration(widget.m_memory.getNotifyTimes());
       updateNotifyTimes();
@@ -73,18 +88,19 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
               DropdownMenuItem(value: "Occasionally", child: Text("Occasionally", style: Display.listItemTextStyleBlack, textAlign: TextAlign.center)),
               DropdownMenuItem(value: "Frequently", child: Text("Frequently", style: Display.listItemTextStyleBlack, textAlign: TextAlign.center)),
               DropdownMenuItem(value: "Custom", child: Text("Custom", style: Display.listItemTextStyleBlack, textAlign: TextAlign.center)),
+              DropdownMenuItem(value: "Fixed", child: Text("Fixed", style: Display.listItemTextStyleBlack, textAlign: TextAlign.center)),
               DropdownMenuItem(value: "Configure", child: Text("Configure", style: Display.listItemTextStyleBlack, textAlign: TextAlign.center))
           ],
         )),
 
-        Visibility(visible: widget.m_memory.m_testFrequecy != "Never" && widget.m_memory.m_testFrequecy != "Custom", child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Column(children: <Widget>[
+        Visibility(visible: widget.m_memory.m_testFrequecy != "Never" && widget.m_memory.m_testFrequecy != "Custom" && widget.m_memory.m_testFrequecy != "Fixed", child: SizedBox(width: MediaQuery.of(context).size.width * 0.9, child: Column(children: <Widget>[
 
           Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, 30, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
             Text("Iteration goal: " + widget.m_notificationCountGoal.toString(), style: Display.largeTextStyle, textAlign: TextAlign.left),
           )),
 
           SizedBox(width: MediaQuery.of(context).size.width * 0.9, child:
-            Slider(value: widget.m_notificationCountGoal.toDouble(), min: 0, max: 25, onChanged: (newValue) => onNotificationCountGoalSliderChanged(newValue.toInt())
+            Slider(value: widget.m_notificationCountGoal.toDouble(), min: 0, max: widget.m_memory.m_testFrequecy == "Fixed" ? 100 : 25, onChanged: (newValue) => onNotificationCountGoalSliderChanged(newValue.toInt())
           )),
 
           Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, 30, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
@@ -109,6 +125,16 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
           )
         ]))),
 
+        Center(child: Visibility(visible: widget.m_memory.m_testFrequecy == "Fixed", child: Column(children: [
+
+          SizedBox(width: MediaQuery.of(context).size.width * 0.8, child:
+            TextButton(onPressed: () => onSelectFixedNotification(), child:
+              Text(widget.m_fixedNotifyTime.toString(), style: Display.listItemTextStyle)
+            ),
+          ),
+
+        ]))),
+
         Visibility(visible: widget.m_memory.m_testFrequecy == "Configure", child: Column(children: <Widget>[
 
           Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, 30, 0, 0), child: Align(alignment: Alignment.centerLeft, child:
@@ -129,7 +155,7 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
         ]),
         ),
 
-        Visibility(visible: widget.m_memory.m_testFrequecy != "Never", child:
+        Visibility(visible: widget.m_memory.m_testFrequecy != "Never" && widget.m_memory.m_testFrequecy != "Fixed", child:
             Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
 
               Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, 30, 0, 0), child:
@@ -284,6 +310,18 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
       widget.m_memory.m_notifications = Notifications().genNotifyTimes(widget.m_notificationStartGoal, widget.m_notificationCountGoal, widget.m_configureIncrement.toDouble(), widget.m_configureTimeFrequency);
       widget.m_notificationCountGoal = widget.m_memory.m_notifications.length + widget.m_notificationStartGoal;
     }
+    else if(widget.m_memory.m_testFrequecy == "Fixed")
+    {
+      widget.m_memory.m_notifications.clear();
+
+      final DateTime dateTime = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, widget.m_fixedNotifyTime.hour, widget.m_fixedNotifyTime.minute);
+      int epochIncTime = 0;
+      for(int i = 1; i < 100; i++)
+      {
+        widget.m_memory.m_notifications.add(MemoryNotification(dateTime.millisecondsSinceEpoch + epochIncTime, false));
+        epochIncTime += DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + i, 0, 0, 0, 0, 0).millisecondsSinceEpoch;
+      }
+    }
     else
     {
       widget.m_memory.m_notifications = [];
@@ -409,6 +447,19 @@ class PageMemoryRemindersState extends State<PageMemoryReminders>
       {
         widget.m_memory.m_notifications[iCustomNotification].m_notifyTime = dateTime.millisecondsSinceEpoch;
         widget.m_memory.m_notifications[iCustomNotification].m_bHasBeenTested = dateTime.millisecondsSinceEpoch < DateTime.now().millisecondsSinceEpoch;
+        updateNotifyTimes();
+      });
+    }
+  }
+
+  void onSelectFixedNotification() async
+  {
+    TimeOfDay? newTime = await showTimePicker(context: context, initialTime: TimeOfDay.now());
+    if(newTime != null)
+    {
+      setState(()
+      {
+        widget.m_fixedNotifyTime = newTime;
         updateNotifyTimes();
       });
     }
